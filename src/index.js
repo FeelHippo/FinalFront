@@ -1,17 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import Root from './Root';
+import { createBrowserHistory } from 'history';
+import LocalStorage from './services/Storage';
+import api from './services/itemService.js';
+import { getAllTags } from './store/actions/index'
+import { configureStore } from './store/config.js';
+import { home, auth } from './store/types/types';
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// render function
+const renderApp = props => 
+  ReactDOM.render(<Root {...props} />, document.getElementById('root'));
+
+// browser history
+const history = createBrowserHistory();
+
+// localStorage query
+const session = LocalStorage.readLocalStorage() || undefined;
+
+// store config
+const store = configureStore({
+  history,
+  services: { api },
+})({
+  session,
+})
+
+// sync store, update in case of changes
+store.subscribe(() => {
+  const { lastAction, session } = store.getState();
+  if (lastAction.type === auth.LOGIN_USER && lastAction.remember) {
+    LocalStorage.saveLocalStorage(session);
+  }
+
+  if (lastAction.type === auth.LOGOUT_USER) {
+    LocalStorage.clearLocalStorage();
+  }
+
+  // render app when tags loaded
+  if (lastAction.type === home.TAGS_LOAD_SUCCESS) {
+    renderApp({ store, history })
+  }
+})
+
+// launch initial action to load tags
+store.dispatch(getAllTags());
