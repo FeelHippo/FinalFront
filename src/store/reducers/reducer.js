@@ -1,4 +1,4 @@
-import { home, details, shared } from '../types/types';
+import { home, details, auth, shared } from '../types/types';
 
 // const { GET_ALL_TAGS, 
 //     SEARCH_ADS, 
@@ -22,21 +22,31 @@ const defaultState = {
     ui: {
         loading: false,
         error: null,
-    }
+    },
 }
 
 export const session = (state = defaultState.session, action) => {
     switch (action.type) {
-        case home.SIGNUP_USER:
+        case auth.SIGNUP_USER:
             return { 
                 ...state, 
-                success: action.payload.data.success }
+                success: action.payload }
         
-        case home.LOGIN_USER:
+        case auth.LOGIN_USER:
             return {
                 ...state,
-                ...action.payload
-            };
+                ...action.payload,
+            }
+
+        case shared.ERROR:
+            return {
+                ...state,
+                success: action.payload.success,
+                error: action.payload.msg,
+            }
+
+        case auth.LOGOUT_USER: 
+            return new Session()
 
         case home.TAGS_LOAD_SUCCESS:
             return state;

@@ -38,7 +38,7 @@ export class ClassifiedAds extends Component {
 }
 
 const mapStateToProps = state => {
-    return state.home
+    return state.ads
 }
 
 const mapDispatchToProps = {

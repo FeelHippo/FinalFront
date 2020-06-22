@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import { userPostSignup } from '../../store/actions/authentication';
 
 // custom input hook
@@ -13,14 +14,17 @@ const SignUp = props => {
     const { value:email, bind:bindEmail } = useInput('');
     const { value:password, bind:bindPassword } = useInput('');
 
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
     const submitForm = evt => {
         evt.preventDefault();
         
         props.userPostSignup({
-            username: email,
-            password: password
+            email,
+            password,
         })
         
+        if(props.error) enqueueSnackbar(props.error);
         setRedirect(props.success);
     };
 
@@ -52,7 +56,7 @@ const SignUp = props => {
 }
 
 const mapStateToProps = state => {
-    return state.session;
+    return state.session
 }
 
 const mapDispatchToProps = dispatch => ({

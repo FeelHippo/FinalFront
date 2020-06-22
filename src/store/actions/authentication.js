@@ -1,14 +1,25 @@
 import api from '../../services/itemService';
-const { loginUser, registerUser } = api();
+const { loginUser, registerUser, tokenAuthentication } = api();
 
 export const userPostLogin = user => {
     return async dispatch => {
-        
+
         try {
-            await loginUser(user).then(response => {
-                localStorage.setItem('token', user.username);
-                dispatch(loginAuthUser({...user, ...response}));
-            }) // maybe a .catch in case of error, the front receives the email address, and password == '', redirect to login form with email and empty password
+            // if status 200, receive used object
+            let response = await loginUser(user);
+            
+            let token = response.data.token;
+            // if token is valid, receive true
+            let authenticated = await tokenAuthentication(token);
+            // store token in LocalStorage, validity is 7 days
+            if (authenticated && response.status === 200) {
+                localStorage.setItem('x-auth-token', token);
+                // dispatch login if status 200
+                dispatch(loginAuthUser( response ));
+            } else {
+                dispatch(showMessage(response.data))
+            }
+            
         } catch (error) {
             console.log(error);
         }
@@ -26,9 +37,14 @@ export const userPostSignup = user => {
     return async dispatch => {
         
         try {
-            await registerUser(user).then(response =>
-                dispatch(signupUser(response))  
-            )
+            // receive true if user registered
+            let response = await registerUser(user)
+            if (response.status === 200) {
+                dispatch(signupUser(response.data.success))
+            } else {
+                dispatch(showMessage(response.data))
+            }
+            
             
         } catch (error) {
             console.log(error);
@@ -42,3 +58,12 @@ const signupUser = success => ({
     type: 'SIGNUP_USER',
     payload: success,
 })
+
+// error handler
+const showMessage = data => ({
+    type: 'ERROR',
+    payload: data,    
+})
+
+// inside the individual components, if there is a state.msg, use snackbar to print it
+// amend userPostLogin to di the same

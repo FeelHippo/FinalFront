@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useSnackbar } from 'notistack';
 import { userPostLogin } from '../../store/actions/authentication';
 
 // custom input hook
@@ -12,15 +13,18 @@ const Login = props => {
     // import custom hook functionalities
     const { value:email, bind:bindEmail } = useInput('');
     const { value:password, bind:bindPassword } = useInput('');
+    // snackbar errors
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const submitForm = evt => {
         evt.preventDefault();
         
         props.userPostLogin({
-            username: email,
-            password: password
+            email,
+            password,
         })
 
+        if(props.error) enqueueSnackbar(props.error);
         setRedirect(props.success);
     };
     
@@ -54,7 +58,7 @@ const Login = props => {
 }
 
 const mapStateToProps = state => {
-    return state.session;
+    return state.session
 }
 
 const mapDispatchToProps = dispatch => ({

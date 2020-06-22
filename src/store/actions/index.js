@@ -10,11 +10,6 @@ const { GET_AD,
         CREATE_AD, 
         CHANGE_AD 
     } = details;
-const {
-    SIGNUP_USER,
-    LOGIN_USER,
-    LOGOUT_USER,
-} = auth;
 const { UPDATE_FIELD } = shared;
 
 // global action creators

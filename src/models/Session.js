@@ -3,12 +3,16 @@ export default class Session {
      * constructor
      */
     constructor(
-        currentUser = '',
-        currentPwd = '',
-        success = false
+        email = '',
+        password = '',
+        success = false,
+        token = '',
+        error = '',
     ) {
-        this.currentUser = currentUser;
-        this.currentPwd = currentPwd;
+        this.email = email;
+        this.password = password;
         this.success = success;
+        this.token = token;
+        this.error = error;
     }
 }
