@@ -5,7 +5,7 @@ import { updateField } from '../../store/actions/index';
 
 export const CustomRadio = ({ label, name }) => {
 
-    const sale = useSelector(state => state.home.sale)
+    const sale = useSelector(state => state.user_search[name])
     const dispatch = useDispatch();
     
     return (

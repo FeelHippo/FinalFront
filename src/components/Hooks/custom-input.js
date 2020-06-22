@@ -1,25 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
-import { updateField } from '../../store/actions/index';
+import { updateField } from '../../store/actions/index';    
 
-export const myCustomSelector = createSelector(
-    state => state.home,
-    (_, name) => name,
-    (home, name) => home[name]
-)
-
-const namedInput = () => myCustomSelector;
-    
-
-export const CustomInput = ({ label, type, name, container }) => {
-
-    const memoInput = useMemo(
-        namedInput,
-        []
-    )
+export const CustomInput = ({ label, type, name }) => {
        
-    const value = useSelector(state => memoInput(state, name))
+    const value = useSelector(state => state.user_search[name])
     const dispatch = useDispatch();
 
     return (

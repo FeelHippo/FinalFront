@@ -10,17 +10,16 @@ import Home from '../components/Home/ads';
 
 export class ClassifiedAds extends Component {
 
-    componentDidMount() {
-        this.getTags();
-    }
-
-    getTags = () => {
-        this.props.getAllTags();
-    }
-
     searchAds = () => {
-        const { name, price_low, price_high, sale, tag } = this.props;
-        this.props.searchAds(name, price_low.toString(), price_high.toString(), tag, sale)
+        const { tag,
+                name,
+                price_low,
+                price_high,
+                description,
+                photo,
+                type 
+        } = this.props.user_search;
+        this.props.searchAds(name, price_low.toString(),price_high.toString(), description, photo, type, tag)
     }
 
     render() {
@@ -29,16 +28,18 @@ export class ClassifiedAds extends Component {
         }
         return (
             <Home
-                { ...this.props }
-                searchAds={ this.searchAds } 
-                updateField={ this.updateField }
+                ads={ this.props.ads }
+                searchAds={ this.searchAds }
             />
         )
     }
 }
 
 const mapStateToProps = state => {
-    return state.ads
+    return {
+        ads: state.ads,
+        user_search: state.user_search,
+    }
 }
 
 const mapDispatchToProps = {

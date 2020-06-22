@@ -1,6 +1,6 @@
 import { home, details, shared, auth } from '../types/types';
 import api from '../../services/itemService';
-const { getTags, getAll, getAds, getDetail, postAd, modifyAd } = api();
+const { getTags, getAds, getDetail, postAd, modifyAd } = api();
 
 const { GET_ALL_TAGS,
         TAGS_LOAD_SUCCESS, 
@@ -53,10 +53,11 @@ const confirmTransaction = () => ({
     type: TAGS_LOAD_SUCCESS,
 })
 
-export const searchAds = (name, price_low, price_high, tag, sale) => {
+export const searchAds = (name, price_low, price_high, description, photo, type, tag) => {
     return async dispatch => {
         try {
-            let API_ARGS = `?${name ? `name=${name}` : ''}${price_low ? `&price=${price_low}-${price_high}` : ''}${tag ? `&tag=${tag}` : ''}${!sale ? `&venta=false` : ''}`;
+            let API_ARGS = `?${type ? `type=true` : `type=false`}${name.length ? `&name=${name}` : ''}${price_low > 0 ? `&price=${price_low}` : ''}${price_high > price_low ? `&price=${price_high}` : ''}${description.length ? `&description=${description}` : ''}${photo.length ? `&photo=${photo}` : ''}${tag.length ? `&tag=${tag}` : ''}`;
+            console.log('UUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRLLLLLLLLLLLLLLLLLLL', API_ARGS)
             await getAds(API_ARGS).then(results => dispatch(getHomeAds(results)))
         } catch (error) {
             console.log(error);            

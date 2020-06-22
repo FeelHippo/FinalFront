@@ -19,6 +19,7 @@ const defaultState = {
     session: new Session(),
     valid_tags: [],
     ads: [],
+    user_search: new Ad(),
     ui: {
         loading: false,
         error: null,
@@ -63,10 +64,25 @@ export const valid_tags = (state = defaultState.valid_tags, action) => {
     return state;
 }
 
+export const user_search = (state = defaultState.user_search, action) => {
+    switch (action.type) {
+        case shared.UPDATE_FIELD:
+            const { field, value } = action.payload;
+            return {
+                ...state, 
+                [field]: value
+            }
+    
+        default:
+            return state;
+    }
+}
+
 export const ads = (state = defaultState.ads, action) => {
     switch (action.type) {
-        case home.SESSION_CLEAR:
-            return defaultState.ads;
+        
+        case home.SEARCH_ADS:
+            return action.payload;
         
         case details.GET_AD:
             return action.payload;

@@ -5,7 +5,7 @@ import { updateField } from '../../store/actions/index';
 
 export const CustomSelect = ({ label, name }) => {
 
-    const results = useSelector(state => state.home.valid_tags);
+    const results = useSelector(state => state.valid_tags);
     const dispatch = useDispatch();
     
     return (

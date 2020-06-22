@@ -76,6 +76,7 @@ const api = (API_URL = 'http://localhost:5000') => {
         getAds: async (params) => {
             let baseURL = `${API_URL}/api/item/${params}`;
             let res = await axios.get(baseURL);
+            console.log('LLLLLLLLEEEEEEEEEEEEEEEEEEEEEEEEEPPPPPP', res)
             return res.data || [];
         }
     }
