@@ -3,7 +3,8 @@ export default class Ad {
      * Constructor
      */
     constructor(
-        tag = '',
+        tag1 = '',
+        tag2 = '',
         _id = '',
         name = '',
         price_low = 0,
@@ -12,7 +13,8 @@ export default class Ad {
         photo = '',
         type = true,
     ){
-        this.tag = tag;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
         this._id = _id;
         this.name = name;
         this.price_low = price_low;

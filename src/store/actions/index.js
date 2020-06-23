@@ -53,11 +53,10 @@ const confirmTransaction = () => ({
     type: TAGS_LOAD_SUCCESS,
 })
 
-export const searchAds = (name, price_low, price_high, description, photo, type, tag) => {
+export const searchAds = (name, price_low, price_high, description, photo, type, tags) => {
     return async dispatch => {
         try {
-            let API_ARGS = `?${type ? `type=true` : `type=false`}${name.length ? `&name=${name}` : ''}${price_low > 0 ? `&price=${price_low}` : ''}${price_high > price_low ? `&price=${price_high}` : ''}${description.length ? `&description=${description}` : ''}${photo.length ? `&photo=${photo}` : ''}${tag.length ? `&tag=${tag}` : ''}`;
-            console.log('UUUUUUUUUUUUUUUUUUURRRRRRRRRRRRRRRRLLLLLLLLLLLLLLLLLLL', API_ARGS)
+            let API_ARGS = `?${type ? `type=true` : `type=false`}${name.length ? `&name=${name}` : ''}${price_low > 0 ? `&price=${price_low}` : ''}${price_high > price_low ? `&price=${price_high}` : ''}${description.length ? `&description=${description}` : ''}${photo.length ? `&photo=${photo}` : ''}${tags.length ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}`;
             await getAds(API_ARGS).then(results => dispatch(getHomeAds(results)))
         } catch (error) {
             console.log(error);            

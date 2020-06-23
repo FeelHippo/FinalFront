@@ -75,9 +75,33 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         getAds: async (params) => {
             let baseURL = `${API_URL}/api/item/${params}`;
-            let res = await axios.get(baseURL);
-            console.log('LLLLLLLLEEEEEEEEEEEEEEEEEEEEEEEEEPPPPPP', res)
-            return res.data || [];
+            try {
+                let res = await axios.get(baseURL);
+                return res.data || [];
+            } catch (error) {
+                console.log(error.response.data)
+            }
+        },
+        postAd: async ad => {
+            const API_END = `${API_URL}/api/item/`;
+            let { name, price, description, type, photo, tags } = ad;
+
+            try {
+                const responseBody = await axios.post(API_END,
+                    {
+                        name: name, 
+                        price: price,
+                        description: description,
+                        tags: tags,
+                        type: type,
+                        photo: photo,
+                    },    
+                );
+                console.log('JHHHHHHHHHHHHHEDDDDDDDDDDDDDDDK', responseBody)
+                return responseBody.data.result;
+            } catch (error) {
+                
+            }
         }
     }
 }

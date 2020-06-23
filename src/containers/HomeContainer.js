@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-    getAllTags,
     searchAds,
 } from '../store/actions/index.js';
 
@@ -11,7 +10,8 @@ import Home from '../components/Home/ads';
 export class ClassifiedAds extends Component {
 
     searchAds = () => {
-        const { tag,
+        const { tag1,
+                tag2,
                 name,
                 price_low,
                 price_high,
@@ -19,7 +19,7 @@ export class ClassifiedAds extends Component {
                 photo,
                 type 
         } = this.props.user_search;
-        this.props.searchAds(name, price_low.toString(),price_high.toString(), description, photo, type, tag)
+        this.props.searchAds(name, price_low.toString(),price_high.toString(), description, photo, type, [tag1, tag2])
     }
 
     render() {
@@ -43,7 +43,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    getAllTags,
     searchAds,
 }
 

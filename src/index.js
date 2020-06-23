@@ -6,7 +6,7 @@ import Root from './Root';
 import { createBrowserHistory } from 'history';
 import LocalStorage from './services/Storage';
 import api from './services/itemService.js';
-import { getAllTags } from './store/actions/index'
+import { getAllTags } from './store/actions/index';
 import { configureStore } from './store/config.js';
 import { home, auth } from './store/types/types';
 

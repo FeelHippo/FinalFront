@@ -26,7 +26,8 @@ const Home = ({
                 <CustomInput label='Price From' type='number' name='price_low' container='Home' />
                 <CustomInput label='Price To' type='number' name='price_high' container='Home' />
 
-                <CustomSelect label='Select Tag' name='tag' />
+                <CustomSelect label='Select Tag' name='tag1' />
+                <CustomSelect label='Select Tag' name='tag2' />
                 <CustomRadio label='Buy/Sell' name='sale' />
 
                 <button type='submit'class="nes-btn is-success">Search</button>

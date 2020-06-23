@@ -1,16 +1,5 @@
+import { reducer as formReducer } from 'redux-form';
 import { home, details, auth, shared } from '../types/types';
-
-// const { GET_ALL_TAGS, 
-//     SEARCH_ADS, 
-//     SESSION_SAVE, 
-//     SESSION_CLEAR, 
-//     TAGS_LOAD_FAILURE 
-// } = home;
-// const { GET_AD, 
-//     CREATE_AD, 
-//     CHANGE_AD 
-// } = details;
-// const { UPDATE_FIELD } = shared;
 
 import Session from '../../models/Session';
 import Ad from '../../models/Ad';
@@ -25,6 +14,9 @@ const defaultState = {
         error: null,
     },
 }
+
+// redux-form reducer should always be injected into combineReducers(), see ./store/config.js:24 and 31
+export const form = formReducer;
 
 export const session = (state = defaultState.session, action) => {
     switch (action.type) {

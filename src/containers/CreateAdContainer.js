@@ -1,27 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import {
-    getAllTags,
-    createAd,
-    updateField,
-} from '../store/actions/index';
+import { createAd } from '../store/actions/index';
 
 import CreateNewAd from '../components/Create/createAd';
 
 class CreateAd extends Component {
-    
-    componentDidMount() {        
-        this.getTags();        
-    }
-
-    getTags = () => {
-        this.props.getAllTags();
-    }
 
     sendAd = async values => {
-        
-        values.photo = values.photo.length ? values.photo : 'https://static.thenounproject.com/png/220984-200.png';
+        values.photo = values.photo ? values.photo : '';
         
         const success = await this.props.createAd({
             name: values.name,
@@ -32,14 +19,14 @@ class CreateAd extends Component {
             type: values.type
         });
         
-        if (success.payload._id) {
-            this.props.updateField({
-                target: {
-                    name: 'backhome',
-                    value: true,
-                }
-            })
-        }
+        // if (success.payload._id) {
+        //     this.props.updateField({
+        //         target: {
+        //             name: 'backhome',
+        //             value: true,
+        //         }
+        //     })
+        // }
         
     }
 
@@ -58,13 +45,11 @@ class CreateAd extends Component {
 }
 
 const mapStateToProps = state => {
-    return state.ads
+    return state;
 }
 
 const mapDispatchToProps = {
-    getAllTags,
     createAd,
-    updateField,
 }
 
 export default connect(

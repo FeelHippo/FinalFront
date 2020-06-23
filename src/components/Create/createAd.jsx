@@ -1,13 +1,29 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
+import {useDropzone} from 'react-dropzone'
 
-import { CustomRadio } from '../Hooks/custom-radio';
-import { CustomSelect } from '../Hooks/custom-select';
+function MyDropzone() {
+    const onDrop = useCallback(acceptedFiles => {
+      // Do something with the files
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+   
+    return (
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+          isDragActive ?
+            <p>Drop the files here ...</p> :
+            <p>Drag 'n' drop some files here, or click to select files</p>
+        }
+      </div>
+    )
+  }
 
 let CreateNewAd = ({
+    valid_tags,
     handleSubmit,
-    valid_tags
 }) => {
     return (
         <div className='ads-create' class="nes-container with-title is-centered">
@@ -27,7 +43,8 @@ let CreateNewAd = ({
                 
                 <label>Type of Transaction</label>
                 <div>
-                    <Field name="type" component={CustomRadio} />
+                    <label><Field name="type" component="input" type="radio" value="true"/>Sale</label>
+                    <label><Field name="type" component="input" type="radio" value="false"/> Purchase</label>
                 </div>
 
                 <div class="nes-field">
@@ -36,22 +53,36 @@ let CreateNewAd = ({
                 </div>
 
                 <div>
-                    <label>Tag It Once!</label>
-                    <Field  name="tag1" 
-                            valid_tags={valid_tags} 
-                            component={CustomSelect} />
+                    <Field name="tag1" component="select">
+                        <option>Select First Tag</option>
+                        {valid_tags && valid_tags.length ? (
+                            valid_tags.map(tag => {
+                                return ( <option value={tag}>{tag}</option> )
+                            })
+                        ) : (
+                            ''
+                        )
+                        }
+                    </Field>
                 </div>
 
                 <div>
-                    <label>Tag It Twice!</label>
-                    <Field  name="tag2" 
-                            valid_tags={valid_tags} 
-                            component={CustomSelect} />
+                    <Field name="tag2" component="select">
+                        <option>Select Second Tag</option>
+                        {valid_tags && valid_tags.length ? (
+                            valid_tags.map(tag => {
+                                return ( <option value={tag}>{tag}</option> )
+                            })
+                        ) : (
+                            ''
+                        )
+                        }
+                    </Field>
                 </div>
 
-                <div class="nes-field">
+                <div>
                     <label htmlFor="photo">Pick a Pic!</label>
-                    <Field name="photo" component="input" type="text" class="nes-input" />
+                    <Field name="photo" component={MyDropzone} />
                 </div>
 
                 <button type='submit' class="nes-btn is-primary">Submit It!</button>

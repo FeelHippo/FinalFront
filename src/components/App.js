@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SignUp from './SignUp/signup';
 import Login from './Login/login';
 import ClassifiedAds  from '../containers/HomeContainer';
-import CreateAd from '../components/Create/createAd';
+import CreateAd from '../containers/CreateAdContainer';
 import AdDetails from '../containers/AdsContainer';
 import ChangeDetail from '../containers/ChangeAdContainer';
 // Error Handler
