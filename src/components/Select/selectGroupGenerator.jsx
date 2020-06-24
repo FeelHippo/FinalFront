@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { reactReduxContext, ReactReduxContext } from 'react-redux';
 
-const selectGroupGenerator = ({ valid_tags, input: { onChange, value }, placeholderTag }) => {
+const SelectGroupGenerator = ({ valid_tags, input: { onChange, value }, placeholderTag }) => {
     
+    const { store } = useContext(ReactReduxContext);
+    const { getState } = store;
+    const state = getState();
+
     return (
         <div class="nes-select">
             <select required 
@@ -10,7 +15,7 @@ const selectGroupGenerator = ({ valid_tags, input: { onChange, value }, placehol
                     value={value}
             >
             <option value="" disabled selected>{placeholderTag}</option>
-            {valid_tags.map((tag, i) => {
+            {state.valid_tags.map((tag, i) => {
                 return (
                     <option value={tag} key={i}>{tag}</option>
                 )
@@ -21,4 +26,4 @@ const selectGroupGenerator = ({ valid_tags, input: { onChange, value }, placehol
     )
 }
 
-export default selectGroupGenerator;
+export default SelectGroupGenerator;

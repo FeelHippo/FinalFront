@@ -1,18 +1,37 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
-
+import {useDropzone} from 'react-dropzone';
 import radioGroupGenerator from '../Radio/radioGroupGenerator';
 import selectGroupGenerator from '../Select/selectGroupGenerator';
 
+function MyDropzone() {
+    const onDrop = useCallback(acceptedFiles => {
+      // Do something with the files
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+   
+    return (
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+          isDragActive ?
+            <p>Drop the files here ...</p> :
+            <p>Drag 'n' drop some files here, or click to select files</p>
+        }
+      </div>
+    )
+}
+
+
 let ChangeExistingAd = ({
     handleSubmit,
-    valid_tags,
+    tag1,
+    tag2,
     name,
     price,
     description,
     photo,
-    tags
 }) => {
     return(
         <div className='ads-create' class="nes-container with-title is-centered">
@@ -43,22 +62,20 @@ let ChangeExistingAd = ({
                 <div>
                     <label>Tag It Once!</label>
                     <Field  name="tag1" 
-                            valid_tags={valid_tags} 
                             component={selectGroupGenerator}
-                            placeholderTag={tags[0]} />
+                            placeholderTag={tag1} />
                 </div>
 
                 <div>
                     <label>Tag It Twice!</label>
                     <Field  name="tag2" 
-                            valid_tags={valid_tags} 
                             component={selectGroupGenerator}
-                            placeholderTag={tags[1]} />
+                            placeholderTag={tag2} />
                 </div>
 
-                <div class="nes-field">
+                <div>
                     <label htmlFor="photo">Pick a Pic!</label>
-                    <Field name="photo" component="input" type="text" class="nes-input" placeholder={photo} />
+                    <Field name="photo" component={MyDropzone} />
                 </div>
 
                 <button type='submit' class="nes-btn is-primary">Submit It!</button>

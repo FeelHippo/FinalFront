@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-    getAllTags,
-    getAd,
+    getOneAd,
 } from '../store/actions/index';
 
 import PrintDetail from '../components/Detail/detail';
@@ -10,11 +9,11 @@ import PrintDetail from '../components/Detail/detail';
 export class AdDetails extends Component {
     componentDidMount() {
         const {match: { params }} = this.props; 
-        this.getDetails(params.detId);        
+        this.getDetails(params.detId);    
     }
 
     getDetails = detId => {
-        this.props.getAd(detId);
+        this.props.getOneAd(detId);
     } 
 
     render() {
@@ -28,12 +27,11 @@ export class AdDetails extends Component {
 }
 
 const mapStateToProps = state => {
-    return state.ads
+    return state.user_search
 }
 
 const mapDispatchToProps = {
-    getAllTags,
-    getAd,
+    getOneAd,
 }
 
 export default connect(

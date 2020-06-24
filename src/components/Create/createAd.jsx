@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import { Field, reduxForm } from 'redux-form';
-import {useDropzone} from 'react-dropzone'
+import {useDropzone} from 'react-dropzone';
 
 function MyDropzone() {
     const onDrop = useCallback(acceptedFiles => {
@@ -19,7 +19,7 @@ function MyDropzone() {
         }
       </div>
     )
-  }
+}
 
 let CreateNewAd = ({
     valid_tags,

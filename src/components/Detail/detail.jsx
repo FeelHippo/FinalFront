@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const PrintDetail = ({
-    tags,
     _id,
+    tag1,
+    tag2,
     name,
     price,
     description,
@@ -26,8 +27,12 @@ const PrintDetail = ({
             <section class="nes-container is-dark">
                 <section class="message -left">
                     <div class="nes-container is-rounded is-dark">
-                        <p>Tags: {tags.map(tag => `${tag} `)}</p>
+                        <p>{tag1}</p>
                     </div>
+                    <div class="nes-container is-rounded is-dark">
+                        <p>{tag2}</p>
+                    </div>
+                    
                     <div class="nes-container is-rounded is-dark">
                         <p>Price: {price}</p>
                     </div>

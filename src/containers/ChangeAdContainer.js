@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import {
-    getAd,
-    getAllTags,
+    getOneAd,
     changeAd,
-    updateField,
+    redirectAfterLoading,
 } from '../store/actions/index.js';
 
 import ChangeExistingAd from '../components/Change/changeAd';
@@ -17,16 +16,10 @@ export class ChangeDetail extends Component {
         const {match: { params }} = this.props; 
         
         this.getDetails(params.detId);
-
-        this.getTags();
     }
 
     getDetails = async detId => {
-        await this.props.getAd(detId);
-    }
-
-    getTags = () => {
-        this.props.getAllTags();
+        await this.props.getOneAd(detId);
     }
 
     submitAd = async values => {
@@ -43,18 +36,13 @@ export class ChangeDetail extends Component {
             type: values.type
         });
         
-        if (success.status === 200) {
-            this.props.updateField({
-                target: {
-                    name: 'backhome',
-                    value: true,
-                }
-            })    
+        if (success.payload._id) {
+            this.props.redirectAfterLoading(true)
         }
     }
 
     render() {
-        if(this.props.backhome){
+        if(this.props.redirect){
             return <Redirect to={`/detail/${this.props._id}`}/>
         }
         
@@ -69,14 +57,13 @@ export class ChangeDetail extends Component {
 }
 
 const mapStateToProps = state => {    
-    return state.ads
+    return state.user_search
 }
 
 const mapDispatchToProps = {
-    getAd,
-    getAllTags,
+    getOneAd,
     changeAd,
-    updateField,
+    redirectAfterLoading
 }
 
 export default connect(

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Ad from '../models/Ad';
 
 const api = (API_URL = 'http://localhost:5000') => {
     return {
@@ -100,6 +99,16 @@ const api = (API_URL = 'http://localhost:5000') => {
                 return responseBody.data;
             } catch (error) {
                 
+            }
+        },
+        getAd: async id => {
+            const API_END = `${API_URL}/api/item/${id}`;
+            
+            try {
+                const result = await axios.get(API_END);
+                return result.data;
+            } catch (error) {
+                console.log(error);
             }
         }
     }

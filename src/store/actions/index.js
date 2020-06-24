@@ -1,6 +1,7 @@
 import { home, details, shared, auth } from '../types/types';
 import api from '../../services/itemService';
-const { getTags, getAds, getDetail, postAd, modifyAd } = api();
+import Ad from '../../models/Ad';
+const { getTags, getAds, getAd, postAd, modifyAd } = api();
 
 const { GET_ALL_TAGS,
         TAGS_LOAD_SUCCESS, 
@@ -63,7 +64,7 @@ const confirmTransaction = () => ({
 export const searchAds = (name, price_low, price_high, description, photo, type, tags) => {
     return async dispatch => {
         try {
-            let API_ARGS = `?${type ? `type=true` : `type=false`}${name.length ? `&name=${name}` : ''}${price_low > 0 ? `&price=${price_low}` : ''}${price_high > price_low ? `&price=${price_high}` : ''}${description.length ? `&description=${description}` : ''}${photo.length ? `&photo=${photo}` : ''}${tags.length ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}`;
+            let API_ARGS = `?${name.length ? `&name=${name}` : ''}${price_low > 0 ? `&price_low=${price_low}` : ''}${price_high > price_low ? `&price_high=${price_high}` : ''}${description.length ? `&description=${description}` : ''}${photo.length ? `&photo=${photo}` : ''}${tags.length ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}${type ? `&type=true` : '&type=false'}`;
             await getAds(API_ARGS).then(results => dispatch(getHomeAds(results)))
         } catch (error) {
             console.log(error);            
@@ -78,10 +79,24 @@ const getHomeAds = results => ({
 })
 
 // action creators for detail cards
-export const getAd = adId => {
+export const getOneAd = adId => {
     return async dispatch => {
         try {
-            await getDetail(adId).then(result => dispatch(getAdDetails(result)))
+            await getAd(adId).then(result => {
+
+                let userAd = new Ad(
+                    result.tags[0],
+                    result.tags[1],
+                    adId,
+                    result.name,
+                    undefined,
+                    result.price,
+                    result.description,
+                    result.photo,
+                    result.type
+                )
+                dispatch(getAdDetails(userAd))
+            })
         } catch (error) {
             console.log(error);
         }
@@ -113,9 +128,7 @@ const createAdSuccess = result => ({
 export const changeAd = adData => {
     return async dispatch => {
         try {
-            let backEndResponse;
             await modifyAd(adData).then(result => {
-                backEndResponse = result;
                 dispatch(changeAdSuccess(result));
             })
         } catch (error) {
@@ -126,5 +139,5 @@ export const changeAd = adData => {
 
 const changeAdSuccess = result => ({
     type: CHANGE_AD,
-    payload: result.success,
+    payload: result,
 })

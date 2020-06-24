@@ -61,6 +61,20 @@ export const user_search = (state = defaultState.user_search, action) => {
                 ...state, 
                 [field]: value
             }
+
+        case details.GET_AD:
+            return action.payload;
+
+        case details.CREATE_AD:
+            return {
+                ...state, 
+                ...action.payload
+            }
+
+        case details.CHANGE_AD:
+            return state.map(ad => 
+                ad._id === action.payload._id ? action.payload : ad
+            )
     
         default:
             return state;
@@ -68,21 +82,11 @@ export const user_search = (state = defaultState.user_search, action) => {
 }
 
 export const ads = (state = defaultState.ads, action) => {
+    
     switch (action.type) {
         
         case home.SEARCH_ADS:
             return action.payload;
-        
-        case details.GET_AD:
-            return action.payload;
-
-        case details.CREATE_AD:
-            return [...state, action.payload]
-
-        case details.CHANGE_AD:
-            return state.map(ad => 
-                ad._id === action.payload._id ? action.payload : ad
-            )
     
         default:
             return state;
