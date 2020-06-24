@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { createAd } from '../store/actions/index';
+import { createAd, redirectAfterLoading } from '../store/actions/index';
 
 import CreateNewAd from '../components/Create/createAd';
 
@@ -19,19 +19,13 @@ class CreateAd extends Component {
             type: values.type
         });
         
-        // if (success.payload._id) {
-        //     this.props.updateField({
-        //         target: {
-        //             name: 'backhome',
-        //             value: true,
-        //         }
-        //     })
-        // }
-        
+        if (success.payload._id) {
+            this.props.redirectAfterLoading(true)
+        }
     }
 
     render() {
-        if(this.props.backhome){
+        if(this.props.redirect){
             return <Redirect to='/ads'/>
         }
         
@@ -50,6 +44,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     createAd,
+    redirectAfterLoading
 }
 
 export default connect(

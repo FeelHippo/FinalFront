@@ -9,10 +9,7 @@ const defaultState = {
     valid_tags: [],
     ads: [],
     user_search: new Ad(),
-    ui: {
-        loading: false,
-        error: null,
-    },
+    redirect: false,
 }
 
 // redux-form reducer should always be injected into combineReducers(), see ./store/config.js:24 and 31
@@ -92,3 +89,9 @@ export const ads = (state = defaultState.ads, action) => {
     }
 }
 
+export const redirect = (state = defaultState.redirect, action) => {
+    if (action.type === shared.REDIRECT) {
+        return action.payload;
+    }
+    return state;
+}

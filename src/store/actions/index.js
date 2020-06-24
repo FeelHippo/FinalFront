@@ -10,7 +10,7 @@ const { GET_AD,
         CREATE_AD, 
         CHANGE_AD 
     } = details;
-const { UPDATE_FIELD } = shared;
+const { UPDATE_FIELD, REDIRECT } = shared;
 
 // global action creators
 export function updateField(evt) {
@@ -27,6 +27,13 @@ export function updateField(evt) {
     return {
         type: UPDATE_FIELD,
         payload: update,
+    }
+}
+
+export function redirectAfterLoading(response) {
+    return {
+        type: REDIRECT,
+        payload: response,
     }
 }
 

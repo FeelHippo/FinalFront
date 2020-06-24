@@ -97,8 +97,7 @@ const api = (API_URL = 'http://localhost:5000') => {
                         photo: photo,
                     },    
                 );
-                console.log('JHHHHHHHHHHHHHEDDDDDDDDDDDDDDDK', responseBody)
-                return responseBody.data.result;
+                return responseBody.data;
             } catch (error) {
                 
             }
