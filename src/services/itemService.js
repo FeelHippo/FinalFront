@@ -2,13 +2,14 @@ import axios from 'axios';
 
 const api = (API_URL = 'http://localhost:5000') => {
     return {
-        registerUser: async ({ email, password }) => {
+        registerUser: async ({ username, email, password }) => {
             const API_END = `${API_URL}/user/register`;
 
             try {
                 const responseBody = await axios.post(
                 API_END, 
                 {
+                    username: username,
                     email: email,
                     password: password
                 },
@@ -25,14 +26,14 @@ const api = (API_URL = 'http://localhost:5000') => {
                 
             }
         },
-        loginUser: async ({ email, password }) => {
+        loginUser: async ({ username, password }) => {
             const API_END = `${API_URL}/user/login`;
-
+            
             try {
                 const responseBody = await axios.post(
                 API_END, 
                 {
-                    email: email,
+                    username: username,
                     password: password
                 },
                 {
@@ -40,7 +41,6 @@ const api = (API_URL = 'http://localhost:5000') => {
                       'Access-Control-Allow-Origin': '*',
                     },
                 });
-
                 return responseBody;
 
             } catch (error) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-
+import Navbar from '../Navbar/navbar';
 import { CustomInput } from '../Hooks/custom-input';
 import { CustomSelect } from '../Hooks/custom-select';
 import { CustomRadio } from '../Hooks/custom-radio';
@@ -13,13 +13,13 @@ const Home = ({
 }) => (
         
     <div className='ads-dashboard'>
-        <div className='define-search' class="nes-container with-title is-centered">
-        <p class="title nes-text is-warning">Walla-Pippo</p>
+        <div class="container">
             <form onSubmit={e => {
                 e.preventDefault();
                 searchAds()}
                 }>
-                <h1 class="nes-text is-primary">Search Stuff</h1>
+
+                <Navbar />
 
                 <CustomInput label='Name' id="testElement" type='text' name='name' container='Home' />
 
@@ -30,10 +30,10 @@ const Home = ({
                 <CustomSelect label='Select Tag' name='tag2' />
                 <CustomRadio label='Buy/Sell' name='sale' />
 
-                <button type='submit'class="nes-btn is-success">Search</button>
+                <button type='submit'class="success">Search</button>
             </form>
             <Link to='/createAd'>
-                <button type="button" class="nes-btn is-warning">Create Ad</button>
+                <button type="button" class="warning">Create Ad</button>
             </Link>
             <div className="listContainer">
                 {

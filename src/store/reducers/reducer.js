@@ -36,7 +36,7 @@ export const session = (state = defaultState.session, action) => {
             }
 
         case auth.LOGOUT_USER: 
-            return new Session()
+            return new Session();
 
         case home.TAGS_LOAD_SUCCESS:
             return state;

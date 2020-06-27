@@ -16,9 +16,9 @@ const App = () => (
       <Router>
         <div>
           <Switch>
-            <Route exact path='/' component={Login} />
+            <Route exact path='/' component={ClassifiedAds} />
             <Route exact path='/signup' component={SignUp} />
-            <Route exact path='/ads' component={ClassifiedAds} />
+            <Route exact path='/login' component={Login} />
             <Route exact path='/createAd' component={CreateAd} />
             <Route path={'/detail/:detId'} component={AdDetails} />
             <Route path={'/change/:detId'} component={ChangeDetail} />

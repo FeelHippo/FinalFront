@@ -38,6 +38,12 @@ export function redirectAfterLoading(response) {
     }
 }
 
+// error handler
+const showMessage = data => ({
+    type: 'ERROR',
+    payload: data,    
+})
+
 // action creators for home page
 export const getAllTags = () => {
     return async dispatch => {

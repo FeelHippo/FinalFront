@@ -7,7 +7,6 @@ export const userPostLogin = user => {
         try {
             // if status 200, receive used object
             let response = await loginUser(user);
-            
             let token = response.data.token;
             // if token is valid, receive true
             let authenticated = await tokenAuthentication(token);
@@ -15,7 +14,7 @@ export const userPostLogin = user => {
             if (authenticated && response.status === 200) {
                 localStorage.setItem('x-auth-token', token);
                 // dispatch login if status 200
-                dispatch(loginAuthUser( response ));
+                dispatch(loginAuthUser(response.data));
             } else {
                 dispatch(showMessage(response.data))
             }
@@ -58,6 +57,12 @@ const signupUser = success => ({
     type: 'SIGNUP_USER',
     payload: success,
 })
+
+export const logoutUser = () => {
+    return {
+        type: 'LOGOUT_USER',
+    }
+}
 
 // error handler
 const showMessage = data => ({

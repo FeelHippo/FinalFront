@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "history": "^5.0.0",
     "notistack": "^0.9.17",
+    "picnic": "^6.5.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",

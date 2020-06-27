@@ -11,6 +11,7 @@ const SignUp = props => {
     // state variables
     const [redirectPage, setRedirect] = useState(false);
     // import custom hook functionalities
+    const { value:username, bind:bindUsername } = useInput('');
     const { value:email, bind:bindEmail } = useInput('');
     const { value:password, bind:bindPassword } = useInput('');
 
@@ -20,34 +21,34 @@ const SignUp = props => {
         evt.preventDefault();
         
         props.userPostSignup({
+            username,
             email,
             password,
         })
-        
+
         if(props.error) enqueueSnackbar(props.error);
         setRedirect(props.success);
     };
 
     return(
-        <>  {redirectPage ? <Redirect to='/' /> : null}
-            <div class="nes-container with-title is-centered">
-                <p class="title nes-text is-warning">Please register</p>
-                <form onSubmit={submitForm} class="nes-field">
-                    <h1 class="nes-text is-primary">New User</h1>
+        <>  {redirectPage ? <Redirect to='/login' /> : null}
+            <div class="container">
+                <form onSubmit={submitForm} class="form">
+                    <h1>New User</h1>
 
-                    <label class="nes-text is-primary">
-                        eM@ail:
-                        <input type="email" class="nes-input" {...bindEmail} />
-                    </label>
+                    <input type="text" {...bindUsername} placeholder="choose a username" />
 
-                    <label class="nes-text is-primary">
-                        password:
-                        <input type="password" class="nes-input" {...bindPassword} />
-                    </label>
+                    <input type="email" {...bindEmail} placeholder="register your e-mail" />
+                    
+                    <input type="password" {...bindPassword} placeholder="choose your password"/>
+                    
 
-                    <button type='submit' class="nes-btn is-primary">Register</button>
+                    <button type='submit' class="success">Register</button>
+                    <Link to='/login'>
+                        <button class="warning">I am registered</button>
+                    </Link>
                     <Link to='/'>
-                        <button class="nes-btn is-warning">I am registered</button>
+                        <button class='error'>No, Thanks</button>
                     </Link>
                 </form>
             </div>
