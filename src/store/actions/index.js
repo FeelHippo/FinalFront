@@ -1,9 +1,10 @@
 import { home, details, shared, auth } from '../types/types';
 import api from '../../services/itemService';
 import Ad from '../../models/Ad';
-const { getTags, getAds, getAd, postAd, modifyAd } = api();
+const { getTags, getAds, getAd, postAd, modifyAd, getInitialAds } = api();
 
-const { GET_ALL_TAGS,
+const { MOST_RECENT,
+        GET_ALL_TAGS,
         TAGS_LOAD_SUCCESS, 
         SEARCH_ADS, 
     } = home;
@@ -15,7 +16,6 @@ const { UPDATE_FIELD, REDIRECT } = shared;
 
 // global action creators
 export function updateField(evt) {
-
     const update = {
         field: evt.target.name,
         value: evt.target.value,
@@ -33,7 +33,7 @@ export function updateField(evt) {
 
 export function redirectAfterLoading(response) {
     return {
-        type: 'REDIRECT',
+        type: REDIRECT,
         payload: response,
     }
 }
@@ -58,19 +58,34 @@ export const getAllTags = () => {
     }
 }
 
+const confirmTransaction = () => ({
+    type: TAGS_LOAD_SUCCESS,
+})
+
 const getHomeTags = tags_api => ({
     type: GET_ALL_TAGS,
     payload: tags_api,
 });
 
-const confirmTransaction = () => ({
-    type: TAGS_LOAD_SUCCESS,
-})
-
-export const searchAds = (name, price_low, price_high, description, photo, type, tags) => {
+export const getDefaultAds = () => {
     return async dispatch => {
         try {
-            let API_ARGS = `?${name.length ? `&name=${name}` : ''}${price_low > 0 ? `&price_low=${price_low}` : ''}${price_high > price_low ? `&price_high=${price_high}` : ''}${description.length ? `&description=${description}` : ''}${photo.length ? `&photo=${photo}` : ''}${tags.length ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}${type ? `&type=true` : '&type=false'}`;
+            await getInitialAds().then(ads => dispatch(getRecentAds(ads)))
+        } catch (error) {
+            
+        }
+    }
+}
+
+const getRecentAds = ads => ({
+    type: MOST_RECENT,
+    payload: ads,
+})
+
+export const searchAds = (name, price_low, price_high, type, tags) => {
+    return async dispatch => {
+        try {
+            let API_ARGS = `?${name ? `&name=${name}` : ''}${price_low > 0 ? `&price_low=${price_low}` : ''}${price_high > price_low ? `&price_high=${price_high}` : ''}${tags ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}${type ? `&type=true` : '&type=false'}`;
             await getAds(API_ARGS).then(results => dispatch(getHomeAds(results)))
         } catch (error) {
             console.log(error);            

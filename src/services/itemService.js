@@ -93,6 +93,7 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         getAds: async (params) => {
             let baseURL = `${API_URL}/api/item/${params}`;
+            
             try {
                 let res = await axios.get(baseURL);
                 return res.data || [];
@@ -118,6 +119,16 @@ const api = (API_URL = 'http://localhost:5000') => {
                 return responseBody.data;
             } catch (error) {
                 
+            }
+        },
+        getInitialAds: async () => {
+            const API_END = `${API_URL}/api/item/home`;
+
+            try {
+                const result = await axios.get(API_END);
+                return result.data;
+            } catch (error) {
+                console.log(error)
             }
         },
         getAd: async id => {

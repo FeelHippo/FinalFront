@@ -80,7 +80,7 @@ let ChangeExistingAd = ({
 
                 <button type='submit' class="nes-btn is-primary">Submit It!</button>
             </form>
-            <Link to='/ads'>
+            <Link to='/'>
                 <button class="nes-btn is-warning">Back</button>
             </Link>
         </div>

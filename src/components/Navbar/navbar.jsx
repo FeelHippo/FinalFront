@@ -44,12 +44,10 @@ const Navbar = props => {
     )
 }
 
-const mapStateToProps = state => {
-    return state.session
-}
+const mapStateToProps = state => ({ session: state.session })
 
-const mapDispatchToProps = {
-    logoutUser
-}
+const mapDispatchToProps = dispatch => ({
+    logoutUser: () => dispatch(logoutUser())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

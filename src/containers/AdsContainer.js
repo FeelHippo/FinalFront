@@ -19,20 +19,18 @@ export class AdDetails extends Component {
     render() {
         return (
             <PrintDetail 
-                {...this.props}
+                {...this.props.user_search}
                 _id={ this.props.match.params.detId }
             />
         )
     }
 }
 
-const mapStateToProps = state => {
-    return state.user_search
-}
+const mapStateToProps = state => ({
+    user_search: state.user_search
+})
 
-const mapDispatchToProps = {
-    getOneAd,
-}
+const mapDispatchToProps = dispatch => ({ getOneAd: id => dispatch(getOneAd(id)) })
 
 export default connect(
     mapStateToProps,

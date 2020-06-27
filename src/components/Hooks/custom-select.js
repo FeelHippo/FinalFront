@@ -9,14 +9,14 @@ export const CustomSelect = ({ label, name }) => {
     const dispatch = useDispatch();
     
     return (
-        <label class="nes-text is-primary">
+        <label>
             {label}
-            <div class="nes-select">
+            <div>
                 <select id="0" name={name} onChange={evt => {
                 evt.preventDefault();
                 dispatch(updateField(evt));
                 }} 
-                >
+                ><option value="" key="null"></option>
                     {
                         results.map((tag, i) => {
                             return (

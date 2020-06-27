@@ -12,15 +12,17 @@ class CreateAd extends Component {
 
     sendAd = async values => {
         values.photo = values.photo ? values.photo : '';
-        
-        const success = await this.props.createAd({
+
+        let body = {
             name: values.name,
             price: values.price,
             description: values.description,
             photo: values.photo,
             tags: [values.tag1, values.tag2],
             type: values.type
-        });
+        }
+        
+        const success = await this.props.createAd(body);
         
         if (success.payload._id) {
             this.props.redirectAfterLoading(true)
@@ -29,7 +31,7 @@ class CreateAd extends Component {
 
     render() {
         if(this.props.redirect){
-            return <Redirect to='/ads'/>
+            return <Redirect to='/'/>
         }
         
         return (
@@ -45,9 +47,11 @@ const mapStateToProps = state => {
     return state;
 }
 
-const mapDispatchToProps = {
-    createAd,
-    redirectAfterLoading
+const mapDispatchToProps = dispatch => {
+    return {
+        createAd: body => dispatch(createAd(body)),
+        redirectAfterLoading: res => dispatch(redirectAfterLoading(res))
+    }
 }
 
 export default connect(

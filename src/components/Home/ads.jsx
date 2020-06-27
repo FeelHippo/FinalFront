@@ -26,9 +26,9 @@ const Home = ({
                 <CustomInput label='Price From' type='number' name='price_low' container='Home' />
                 <CustomInput label='Price To' type='number' name='price_high' container='Home' />
 
-                <CustomSelect label='Select Tag' name='tag1' />
-                <CustomSelect label='Select Tag' name='tag2' />
-                <CustomRadio label='Buy/Sell' name='sale' />
+                <CustomSelect label='Select First Tag' name='tag1' />
+                <CustomSelect label='Select Second Tag' name='tag2' />
+                <CustomRadio label='Buy/Sell' name='type' />
 
                 <button type='submit'class="success">Search</button>
             </form>

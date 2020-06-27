@@ -9,12 +9,11 @@ export const CustomRadio = ({ label, name }) => {
     const dispatch = useDispatch();
     
     return (
-        <label class="nes-text is-primary">
+        <section>
             {label}
             <div className="customRadios">
                 <label>
                     <input  type="radio" 
-                            class="nes-radio" 
                             name={name} 
                             value={true} 
                             onChange={evt => {
@@ -22,12 +21,11 @@ export const CustomRadio = ({ label, name }) => {
                                 dispatch(updateField(evt));
                                 }}
                             checked={sale === true} />
-                    <span>Selling</span>
+                    <span class="checkable" >Selling</span>
                 </label>
 
                 <label>
                     <input  type="radio" 
-                            class="nes-radio" 
                             name={name} 
                             value={false}
                             onChange={evt => {
@@ -35,9 +33,9 @@ export const CustomRadio = ({ label, name }) => {
                                 dispatch(updateField(evt));
                                 }}
                             checked={sale === false} />
-                    <span>Buying</span>
+                    <span class="checkable" >Buying</span>
                 </label>
             </div>
-        </label>
+        </section>
     )
 }

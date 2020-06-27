@@ -18,7 +18,6 @@ const radioGroupGenerator = ({ input: { onChange, value } }) => (
                 <div>
                     <label key={i}>
                         <input  type="radio" 
-                                class="nes-radio" 
                                 name="type"
                                 value={button.value}
                                 onChange={onChange} />

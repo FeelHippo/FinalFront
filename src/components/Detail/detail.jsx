@@ -55,7 +55,7 @@ const PrintDetail = ({
             <Link to={`/change/${_id}`}>
                 <button class="nes-btn is-warning">Modify this Ad</button>
             </Link>
-            <Link to={`/ads`}>
+            <Link to={`/`}>
                 <button class="nes-btn is-error">Back to Ads</button>
             </Link>
             
