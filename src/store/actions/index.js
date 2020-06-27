@@ -33,7 +33,7 @@ export function updateField(evt) {
 
 export function redirectAfterLoading(response) {
     return {
-        type: REDIRECT,
+        type: 'REDIRECT',
         payload: response,
     }
 }

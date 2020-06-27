@@ -42,9 +42,7 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = {
-    searchAds,
-}
+const mapDispatchToProps = dispatch => ({ searchAds: () => dispatch(searchAds()) })
 
 export default connect(
     mapStateToProps,

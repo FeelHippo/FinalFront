@@ -26,8 +26,8 @@ const SignUp = props => {
             password,
         })
 
-        if(props.error) enqueueSnackbar(props.error);
-        setRedirect(props.success);
+        if(props.session.error) enqueueSnackbar(props.session.error);
+        setRedirect(props.session.success);
     };
 
     return(
@@ -56,9 +56,7 @@ const SignUp = props => {
     )
 }
 
-const mapStateToProps = state => {
-    return state.session
-}
+const mapStateToProps = state => ({ session: state.session })
 
 const mapDispatchToProps = dispatch => ({
     userPostSignup: userInfo => dispatch(userPostSignup(userInfo))

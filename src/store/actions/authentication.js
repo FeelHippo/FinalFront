@@ -1,5 +1,5 @@
 import api from '../../services/itemService';
-const { loginUser, registerUser, tokenAuthentication } = api();
+const { loginUser, registerUser, tokenAuthentication, retrievePassword } = api();
 
 export const userPostLogin = user => {
     return async dispatch => {
@@ -58,6 +58,22 @@ const signupUser = success => ({
     payload: success,
 })
 
+export const sendEmail = email => {
+    return async dispatch => {
+
+        try {
+            let response = await retrievePassword(email);
+            if(!response.success) {
+                dispatch(showMessage({ msg: response.msg, success: false }))
+            } else {
+                dispatch(redirectAfterLoading(true))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export const logoutUser = () => {
     return {
         type: 'LOGOUT_USER',
@@ -68,6 +84,11 @@ export const logoutUser = () => {
 const showMessage = data => ({
     type: 'ERROR',
     payload: data,    
+})
+
+const redirectAfterLoading = response => ({
+        type: 'REDIRECT',
+        payload: response,
 })
 
 // inside the individual components, if there is a state.msg, use snackbar to print it

@@ -60,6 +60,25 @@ const api = (API_URL = 'http://localhost:5000') => {
             } catch (error) {
                 console.log(error);
             }
+        },
+        retrievePassword: async email => {
+            const API_END = `${API_URL}/password`;
+            try {
+                let response = await axios.post(
+                    API_END,
+                    {
+                        email: email
+                    },
+                    {
+                        headers: {
+                          'Access-Control-Allow-Origin': '*',
+                        },
+                    }
+                )
+                return response.data;
+            } catch (error) {
+                console.log(error)
+            }
         }, 
         getTags: async () => {
             const API_END = `${API_URL}/api/tags`;

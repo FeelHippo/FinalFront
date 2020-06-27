@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Components
 import SignUp from './SignUp/signup';
 import Login from './Login/login';
+import Password from './Password/password';
 import ClassifiedAds  from '../containers/HomeContainer';
 import CreateAd from '../containers/CreateAdContainer';
 import AdDetails from '../containers/AdsContainer';
@@ -19,6 +20,7 @@ const App = () => (
             <Route exact path='/' component={ClassifiedAds} />
             <Route exact path='/signup' component={SignUp} />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/password' component={Password} />
             <Route exact path='/createAd' component={CreateAd} />
             <Route path={'/detail/:detId'} component={AdDetails} />
             <Route path={'/change/:detId'} component={ChangeDetail} />

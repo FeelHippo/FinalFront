@@ -23,9 +23,8 @@ const Login = props => {
             username,
             password,
         })
-
-        if(props.error) enqueueSnackbar(props.error);
-        setRedirect(props.success);
+        if(props.session.error) enqueueSnackbar(props.session.error);
+        setRedirect(props.session.success);
     };
     
     return (
@@ -42,9 +41,13 @@ const Login = props => {
                     <Link to='/signup'>
                         <button class='warning'>I am not registered</button>
                     </Link>
-                    <Link to='/'>
-                        <button class='error'>No, Thanks</button>
+                    <Link to='/password'>
+                        <button class='warning'>I forgot my password</button>
                     </Link>
+                    <Link to='/'>
+                        <button class='error'>continue without login</button>
+                    </Link>
+                    
                 </form>
             </div>        
         </>
@@ -53,12 +56,10 @@ const Login = props => {
 
 }
 
-const mapStateToProps = state => {
-    return state.session
-}
+const mapStateToProps = state => ({ session: state.session })
 
 const mapDispatchToProps = dispatch => ({
-    userPostLogin: userInfo => dispatch(userPostLogin(userInfo))
+    userPostLogin: userInfo => dispatch(userPostLogin(userInfo)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
