@@ -6,11 +6,14 @@ import { CustomSelect } from '../Hooks/custom-select';
 import { CustomRadio } from '../Hooks/custom-radio';
 import { Card } from '../Hooks/custom-card';
 import List from '../List/list';
+import { user_search } from '../../store/reducers/reducer';
 
 const Home = ({
     ads,
     searchAds,
     searchUser,
+    changeOrder,
+    order
 }) => (
         
     <div className='ads-dashboard'>
@@ -42,6 +45,10 @@ const Home = ({
                 <button type="button" class="warning">Create Ad</button>
             </Link>
             <div className="listContainer">
+                <select value={order} name="order" onChange={evt => changeOrder(evt)}>
+                    <option value="false">Latest</option>
+                    <option value="true">Oldest</option>
+                </select>
                 {
                     ads.length ? (
                         <List

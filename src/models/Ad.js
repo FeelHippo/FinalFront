@@ -4,6 +4,7 @@ export default class Ad {
      */
     constructor(
         user = '',
+        order = false,
         tag1 = '',
         tag2 = '',
         _id = '',

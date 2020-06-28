@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
 import {
+    updateField,
     getDefaultAds,
     searchAds,
     searchUser,
@@ -35,6 +36,11 @@ export class ClassifiedAds extends Component {
         this.props.searchAds(name, price_low.toString(),price_high.toString(), type, [tag1, tag2])
     }
 
+    changeOrder = evt => {
+        evt.preventDefault();
+        this.props.updateField(evt);
+    }
+
     render() {
         if(this.props.redirect){
             return <Redirect to={`/${this.props.user_search.user}`} />
@@ -42,8 +48,10 @@ export class ClassifiedAds extends Component {
         return (
             <Home
                 ads={ this.props.ads }
+                order={ this.props.user_search.order }
                 searchAds={ this.searchAds }
                 searchUser={ this.searchUser }
+                changeOrder={ this.changeOrder }
             />
         )
     }
@@ -62,6 +70,7 @@ const mapDispatchToProps = dispatch => {
         searchAds: params => dispatch(searchAds(params)),
         searchUser: user => dispatch(searchUser(user)),
         getDefaultAds: () => dispatch(getDefaultAds()),
+        updateField: evt => dispatch(updateField(evt))
     }
 }
 

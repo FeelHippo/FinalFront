@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LocalStorage from '../../services/Storage';
-import { logoutUser } from '../../store/actions/authentication';
+import { useSnackbar } from 'notistack';
+import { logoutUser, deleteUser } from '../../store/actions/authentication';
 
 const Navbar = props => {
     const [auth, setAuth] = useState(false);
+    // snackbar errors
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     useEffect(() => {
         let response = LocalStorage.readTokenStorage();
         if(response) setAuth(true);
+        if(props.session.error) enqueueSnackbar(props.session.error);
     }, []);
 
     return (
@@ -17,9 +21,15 @@ const Navbar = props => {
 
             <ul className="navbar">
                 {auth ? (
-                    <li className="logout" onClick={() => {props.logoutUser(); setAuth(false)}}>
-                        <img src={require('./icons/logout.svg')} alt="logout" />
+                    <li className="logout" >
+                        <div onClick={() => {props.logoutUser(); setAuth(false)}}>
+                            <img src={require('./icons/logout.svg')} alt="logout" />
+                        </div>
+                        <div onClick={() => {props.deleteUser(props.username); setAuth(false)}}>
+                            <img src={require('./icons/delete.svg')} alt="delete" />
+                        </div>
                     </li>
+                    
                 ) : (
                     <li className="login">
                         <Link to='/login'>
@@ -47,7 +57,8 @@ const Navbar = props => {
 const mapStateToProps = state => ({ session: state.session })
 
 const mapDispatchToProps = dispatch => ({
-    logoutUser: () => dispatch(logoutUser())
+    logoutUser: () => dispatch(logoutUser()),
+    deleteUser: username => dispatch(deleteUser(username)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

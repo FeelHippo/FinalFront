@@ -1,5 +1,5 @@
 import api from '../../services/itemService';
-const { loginUser, registerUser, tokenAuthentication, retrievePassword } = api();
+const { loginUser, registerUser, tokenAuthentication, retrievePassword, deleteUserAccount } = api();
 
 export const userPostLogin = user => {
     return async dispatch => {
@@ -68,6 +68,24 @@ export const sendEmail = email => {
             } else {
                 dispatch(redirectAfterLoading(true))
             }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+export const deleteUser = username => {
+    return async dispatch => {
+
+        try {
+            let response = await deleteUserAccount(username);
+            if(!response) {
+                dispatch(showMessage({ msg: response.msg, success: false }))
+            } else {
+                dispatch(logoutUser())
+                dispatch(showMessage({ msg: response.msg, success: true }))
+            }
+
         } catch (error) {
             console.log(error)
         }

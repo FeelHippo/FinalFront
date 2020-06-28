@@ -47,6 +47,25 @@ const api = (API_URL = 'http://localhost:5000') => {
                 console.log(error.response.data);
             }
         },
+        deleteUserAccount: async username => {
+            const API_END = `${API_URL}/user/${username}`;
+
+            try {
+                const responseBody = axios.delete(
+                    API_END, 
+                    {
+                        username: username,
+                    },
+                    {
+                        headers: {
+                          'Access-Control-Allow-Origin': '*',
+                        },
+                    });
+                    return responseBody;
+            } catch (error) {
+                console.log(error)
+            }
+        },
         tokenAuthentication: async token => {
             const API_END = `${API_URL}/tokenIsValid`;
 
