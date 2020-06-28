@@ -1,8 +1,7 @@
 export const home = {
-    MOST_RECENT: 'MOST_RECENT',
     GET_ALL_TAGS: 'GET_ALL_TAGS',
     TAGS_LOAD_SUCCESS: 'TAGS_LOAD_SUCCESS',
-    SEARCH_ADS: 'SEARCH_ADS',
+    FETCH_ADS: 'FETCH_ADS',
 }
 
 export const details = {

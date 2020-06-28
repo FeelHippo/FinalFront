@@ -103,11 +103,11 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         postAd: async ad => {
             const API_END = `${API_URL}/api/item/`;
-            let { name, price, description, type, photo, tags } = ad;
-
+            let { creator, name, price, description, type, photo, tags } = ad;
             try {
                 const responseBody = await axios.post(API_END,
-                    {
+                    {   
+                        creator: creator,
                         name: name, 
                         price: price,
                         description: description,
@@ -139,6 +139,18 @@ const api = (API_URL = 'http://localhost:5000') => {
                 return result.data;
             } catch (error) {
                 console.log(error)
+            }
+        },
+        getAdsRegisteredUser: async username => {
+            const API_END = `${API_URL}/api/${username}`;
+
+            try {
+                let result = await axios.get(API_END);
+                console.log('SDIJDH', result);
+                
+                return result.data;
+            } catch (error) {
+                console.log(error);
             }
         },
         getAd: async id => {

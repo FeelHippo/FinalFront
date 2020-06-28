@@ -98,11 +98,8 @@ export const ads = (state = defaultState.ads, action) => {
     
     switch (action.type) {
 
-        case home.MOST_RECENT:
+        case home.FETCH_ADS:
             return action.payload
-        
-        case home.SEARCH_ADS:
-            return action.payload;
     
         default:
             return state;

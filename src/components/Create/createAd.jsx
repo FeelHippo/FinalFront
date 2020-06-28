@@ -54,7 +54,7 @@ let CreateNewAd = ({
 
                 <div>
                     <Field name="tag1" component="select">
-                        <option>Select First Tag</option>
+                        <option value="">Select First Tag</option>
                         {valid_tags && valid_tags.length ? (
                             valid_tags.map(tag => {
                                 return ( <option value={tag}>{tag}</option> )
@@ -68,7 +68,7 @@ let CreateNewAd = ({
 
                 <div>
                     <Field name="tag2" component="select">
-                        <option>Select Second Tag</option>
+                        <option value="">Select Second Tag</option>
                         {valid_tags && valid_tags.length ? (
                             valid_tags.map(tag => {
                                 return ( <option value={tag}>{tag}</option> )

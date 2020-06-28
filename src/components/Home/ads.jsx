@@ -14,7 +14,7 @@ const Home = ({
 }) => (
         
     <div className='ads-dashboard'>
-        <div class="container">
+        <div className="container">
             <Navbar />
             <form onSubmit={e => {
                 e.preventDefault();

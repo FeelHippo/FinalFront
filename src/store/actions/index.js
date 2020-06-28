@@ -1,7 +1,7 @@
 import { home, details, shared, auth } from '../types/types';
 import api from '../../services/itemService';
 import Ad from '../../models/Ad';
-const { getTags, getAds, getAd, postAd, modifyAd, getInitialAds, registeredUser } = api();
+const { getTags, getAds, getAd, postAd, modifyAd, getInitialAds, registeredUser, getAdsRegisteredUser } = api();
 
 const { MOST_RECENT,
         GET_ALL_TAGS,
@@ -66,20 +66,51 @@ const getHomeTags = tags_api => ({
     payload: tags_api,
 });
 
+// data fetch action creators
+export const searchAds = (name, price_low, price_high, type, tags) => {
+    return async dispatch => {
+        try {
+            let API_ARGS = `?${name ? `&name=${name}` : ''}${price_low > 0 ? `&price_low=${price_low}` : ''}${price_high > price_low ? `&price_high=${price_high}` : ''}${tags ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}${type ? `&type=true` : '&type=false'}`;
+            await getAds(API_ARGS).then(results => dispatch(fetchAds(results)))
+        } catch (error) {
+            console.log(error);            
+        }
+        return 'done';
+    }
+}
+
 export const getDefaultAds = () => {
     return async dispatch => {
         try {
-            await getInitialAds().then(ads => dispatch(getRecentAds(ads)))
+            await getInitialAds().then(ads => dispatch(fetchAds(ads)))
         } catch (error) {
             
         }
     }
 }
 
-const getRecentAds = ads => ({
-    type: MOST_RECENT,
+export const getUserAds = username => {
+    return async dispatch => {
+        try {
+            let response = await getAdsRegisteredUser(username);
+            
+            if (!response) {
+                dispatchEvent(showMessage({ msg: response.msg, success: false }))
+            } else {
+                dispatch(fetchAds(response))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const fetchAds = ads => ({
+    type: 'FETCH_ADS',
     payload: ads,
 })
+
+
 
 export const searchUser = user => {
     return async dispatch => {
@@ -101,23 +132,6 @@ export const searchUser = user => {
 const userExists = user => ({
     type: USER_SEARCH,
     payload: user,
-})
-
-export const searchAds = (name, price_low, price_high, type, tags) => {
-    return async dispatch => {
-        try {
-            let API_ARGS = `?${name ? `&name=${name}` : ''}${price_low > 0 ? `&price_low=${price_low}` : ''}${price_high > price_low ? `&price_high=${price_high}` : ''}${tags ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}${type ? `&type=true` : '&type=false'}`;
-            await getAds(API_ARGS).then(results => dispatch(getHomeAds(results)))
-        } catch (error) {
-            console.log(error);            
-        }
-        return 'done';
-    }
-}
-
-const getHomeAds = results => ({
-    type: SEARCH_ADS,
-    payload: results,
 })
 
 // action creators for detail cards

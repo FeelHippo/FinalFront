@@ -14,12 +14,13 @@ class CreateAd extends Component {
         values.photo = values.photo ? values.photo : '';
 
         let body = {
-            name: values.name,
-            price: values.price,
-            description: values.description,
-            photo: values.photo,
-            tags: [values.tag1, values.tag2],
-            type: values.type
+            creator: this.props.session.username || '',
+            name: values.name || '',
+            price: values.price || 0,
+            description: values.description || '',
+            photo: values.photo || '',
+            tags: [values.tag1, values.tag2] || ['', ''],
+            type: values.type || true,
         }
         
         const success = await this.props.createAd(body);
@@ -30,8 +31,8 @@ class CreateAd extends Component {
     }
 
     render() {
-        if(this.props.redirect){
-            return <Redirect to='/'/>
+        if(this.props.user_search._id){
+            return <Redirect to={`/detail/${this.props.user_search._id}`} />
         }
         
         return (

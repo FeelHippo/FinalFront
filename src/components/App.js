@@ -9,6 +9,7 @@ import ClassifiedAds  from '../containers/HomeContainer';
 import CreateAd from '../containers/CreateAdContainer';
 import AdDetails from '../containers/AdsContainer';
 import ChangeDetail from '../containers/ChangeAdContainer';
+import UserAdsContainer from '../containers/UserAdsContainer';
 // Error Handler
 import ErrorCatch from '../errorCatch';
 
@@ -24,6 +25,7 @@ const App = () => (
             <Route exact path='/createAd' component={CreateAd} />
             <Route path={'/detail/:detId'} component={AdDetails} />
             <Route path={'/change/:detId'} component={ChangeDetail} />
+            <Route path={'/:username'} component={UserAdsContainer} />
           </Switch>
         </div>
       </Router> 

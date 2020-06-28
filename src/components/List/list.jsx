@@ -3,7 +3,7 @@ import React from 'react';
 export default function List({ items, renderItem }) {
 
     // limit output to 10 elements
-    let recent = items.reverse().slice(0, 10)
+    let recent = items.length ? items.reverse().slice(0, 10) : [];
 
     return (
         <ul className="adsList">
