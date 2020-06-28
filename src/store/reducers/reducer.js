@@ -61,6 +61,12 @@ export const user_search = (state = defaultState.user_search, action) => {
                 ...state, 
                 [field]: value
             }
+        
+        case details.USER_SEARCH:
+            return {
+                ...state,
+                user: action.payload,
+            }
 
         case details.GET_AD:
             return action.payload;
@@ -75,6 +81,13 @@ export const user_search = (state = defaultState.user_search, action) => {
             return state.map(ad => 
                 ad._id === action.payload._id ? action.payload : ad
             )
+
+            case shared.ERROR:
+                return {
+                    ...state,
+                    success: action.payload.success,
+                    error: action.payload.msg,
+                }
     
         default:
             return state;

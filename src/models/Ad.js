@@ -3,6 +3,7 @@ export default class Ad {
      * Constructor
      */
     constructor(
+        user = '',
         tag1 = '',
         tag2 = '',
         _id = '',
@@ -13,6 +14,7 @@ export default class Ad {
         photo = '',
         type = true,
     ){
+        this.user = user;
         this.tag1 = tag1;
         this.tag2 = tag2;
         this._id = _id;

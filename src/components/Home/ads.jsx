@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/navbar';
 import { CustomInput } from '../Hooks/custom-input';
 import { CustomSelect } from '../Hooks/custom-select';
@@ -10,25 +10,31 @@ import List from '../List/list';
 const Home = ({
     ads,
     searchAds,
+    searchUser,
 }) => (
         
     <div className='ads-dashboard'>
         <div class="container">
+            <Navbar />
+            <form onSubmit={e => {
+                e.preventDefault();
+                searchUser()}
+            }>
+                <CustomInput label='Search a User' type='text' name='user' container='Home' />
+                <button type='submit'class="success">Search</button>
+            </form>
             <form onSubmit={e => {
                 e.preventDefault();
                 searchAds()}
-                }>
-
-                <Navbar />
-
-                <CustomInput label='Name' id="testElement" type='text' name='name' container='Home' />
+            }>
+                <CustomInput label='Article Name' type='text' name='name' container='Home' />
 
                 <CustomInput label='Price From' type='number' name='price_low' container='Home' />
                 <CustomInput label='Price To' type='number' name='price_high' container='Home' />
 
                 <CustomSelect label='Select First Tag' name='tag1' />
                 <CustomSelect label='Select Second Tag' name='tag2' />
-                <CustomRadio label='Buy/Sell' name='type' />
+                <CustomRadio label='Are You Buying or Selling?' name='type' />
 
                 <button type='submit'class="success">Search</button>
             </form>

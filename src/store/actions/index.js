@@ -1,14 +1,15 @@
 import { home, details, shared, auth } from '../types/types';
 import api from '../../services/itemService';
 import Ad from '../../models/Ad';
-const { getTags, getAds, getAd, postAd, modifyAd, getInitialAds } = api();
+const { getTags, getAds, getAd, postAd, modifyAd, getInitialAds, registeredUser } = api();
 
 const { MOST_RECENT,
         GET_ALL_TAGS,
         TAGS_LOAD_SUCCESS, 
         SEARCH_ADS, 
     } = home;
-const { GET_AD, 
+const { USER_SEARCH,
+        GET_AD, 
         CREATE_AD, 
         CHANGE_AD 
     } = details;
@@ -51,9 +52,7 @@ export const getAllTags = () => {
             await getTags().then(tags_api => dispatch(getHomeTags(tags_api))).then(() => dispatch(confirmTransaction()))
         } catch (error) {
             console.log(error);
-            
         }
-
         return 'done';
     }
 }
@@ -80,6 +79,28 @@ export const getDefaultAds = () => {
 const getRecentAds = ads => ({
     type: MOST_RECENT,
     payload: ads,
+})
+
+export const searchUser = user => {
+    return async dispatch => {
+        try {
+            let response = await registeredUser(user);
+            if (!response._id) {
+                dispatch(showMessage({ msg: response.msg, success: false }))
+            } else {
+                dispatch(userExists(response.username));
+                dispatch(redirectAfterLoading(true));
+            }
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const userExists = user => ({
+    type: USER_SEARCH,
+    payload: user,
 })
 
 export const searchAds = (name, price_low, price_high, type, tags) => {

@@ -6,6 +6,7 @@ export const home = {
 }
 
 export const details = {
+    USER_SEARCH: 'USER_SEARCH',
     GET_AD: 'GET_AD',
     CREATE_AD: 'CREATE_AD',
     CHANGE_AD: 'CHANGE_AD',

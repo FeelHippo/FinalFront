@@ -131,6 +131,16 @@ const api = (API_URL = 'http://localhost:5000') => {
                 console.log(error)
             }
         },
+        registeredUser: async user => {
+            const API_END = `${API_URL}/user/login/${user}`;
+
+            try {
+                const result = await axios.get(API_END);
+                return result.data;
+            } catch (error) {
+                console.log(error)
+            }
+        },
         getAd: async id => {
             const API_END = `${API_URL}/api/item/${id}`;
             

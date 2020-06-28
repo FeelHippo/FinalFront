@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Helmet} from 'react-helmet'
+import {Helmet} from 'react-helmet';
+import { TwitterShareButton } from 'react-twitter-embed';
+import { FacebookProvider, ShareButton } from 'react-facebook';
 
 const PrintDetail = ({
     _id,
@@ -63,7 +65,16 @@ const PrintDetail = ({
             <Link to={`/`}>
                 <button class="nes-btn is-error">Back to Ads</button>
             </Link>
-            
+            <TwitterShareButton
+                url={window.location.href}
+                options={{ text: `${name}-${description}`, via: 'FeelHippo' }}
+            />
+            {/* once live, get appId */}
+            <FacebookProvider appId="FeelHippo"> 
+                <ShareButton href="http://www.facebook.com">
+                Share
+                </ShareButton>
+            </FacebookProvider>
         </div>
         
     </div>

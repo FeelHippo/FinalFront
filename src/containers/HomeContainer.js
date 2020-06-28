@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { withSnackbar } from 'notistack';
 import {
     getDefaultAds,
     searchAds,
+    searchUser,
 } from '../store/actions/index.js';
 
 import Home from '../components/Home/ads';
@@ -12,6 +14,15 @@ export class ClassifiedAds extends Component {
 
     componentDidMount() {
         this.props.getDefaultAds();
+    }
+
+    searchUser = async () => {
+        const { user } = this.props.user_search;
+        await this.props.searchUser(user).then(() => {
+            if(this.props.user_search.success === false) {
+                this.key = this.props.enqueueSnackbar(this.props.user_search.error);
+            }
+        })
     }
 
     searchAds = () => {
@@ -25,13 +36,14 @@ export class ClassifiedAds extends Component {
     }
 
     render() {
-        // if(localStorage.length===0){
-        //     return <Redirect to={'/login'} />
-        // }
+        if(this.props.redirect){
+            return <Redirect to={`/${this.props.user_search.user}`} />
+        }
         return (
             <Home
                 ads={ this.props.ads }
                 searchAds={ this.searchAds }
+                searchUser={ this.searchUser }
             />
         )
     }
@@ -41,17 +53,21 @@ const mapStateToProps = state => {
     return {
         ads: state.ads,
         user_search: state.user_search,
+        redirect: state.redirect,
     }
 }
 
 const mapDispatchToProps = dispatch => { 
     return {
         searchAds: params => dispatch(searchAds(params)),
-        getDefaultAds: () => dispatch(getDefaultAds())
+        searchUser: user => dispatch(searchUser(user)),
+        getDefaultAds: () => dispatch(getDefaultAds()),
     }
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ClassifiedAds)
+export default withSnackbar(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(ClassifiedAds)
+)
