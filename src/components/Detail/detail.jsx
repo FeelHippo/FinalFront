@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {Helmet} from 'react-helmet'
 
 const PrintDetail = ({
     _id,
@@ -11,6 +12,10 @@ const PrintDetail = ({
     photo
 }) => (
     <div>
+        <Helmet>
+            <title>{`${name}-${tag1}-${tag2}`}</title>
+            <meta name="description" content={`${description}`} />
+        </Helmet>
         <section class="nes-container is-dark">
             <section class="message-list">
                 <section>
