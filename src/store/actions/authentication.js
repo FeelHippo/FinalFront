@@ -1,5 +1,5 @@
 import api from '../../services/itemService';
-const { loginUser, registerUser, tokenAuthentication, retrievePassword, deleteUserAccount } = api();
+const { loginUser, registerUser, updateUser, tokenAuthentication, retrievePassword, deleteUserAccount } = api();
 
 export const userPostLogin = user => {
     return async dispatch => {
@@ -32,6 +32,7 @@ const loginAuthUser = userObj => ({
     payload: userObj,
 })
 
+// signup or update user data
 export const userPostSignup = user => {
     return async dispatch => {
         
@@ -43,13 +44,28 @@ export const userPostSignup = user => {
             } else {
                 dispatch(showMessage(response.data))
             }
-            
-            
         } catch (error) {
             console.log(error);
         }
 
         return 'done';
+    }
+}
+
+export const userPutUpdate = user => {
+    return async dispatch => {
+
+        try {
+            // receive true if user updated
+            let response = await updateUser(user);
+            if (response.status === 200) {
+                dispatch(signupUser(response.data.success))
+            } else {
+                dispatch(showMessage(response.data))
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

@@ -105,6 +105,31 @@ export const getUserAds = username => {
     }
 }
 
+// action creator for detail cards
+export const getOneAd = adId => {
+    return async dispatch => {
+        try {
+            await getAd(adId).then(result => {
+
+                let userAd = {
+                    _id: adId,
+                    name: result.name,
+                    price: result.price,
+                    description: result.description,
+                    photo: result.photo,
+                    type: result.type,
+                    tag1: result.tags[0],
+                    tag2: result.tags[1],
+                }
+                dispatch(fetchAds(userAd))
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        return 'done';
+    }
+}
+
 const fetchAds = ads => ({
     type: 'FETCH_ADS',
     payload: ads,
@@ -134,42 +159,16 @@ const userExists = user => ({
     payload: user,
 })
 
-// action creators for detail cards
-export const getOneAd = adId => {
-    return async dispatch => {
-        try {
-            await getAd(adId).then(result => {
-
-                let userAd = new Ad(
-                    result.tags[0],
-                    result.tags[1],
-                    adId,
-                    result.name,
-                    undefined,
-                    result.price,
-                    result.description,
-                    result.photo,
-                    result.type
-                )
-                dispatch(getAdDetails(userAd))
-            })
-        } catch (error) {
-            console.log(error);
-        }
-        return 'done';
-    }
-}
-
-const getAdDetails = result => ({
-    type: GET_AD,
-    payload: result,
-})
-
 export const createAd = adData => {
     return async dispatch => {
         try {
-            const result = await postAd(adData).then(result => dispatch(createAdSuccess(result)));
-            return result;
+            let response = await postAd(adData);
+            if (!response._id) {
+                dispatch(showMessage({ msg: response.msg, success: false }))
+            } else {
+                dispatch(createAdSuccess(response))
+                return true;
+            }
         } catch (error) {
             console.log(error)
         }
@@ -184,9 +183,13 @@ const createAdSuccess = result => ({
 export const changeAd = adData => {
     return async dispatch => {
         try {
-            await modifyAd(adData).then(result => {
-                dispatch(changeAdSuccess(result));
-            })
+            let response = await modifyAd(adData);
+            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', response)
+            if (!response._id) {
+                dispatch(showMessage({ msg: response.msg, success: false }))
+            } else {
+                dispatch(changeAdSuccess(response));
+            }
         } catch (error) {
             console.log(error);
         }

@@ -19,7 +19,7 @@ export class AdDetails extends Component {
     render() {
         return (
             <PrintDetail 
-                {...this.props.user_search}
+                {...this.props.ads}
                 _id={ this.props.match.params.detId }
             />
         )
@@ -27,7 +27,7 @@ export class AdDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-    user_search: state.user_search
+    ads: state.ads
 })
 
 const mapDispatchToProps = dispatch => ({ getOneAd: id => dispatch(getOneAd(id)) })

@@ -26,27 +26,26 @@ function MyDropzone() {
 
 let ChangeExistingAd = ({
     handleSubmit,
-    tag1,
-    tag2,
-    name,
-    price,
-    description,
-    photo,
+    ad
 }) => {
     return(
         <div className='ads-create' class="nes-container with-title is-centered">
             <p class="title nes-text is-warning">Modify Ads</p>
-            <form onSubmit={ handleSubmit }>
+            <form onSubmit={e => {
+                e.preventDefault();
+                handleSubmit();
+            } 
+            }>
                 <h1 class="nes-text is-primary">Change Stuff</h1>
 
                 <div class="nes-field">
                     <label htmlFor="name">Name It!</label>
-                    <Field name="name" component="input" type="text" class="nes-input" placeholder={name} />
+                    <Field name="name" component="input" type="text" class="nes-input" placeholder={ad.name} />
                 </div>
 
                 <div class="nes-field">
                     <label htmlFor="price">Price It!</label>
-                    <Field name="price" component="input" type="number" class="nes-input" placeholder={price} />
+                    <Field name="price" component="input" type="number" class="nes-input" placeholder={ad.price} />
                 </div>
                 
                 <label>Type of Transaction</label>
@@ -56,22 +55,34 @@ let ChangeExistingAd = ({
 
                 <div class="nes-field">
                     <label htmlFor="description">Describe It!</label>
-                    <Field name="description" component="input" type="text" class="nes-input" placeholder={description} />
+                    <Field name="description" component="input" type="text" class="nes-input" placeholder={ad.description} />
                 </div>
 
-                <div>
-                    <label>Tag It Once!</label>
-                    <Field  name="tag1" 
-                            component={selectGroupGenerator}
-                            placeholderTag={tag1} />
-                </div>
+                {
+                    ad.tag1 ? (
+                        <div>
+                            <label>Tag It Once!</label>
+                            <Field  name="tag1" 
+                                    component={selectGroupGenerator}
+                                    placeholderTag={ad.tag1} />
+                        </div>
+                    ) : (
+                        ''
+                    )
+                }
 
-                <div>
-                    <label>Tag It Twice!</label>
-                    <Field  name="tag2" 
-                            component={selectGroupGenerator}
-                            placeholderTag={tag2} />
-                </div>
+                {
+                    ad.tag2 ? (
+                        <div>
+                            <label>Tag It Twice!</label>
+                            <Field  name="tag2" 
+                                    component={selectGroupGenerator}
+                                    placeholderTag={ad.tag2} />
+                        </div>
+                    ) : (
+                        ''
+                    )
+                }
 
                 <div>
                     <label htmlFor="photo">Pick a Pic!</label>

@@ -68,26 +68,12 @@ export const user_search = (state = defaultState.user_search, action) => {
                 user: action.payload,
             }
 
-        case details.GET_AD:
-            return action.payload;
-
-        case details.CREATE_AD:
+        case shared.ERROR:
             return {
-                ...state, 
-                ...action.payload
+                ...state,
+                success: action.payload.success,
+                error: action.payload.msg,
             }
-
-        case details.CHANGE_AD:
-            return state.map(ad => 
-                ad._id === action.payload._id ? action.payload : ad
-            )
-
-            case shared.ERROR:
-                return {
-                    ...state,
-                    success: action.payload.success,
-                    error: action.payload.msg,
-                }
     
         default:
             return state;
@@ -99,6 +85,12 @@ export const ads = (state = defaultState.ads, action) => {
     switch (action.type) {
 
         case home.FETCH_ADS:
+            return action.payload
+
+        case details.CREATE_AD:
+            return action.payload
+
+        case details.CHANGE_AD:
             return action.payload
     
         default:

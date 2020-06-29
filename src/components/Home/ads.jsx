@@ -6,7 +6,6 @@ import { CustomSelect } from '../Hooks/custom-select';
 import { CustomRadio } from '../Hooks/custom-radio';
 import { Card } from '../Hooks/custom-card';
 import List from '../List/list';
-import { user_search } from '../../store/reducers/reducer';
 
 const Home = ({
     ads,

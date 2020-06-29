@@ -12,14 +12,13 @@ import ChangeExistingAd from '../components/Change/changeAd';
 
 export class ChangeDetail extends Component {
     
-    componentDidMount() {
-        const {match: { params }} = this.props; 
-        
+    async componentDidMount() {
+        const {match: { params }} = this.props;
         this.getDetails(params.detId);
     }
 
-    getDetails = async detId => {
-        await this.props.getOneAd(detId);
+    getDetails = detId => {
+        this.props.getOneAd(detId);
     }
 
     submitAd = async values => {
@@ -36,19 +35,18 @@ export class ChangeDetail extends Component {
             type: values.type
         });
         
-        if (success.payload._id) {
+        if (success) {
             this.props.redirectAfterLoading(true)
         }
     }
 
     render() {
         if(this.props.redirect){
-            return <Redirect to={`/detail/${this.props._id}`}/>
+            return <Redirect to={`/detail/${this.props.match.params.detId}`} />
         }
-        
         return (
             <ChangeExistingAd 
-                {...this.props}
+                ad={ this.props.ads }
                 valid_tags={ this.props.valid_tags }
                 onSubmit={ this.submitAd }
             />
@@ -57,13 +55,19 @@ export class ChangeDetail extends Component {
 }
 
 const mapStateToProps = state => {    
-    return state.user_search
+    return {
+        ads: state.ads,
+        redirect: state.redirect,
+        valid_tags: state.valid_tags,
+    }
 }
 
-const mapDispatchToProps = {
-    getOneAd,
-    changeAd,
-    redirectAfterLoading
+const mapDispatchToProps = dispatch => {
+    return {
+        getOneAd: detId => dispatch(getOneAd(detId)),
+        changeAd: ad => dispatch(changeAd(ad)),
+        redirectAfterLoading: res => dispatch(redirectAfterLoading(res)),
+    }
 }
 
 export default connect(

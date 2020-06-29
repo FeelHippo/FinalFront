@@ -26,6 +26,28 @@ const api = (API_URL = 'http://localhost:5000') => {
                 
             }
         },
+        updateUser: async ({ _id, username, email, password }) => {
+            const API_END = `${API_URL}/user/update`;
+
+            try {
+                const responseBody = await axios.put(API_END, 
+                    {   
+                        _id: _id,
+                        username: username,
+                        email: email,
+                        password: password
+                    },
+                    {
+                        headers: {
+                            'Access-Control-Allow-Origin': '*',
+                        },
+                    })
+                    return responseBody;
+
+            } catch (error) {
+                console.log(error)
+            }
+        },
         loginUser: async ({ username, password }) => {
             const API_END = `${API_URL}/user/login`;
             
@@ -165,7 +187,6 @@ const api = (API_URL = 'http://localhost:5000') => {
 
             try {
                 let result = await axios.get(API_END);
-                console.log('SDIJDH', result);
                 
                 return result.data;
             } catch (error) {
@@ -180,6 +201,25 @@ const api = (API_URL = 'http://localhost:5000') => {
                 return result.data;
             } catch (error) {
                 console.log(error);
+            }
+        },
+        modifyAd: async ad => {
+            const API_END = `${API_URL}/api/item/change`;
+            let { _id, name, price, description, type, photo, tags } = ad;
+
+            try {
+                const result = await axios.put(API_END, {   
+                    _id: _id,
+                    name: name, 
+                    price: price,
+                    description: description,
+                    tags: tags,
+                    type: type,
+                    photo: photo,
+                });
+                return result.data;
+            } catch (error) {
+                console.log(error)
             }
         }
     }

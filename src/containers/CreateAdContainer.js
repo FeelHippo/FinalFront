@@ -24,15 +24,14 @@ class CreateAd extends Component {
         }
         
         const success = await this.props.createAd(body);
-        
-        if (success.payload._id) {
+        if (success) {
             this.props.redirectAfterLoading(true)
         }
     }
 
     render() {
-        if(this.props.user_search._id){
-            return <Redirect to={`/detail/${this.props.user_search._id}`} />
+        if(this.props.redirect){
+            return <Redirect to={`/`} />
         }
         
         return (

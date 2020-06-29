@@ -25,6 +25,11 @@ const Navbar = props => {
                         <div onClick={() => {props.logoutUser(); setAuth(false)}}>
                             <img src={require('./icons/logout.svg')} alt="logout" />
                         </div>
+                        <Link to={'/settings'}>
+                            <div>
+                                <img src={require('./icons/edit.svg')} alt="edit" />
+                            </div>
+                        </Link>
                         <div onClick={() => {props.deleteUser(props.username); setAuth(false)}}>
                             <img src={require('./icons/delete.svg')} alt="delete" />
                         </div>
