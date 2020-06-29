@@ -205,7 +205,7 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         modifyAd: async ad => {
             const API_END = `${API_URL}/api/item/change`;
-            let { _id, name, price, description, type, photo, tags } = ad;
+            let { _id, name, price, description, type, photo, tags, reserved, sold } = ad;
 
             try {
                 const result = await axios.put(API_END, {   
@@ -216,10 +216,22 @@ const api = (API_URL = 'http://localhost:5000') => {
                     tags: tags,
                     type: type,
                     photo: photo,
+                    reserved: reserved,
+                    sold: sold,
                 });
                 return result.data;
             } catch (error) {
                 console.log(error)
+            }
+        },
+        deleteAd: async detId => {
+            const API_END = `${API_URL}/api/item/${detId}`;
+
+            try {
+                const result = await axios.delete(API_END);
+                return result.data;
+            } catch (error) {
+                console.log(error);
             }
         }
     }

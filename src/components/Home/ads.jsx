@@ -12,7 +12,7 @@ const Home = ({
     searchAds,
     searchUser,
     changeOrder,
-    order
+    oldFirst
 }) => (
         
     <div className='ads-dashboard'>
@@ -44,7 +44,7 @@ const Home = ({
                 <button type="button" class="warning">Create Ad</button>
             </Link>
             <div className="listContainer">
-                <select value={order} name="order" onChange={evt => changeOrder(evt)}>
+                <select value={oldFirst} name="oldFirst" onChange={evt => changeOrder(evt)}>
                     <option value="false">Latest</option>
                     <option value="true">Oldest</option>
                 </select>
@@ -52,6 +52,7 @@ const Home = ({
                     ads.length ? (
                         <List
                             items={ads}
+                            oldFirst={oldFirst}
                             renderItem={
                                 ad => (
                                     <Card {...ad} />

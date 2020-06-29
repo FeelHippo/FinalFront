@@ -48,7 +48,7 @@ export class ClassifiedAds extends Component {
         return (
             <Home
                 ads={ this.props.ads }
-                order={ this.props.user_search.order }
+                oldFirst={ this.props.user_search.order }
                 searchAds={ this.searchAds }
                 searchUser={ this.searchUser }
                 changeOrder={ this.changeOrder }

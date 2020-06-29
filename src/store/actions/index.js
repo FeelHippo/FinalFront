@@ -1,7 +1,7 @@
 import { home, details, shared, auth } from '../types/types';
 import api from '../../services/itemService';
 import Ad from '../../models/Ad';
-const { getTags, getAds, getAd, postAd, modifyAd, getInitialAds, registeredUser, getAdsRegisteredUser } = api();
+const { getTags, getAds, getAd, postAd, modifyAd, deleteAd, getInitialAds, registeredUser, getAdsRegisteredUser } = api();
 
 const { MOST_RECENT,
         GET_ALL_TAGS,
@@ -93,7 +93,6 @@ export const getUserAds = username => {
     return async dispatch => {
         try {
             let response = await getAdsRegisteredUser(username);
-            
             if (!response) {
                 dispatchEvent(showMessage({ msg: response.msg, success: false }))
             } else {
@@ -112,14 +111,17 @@ export const getOneAd = adId => {
             await getAd(adId).then(result => {
 
                 let userAd = {
+                    user: result.user,
+                    tag1: result.tags[0],
+                    tag2: result.tags[1],
                     _id: adId,
                     name: result.name,
                     price: result.price,
                     description: result.description,
                     photo: result.photo,
                     type: result.type,
-                    tag1: result.tags[0],
-                    tag2: result.tags[1],
+                    reserved: result.reserved || false,
+                    sold: result.sold || false,
                 }
                 dispatch(fetchAds(userAd))
             })
@@ -184,11 +186,10 @@ export const changeAd = adData => {
     return async dispatch => {
         try {
             let response = await modifyAd(adData);
-            console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', response)
             if (!response._id) {
                 dispatch(showMessage({ msg: response.msg, success: false }))
             } else {
-                dispatch(changeAdSuccess(response));
+                dispatch(changeAdSuccess(response))
             }
         } catch (error) {
             console.log(error);
@@ -200,3 +201,21 @@ const changeAdSuccess = result => ({
     type: CHANGE_AD,
     payload: result,
 })
+
+// delete element, and redirect ui when done
+export const deleteItem = detId => {
+    return async dispatch => {
+        try {
+            let response = await deleteAd(detId);
+
+            if (!response.success) {
+                dispatch(showMessage({ msg: response.msg, success: false }))
+            } else {
+                dispatch(redirectAfterLoading(true))
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+

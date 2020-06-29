@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import {
     getOneAd,
     changeAd,
+    deleteItem,
     redirectAfterLoading,
 } from '../store/actions/index.js';
 
@@ -11,10 +12,20 @@ import ChangeExistingAd from '../components/Change/changeAd';
 
 
 export class ChangeDetail extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            detId: '',
+        }
+    }
     
-    async componentDidMount() {
+    componentDidMount() {
         const {match: { params }} = this.props;
-        this.getDetails(params.detId);
+        let detId = params.detId
+        
+        this.setState({ detId });
+
+        this.getDetails(detId);
     }
 
     getDetails = detId => {
@@ -22,11 +33,9 @@ export class ChangeDetail extends Component {
     }
 
     submitAd = async values => {
-        
-        const {match: { params }} = this.props;
 
         const success = await this.props.changeAd({
-            _id: params.detId,
+            _id: this.state.detId,
             name: values.name,
             price: values.price,
             description: values.description,
@@ -40,15 +49,33 @@ export class ChangeDetail extends Component {
         }
     }
 
+    deleteAd = async () => {
+
+        const success = await this.props.deleteItem(this.state.detId)
+
+        if (success) {
+            this.props.redirectAfterLoading(true)
+        }
+    }
+
+    toggleFunction = async e => {
+        await this.props.changeAd({
+            _id: this.state.detId,
+            [e.target.name]: !this.props.ads[e.target.name],
+        });
+    }
+
     render() {
         if(this.props.redirect){
-            return <Redirect to={`/detail/${this.props.match.params.detId}`} />
+            return <Redirect to={`/settings`} />
         }
         return (
             <ChangeExistingAd 
                 ad={ this.props.ads }
                 valid_tags={ this.props.valid_tags }
                 onSubmit={ this.submitAd }
+                onDelete={ this.deleteAd }
+                toggle={ this.toggleFunction }
             />
         )
     }
@@ -66,6 +93,7 @@ const mapDispatchToProps = dispatch => {
     return {
         getOneAd: detId => dispatch(getOneAd(detId)),
         changeAd: ad => dispatch(changeAd(ad)),
+        deleteItem: detId => dispatch(deleteItem(detId)),
         redirectAfterLoading: res => dispatch(redirectAfterLoading(res)),
     }
 }

@@ -6,7 +6,7 @@ export const CustomInput = ({ label, type, name }) => {
        
     const value = useSelector(state => state.user_search[name])
     const dispatch = useDispatch();
-
+    
     return (
         <label class="nes-text is-primary">
             {label}

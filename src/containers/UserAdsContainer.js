@@ -10,8 +10,12 @@ export class UserAdsContainer extends Component {
     componentDidMount() {
         // fetch ads
         const {match: { params }} = this.props;
-        this.props.getUserAds(params.username)
+        this.fetchUserAds(params.username);
     }
+
+    fetchUserAds = username => {
+        this.props.getUserAds(username);
+    };
 
     render() {
         return <UserAdsSection 

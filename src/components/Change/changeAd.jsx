@@ -26,7 +26,9 @@ function MyDropzone() {
 
 let ChangeExistingAd = ({
     handleSubmit,
-    ad
+    onDelete,
+    toggle,
+    ad,
 }) => {
     return(
         <div className='ads-create' class="nes-container with-title is-centered">
@@ -91,6 +93,19 @@ let ChangeExistingAd = ({
 
                 <button type='submit' class="nes-btn is-primary">Submit It!</button>
             </form>
+            <div>
+                
+                <button type='button' class="nes-btn is-primary" onClick={ onDelete }>Delete It!</button>
+
+            <button type="button" name="reserved" onClick={ e => toggle(e) }>{
+                ad.reserved ? "Cancel Reservation" : "Mark as Reserved"
+            }</button>
+
+            <button type="button" name="sold" onClick={ e => toggle(e) }>{
+                ad.sold ? "Currently Available" : "Mark as Sold"
+            }</button>
+            
+            </div>
             <Link to='/'>
                 <button class="nes-btn is-warning">Back</button>
             </Link>

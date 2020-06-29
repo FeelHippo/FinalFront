@@ -36,7 +36,10 @@ export const session = (state = defaultState.session, action) => {
             }
 
         case auth.LOGOUT_USER: 
-            return new Session();
+        return {
+            ...state,
+            ...new Session()
+        }
 
         case home.TAGS_LOAD_SUCCESS:
             return state;
@@ -85,13 +88,22 @@ export const ads = (state = defaultState.ads, action) => {
     switch (action.type) {
 
         case home.FETCH_ADS:
-            return action.payload
+            return [
+                ...state,
+                ...action.payload
+            ]
 
         case details.CREATE_AD:
-            return action.payload
+            return {
+                ...state,
+                ...action.payload
+            }
 
         case details.CHANGE_AD:
-            return action.payload
+            return {
+                ...state,
+                ...action.payload
+            }
     
         default:
             return state;
@@ -100,7 +112,10 @@ export const ads = (state = defaultState.ads, action) => {
 
 export const redirect = (state = defaultState.redirect, action) => {
     if (action.type === shared.REDIRECT) {
-        return action.payload;
+        return {
+            ...state,
+            ...action.payload
+        }
     }
     return state;
 }
