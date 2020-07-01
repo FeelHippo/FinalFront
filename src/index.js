@@ -32,7 +32,6 @@ const store = configureStore({
 store.subscribe(() => {
   const { lastAction, session } = store.getState();
   if (lastAction.type === auth.LOGIN_USER && session.token) {
-    console.log(session)
     LocalStorage.saveLocalStorage(session);
   }
 

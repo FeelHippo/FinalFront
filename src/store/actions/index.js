@@ -1,19 +1,23 @@
-import { home, details, shared, auth } from '../types/types';
+import { home, details, shared, messaging } from '../types/types';
+import io from 'socket.io-client';
+import uniqid from 'uniqid';
 import api from '../../services/itemService';
-import Ad from '../../models/Ad';
+
 const { getTags, getAds, getAd, postAd, modifyAd, deleteAd, getInitialAds, registeredUser, getAdsRegisteredUser } = api();
 
-const { MOST_RECENT,
-        GET_ALL_TAGS,
+const { GET_ALL_TAGS,
         TAGS_LOAD_SUCCESS, 
-        SEARCH_ADS, 
     } = home;
 const { USER_SEARCH,
-        GET_AD, 
         CREATE_AD, 
         CHANGE_AD 
     } = details;
 const { UPDATE_FIELD, REDIRECT } = shared;
+const { UPDATE_MESSAGE_HISTORY,
+        CLIENT_ID,
+        MESSAGE_TYPE,
+        SET_CONNECTION_STATUS
+} = messaging;
 
 // global action creators
 export function updateField(evt) {
@@ -218,4 +222,72 @@ export const deleteItem = detId => {
         }
     }
 }
+
+// socket.IO connection set up 
+const socket = io('http://localhost:5000/');
+
+// socket.IO action creators
+export const listenConnectionChange = () => {
+    return async dispatch => {
+        try {
+            socket.on('connect', () => {
+                dispatch(connectionChanged(true))
+            })
+            socket.on('disconnect', () => {
+                dispatch(connectionChanged(false))
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const connectionChanged = status => ({
+    type: SET_CONNECTION_STATUS,
+    payload: status
+}) 
+
+export const sendMessage = ({ message, username }) => {
+    const messageTemplate = {
+        message: message,
+        type: messaging.MESSAGE_TYPE.SENT,
+        receiverId: username,
+        timestamp: Date.now(),
+        id: uniqid()
+    }
+    return async dispatch => {
+        try {
+            await socket.emit('message', messageTemplate, () => {
+                console.log('emit message');
+                dispatch(dispatchMessage(messageTemplate))
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const dispatchMessage = messageTemplate => ({
+    type: UPDATE_MESSAGE_HISTORY,
+    payload: messageTemplate
+});
+
+export const listenForIncomingMessage = () => {
+    return async dispatch => {
+        try {
+            socket.on('message', message => {
+                dispatch(inboundMessage(message))
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const inboundMessage = message => ({
+    type: UPDATE_MESSAGE_HISTORY,
+    payload: message
+})
+
+
 

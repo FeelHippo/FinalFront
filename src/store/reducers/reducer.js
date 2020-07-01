@@ -1,5 +1,5 @@
 import { reducer as formReducer } from 'redux-form';
-import { home, details, auth, shared } from '../types/types';
+import { home, details, auth, shared, messaging } from '../types/types';
 
 import Session from '../../models/Session';
 import Ad from '../../models/Ad';
@@ -10,6 +10,10 @@ const defaultState = {
     ads: [],
     user_search: new Ad(),
     redirect: false,
+    chat: {
+        messages: {},
+        connectionStatus: false
+    }
 }
 
 // redux-form reducer should always be injected into combineReducers(), see ./store/config.js:24 and 31
@@ -88,10 +92,7 @@ export const ads = (state = defaultState.ads, action) => {
     switch (action.type) {
 
         case home.FETCH_ADS:
-            return [
-                ...state,
-                ...action.payload
-            ]
+            return action.payload
 
         case details.CREATE_AD:
             return {
@@ -118,4 +119,30 @@ export const redirect = (state = defaultState.redirect, action) => {
         }
     }
     return state;
+}
+
+export const chat = (state = defaultState.chat, action) => {
+    switch (action.type) {
+        case messaging.UPDATE_MESSAGE_HISTORY:
+            const messageTemplate = {
+                message: action.payload.message,
+                type: action.payload.type,
+                timestamp: action.payload.timestamp,
+                id: action.payload.id
+            };
+            const username = action.payload.receiverId;
+            return {
+                ...state,
+                messages: {
+                    ...state.messages,
+                    [username]: (state.messages[username])
+                        ? state.messages[username].concat(messageTemplate)
+                        : [].concat(messageTemplate)
+                }
+            }
+        case messaging.SET_CONNECTION_STATUS:
+            return { ...state, connectionStatus: action.payload }
+        default:
+            return state
+    }
 }

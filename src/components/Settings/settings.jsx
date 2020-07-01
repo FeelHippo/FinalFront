@@ -45,7 +45,7 @@ const Settings = props => {
     return(
         <>  {redirectPage ? <Redirect to='/login' /> : null}
             <div class="container">
-                <form onSubmit={submitForm} class="form">
+                <form onSubmit={submitForm}>
                     <h1>Account Settings</h1>
 
                     <input type="text" {...bindUsername} placeholder={props.session.username} />

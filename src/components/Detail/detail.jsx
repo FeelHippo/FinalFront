@@ -1,31 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {Helmet} from 'react-helmet';
+import Chat from '../../containers/Chat';
+import { Helmet } from 'react-helmet';
 import { TwitterShareButton } from 'react-twitter-embed';
 import { FacebookProvider, ShareButton } from 'react-facebook';
 
 const PrintDetail = ({
     _id,
-    tag1,
-    tag2,
-    name,
-    price,
-    description,
-    photo
+    ad,
+    authenticated,
 }) => (
     <div>
         <Helmet>
-            <title>{`${name}-${tag1}-${tag2}`}</title>
-            <meta name="description" content={`${description}`} />
+            <title>{`${ad.name}-${ad.tag1}-${ad.tag2}`}</title>
+            <meta name="description" content={`${ad.description}`} />
         </Helmet>
         <section class="nes-container is-dark">
             <section class="message-list">
                 <section>
                     <div class="nes-container is-rounded is-dark">
-                        <p>Item: {name}</p>
+                        <p>Item: {ad.name}</p>
                     </div>
                     <div class="nes-container is-rounded is-dark">
-                        <p>Description: {description}</p>
+                        <p>Description: {ad.description}</p>
                     </div>
                 </section>
             </section>
@@ -34,14 +31,14 @@ const PrintDetail = ({
             <section class="nes-container is-dark">
                 <section class="message -left">
                     <div class="nes-container is-rounded is-dark">
-                        <p>{tag1}</p>
+                        <p>{ad.tag1}</p>
                     </div>
                     <div class="nes-container is-rounded is-dark">
-                        <p>{tag2}</p>
+                        <p>{ad.tag2}</p>
                     </div>
                     
                     <div class="nes-container is-rounded is-dark">
-                        <p>Price: {price}</p>
+                        <p>Price: {ad.price}</p>
                     </div>
                     <section class="icon-list">
                         <i class="nes-icon twitter is-large"></i>
@@ -54,11 +51,11 @@ const PrintDetail = ({
         <section class="nes-container is-dark">
         <div class="nes-container is-dark with-title">
             <p class="title">Bitmap</p>
-            <p><img src={photo} alt={name}></img></p>
+            <p><img src={ad.photo} alt={ad.name}></img></p>
         </div>
         </section>
         
-        <div className="options">
+        <section className="options">
             <Link to={`/change/${_id}`}>
                 <button class="nes-btn is-warning">Modify this Ad</button>
             </Link>
@@ -67,7 +64,7 @@ const PrintDetail = ({
             </Link>
             <TwitterShareButton
                 url={window.location.href}
-                options={{ text: `${name}-${description}`, via: 'FeelHippo' }}
+                options={{ text: `${ad.name}-${ad.description}`, via: 'FeelHippo' }}
             />
             {/* once live, get appId */}
             <FacebookProvider appId="FeelHippo"> 
@@ -75,8 +72,16 @@ const PrintDetail = ({
                 Share
                 </ShareButton>
             </FacebookProvider>
-        </div>
-        
+        </section>
+        <section>
+            {
+                authenticated ? (
+                    <Chat />
+                ) : (
+                    ''
+                )
+            }
+        </section>
     </div>
 )
 
