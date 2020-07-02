@@ -154,7 +154,6 @@ export const searchUser = user => {
                 dispatch(showMessage({ msg: response.msg, success: false }))
             } else {
                 dispatch(userExists(response.username));
-                dispatch(redirectAfterLoading(true));
             }
             
         } catch (error) {
@@ -315,7 +314,7 @@ export const isTyping = data => {
 }
 
 const userTyping = data => ({
-    type: messaging.IS_TYPING,
+    type: IS_TYPING,
     payload: data,
 })
 
@@ -333,7 +332,7 @@ export const notTyping = data => {
 }
 
 const userNotTyping = data => ({
-    type: messaging.NOT_TYPING,
+    type: NOT_TYPING,
     payload: data
 })
 

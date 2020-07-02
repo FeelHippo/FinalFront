@@ -5,7 +5,6 @@ import {
     getOneAd,
     changeAd,
     deleteItem,
-    redirectAfterLoading,
 } from '../store/actions/index.js';
 
 import ChangeExistingAd from '../components/Change/changeAd';
@@ -16,6 +15,7 @@ export class ChangeDetail extends Component {
         super(props);
         this.state = {
             detId: '',
+            redirect: false,
         }
     }
     
@@ -45,7 +45,9 @@ export class ChangeDetail extends Component {
         });
         
         if (success) {
-            this.props.redirectAfterLoading(true)
+            this.setState({
+                redirect: true
+            })
         }
     }
 
@@ -54,7 +56,9 @@ export class ChangeDetail extends Component {
         const success = await this.props.deleteItem(this.state.detId)
 
         if (success) {
-            this.props.redirectAfterLoading(true)
+            this.setState({
+                redirect: true
+            })
         }
     }
 
@@ -66,7 +70,7 @@ export class ChangeDetail extends Component {
     }
 
     render() {
-        if(this.props.redirect){
+        if(this.state.redirect){
             return <Redirect to={`/settings`} />
         }
         return (
@@ -84,7 +88,6 @@ export class ChangeDetail extends Component {
 const mapStateToProps = state => {    
     return {
         ads: state.ads,
-        redirect: state.redirect,
         valid_tags: state.valid_tags,
     }
 }
@@ -94,7 +97,6 @@ const mapDispatchToProps = dispatch => {
         getOneAd: detId => dispatch(getOneAd(detId)),
         changeAd: ad => dispatch(changeAd(ad)),
         deleteItem: detId => dispatch(deleteItem(detId)),
-        redirectAfterLoading: res => dispatch(redirectAfterLoading(res)),
     }
 }
 

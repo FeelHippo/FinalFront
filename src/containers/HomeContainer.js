@@ -12,6 +12,12 @@ import {
 import Home from '../components/Home/ads';
 
 export class ClassifiedAds extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            redirect: false,
+        }
+    }
 
     componentDidMount() {
         this.props.getDefaultAds();
@@ -22,6 +28,10 @@ export class ClassifiedAds extends Component {
         await this.props.searchUser(user).then(() => {
             if(this.props.user_search.success === false) {
                 this.key = this.props.enqueueSnackbar(this.props.user_search.error);
+            } else {
+                this.setState({
+                    redirect: true,
+                })
             }
         })
     }
@@ -42,7 +52,7 @@ export class ClassifiedAds extends Component {
     }
 
     render() {
-        if(this.props.redirect){
+        if(this.state.redirect){
             return <Redirect to={`/${this.props.user_search.user}`} />
         }
         return (
@@ -61,7 +71,6 @@ const mapStateToProps = state => {
     return {
         ads: state.ads,
         user_search: state.user_search,
-        redirect: state.redirect,
     }
 }
 

@@ -114,10 +114,7 @@ export const ads = (state = defaultState.ads, action) => {
 
 export const redirect = (state = defaultState.redirect, action) => {
     if (action.type === shared.REDIRECT) {
-        return {
-            ...state,
-            ...action.payload
-        }
+        return action.payload
     }
     return state;
 }

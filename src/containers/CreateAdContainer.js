@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { 
-    createAd, 
-    redirectAfterLoading 
+    createAd,
 } from '../store/actions/index';
 
 import CreateNewAd from '../components/Create/createAd';
 
 class CreateAd extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            redirect: false,
+        }
+    }
 
     sendAd = async values => {
         values.photo = values.photo ? values.photo : '';
@@ -25,12 +30,14 @@ class CreateAd extends Component {
         
         const success = await this.props.createAd(body);
         if (success) {
-            this.props.redirectAfterLoading(true)
+            this.setState({
+                redirect: true
+            })
         }
     }
 
     render() {
-        if(this.props.redirect){
+        if(this.state.redirect){
             return <Redirect to={`/`} />
         }
         
@@ -50,7 +57,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createAd: body => dispatch(createAd(body)),
-        redirectAfterLoading: res => dispatch(redirectAfterLoading(res))
     }
 }
 
