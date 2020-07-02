@@ -1,4 +1,5 @@
 import { home, details, shared, messaging } from '../types/types';
+import { store } from '../../index';
 import io from 'socket.io-client';
 import uniqid from 'uniqid';
 import api from '../../services/itemService';
@@ -16,7 +17,9 @@ const { UPDATE_FIELD, REDIRECT } = shared;
 const { UPDATE_MESSAGE_HISTORY,
         CLIENT_ID,
         MESSAGE_TYPE,
-        SET_CONNECTION_STATUS
+        SET_CONNECTION_STATUS,
+        IS_TYPING,
+        NOT_TYPING,
 } = messaging;
 
 // global action creators
@@ -257,7 +260,7 @@ export const sendMessage = ({ message, username }) => {
     }
     return async dispatch => {
         try {
-            await socket.emit('message', messageTemplate, () => {
+            socket.emit('message', messageTemplate, () => {
                 console.log('emit message');
                 dispatch(dispatchMessage(messageTemplate))
             })
@@ -288,6 +291,52 @@ const inboundMessage = message => ({
     type: UPDATE_MESSAGE_HISTORY,
     payload: message
 })
+
+// inbound typing events
+socket.on('typing', data => {
+    store.dispatch(userTyping(data))
+})
+
+socket.on('no_typing', data => {
+    store.dispatch(userNotTyping(data))
+})
+
+export const isTyping = data => {
+    return async dispatch => {
+        try {
+            socket.emit('typing', {
+                typist: data
+            })
+            dispatch(userTyping(data));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const userTyping = data => ({
+    type: messaging.IS_TYPING,
+    payload: data,
+})
+
+export const notTyping = data => {
+    return async dispatch => {
+        try {
+            socket.emit('no_typing', {
+                typist: data
+            })
+            dispatch(userNotTyping(data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const userNotTyping = data => ({
+    type: messaging.NOT_TYPING,
+    payload: data
+})
+
 
 
 

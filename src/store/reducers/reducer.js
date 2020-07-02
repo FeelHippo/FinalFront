@@ -11,8 +11,9 @@ const defaultState = {
     user_search: new Ad(),
     redirect: false,
     chat: {
-        messages: {},
-        connectionStatus: false
+        messages: [],
+        connectionStatus: false,
+        typist:null
     }
 }
 
@@ -124,21 +125,20 @@ export const redirect = (state = defaultState.redirect, action) => {
 export const chat = (state = defaultState.chat, action) => {
     switch (action.type) {
         case messaging.UPDATE_MESSAGE_HISTORY:
-            const messageTemplate = {
-                message: action.payload.message,
-                type: action.payload.type,
-                timestamp: action.payload.timestamp,
-                id: action.payload.id
-            };
-            const username = action.payload.receiverId;
+            const temp = [...state.messages, action.payload];
             return {
                 ...state,
-                messages: {
-                    ...state.messages,
-                    [username]: (state.messages[username])
-                        ? state.messages[username].concat(messageTemplate)
-                        : [].concat(messageTemplate)
-                }
+                messages: temp,
+            }
+        case messaging.IS_TYPING:
+            return {
+                ...state,
+                typist: action.payload
+            }
+        case messaging.NOT_TYPING:
+            return {
+                ...state,
+                typist: action.payload
             }
         case messaging.SET_CONNECTION_STATUS:
             return { ...state, connectionStatus: action.payload }

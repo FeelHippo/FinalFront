@@ -21,7 +21,7 @@ const history = createBrowserHistory();
 const session = LocalStorage.readLocalStorage() || undefined;
 
 // store config
-const store = configureStore({
+export const store = configureStore({
   history,
   services: { api },
 })({

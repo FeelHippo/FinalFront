@@ -1,15 +1,18 @@
 import React from 'react';
 import Message from '../Message/message';
 
-const ChatView = ({ messages, connectionStatus, username }) => {
+const ChatView = ({ messages, connectionStatus, username, typist }) => {
     return(
         <div>
             <div>
                 {
-                    messages[username] &&
+                    messages &&
                     <div>
                         {
-                            messages[username].map(message =>
+                            typist ? <h3>{typist} is Typing...</h3> : null
+                        }
+                        {
+                            messages.map(message =>
                                 <Message
                                     key={message.id}
                                     message={message.message}

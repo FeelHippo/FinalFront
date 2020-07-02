@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withSnackbar } from 'notistack';
 import ChatView from '../components/Chat/chatView';
-import { sendMessage, listenForIncomingMessage, listenConnectionChange } from '../store/actions/index'
+import { sendMessage, listenForIncomingMessage, listenConnectionChange, isTyping, notTyping } from '../store/actions/index'
 import { connect } from 'react-redux';
 
 class Chat extends Component {
@@ -33,6 +33,14 @@ class Chat extends Component {
     });
   }
 
+  handleTyping = () => {
+    this.props.isTyping(this.props.session.username);
+  }
+
+  noMoreTyping = () => {
+    this.props.notTyping(null);
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.chat.connectionStatus !== this.props.chat.connectionStatus) {
       if (this.props.chat.connectionStatus) {
@@ -49,6 +57,11 @@ class Chat extends Component {
 
   onChangeMessageHandler(event) {
     this.setState({ message: event.target.value });
+    if (event.target.value !== '') {
+      this.handleTyping();
+    } else {
+      this.noMoreTyping()
+    }
   }
 
   handleKeyPress(event) {
@@ -74,6 +87,7 @@ class Chat extends Component {
           messages={this.props.chat.messages}
           connectionStatus={this.props.chat.connectionStatus}
           username={this.props.session.username}
+          typist={this.props.chat.typist}
         />
         <input 
           type="text"
@@ -102,7 +116,9 @@ const mapDispatchToProps = dispatch => {
     return {
       sendMessage: message => dispatch(sendMessage(message)),
       listenForIncomingMessage: () => dispatch(listenForIncomingMessage()),
-      listenConnectionChange: () => dispatch(listenConnectionChange())
+      listenConnectionChange: () => dispatch(listenConnectionChange()),
+      isTyping: data => dispatch(isTyping(data)),
+      notTyping: () => dispatch(notTyping())
     }
 }
 
