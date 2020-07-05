@@ -36,10 +36,8 @@ export class AdDetails extends Component {
 
     setFavorite = () => {
         // favorite status
-        if (this.props.ads.favorite) {
-            let isFavorite = this.props.ads.favorite.some(user => this.props.session.username === user);
-            this.setState({ isFavorite })
-        }
+        let isFavorite = this.props.ads.favorite.some(user => this.props.session.username === user);
+        this.setState({ favorite: isFavorite })
     }
 
     getDetails = detId => {
