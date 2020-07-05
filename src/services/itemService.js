@@ -187,7 +187,6 @@ const api = (API_URL = 'http://localhost:5000') => {
 
             try {
                 let result = await axios.get(API_END);
-                
                 return result.data;
             } catch (error) {
                 console.log(error);
@@ -205,8 +204,7 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         modifyAd: async ad => {
             const API_END = `${API_URL}/api/item/change`;
-            let { _id, name, price, description, type, photo, tags, reserved, sold } = ad;
-
+            let { _id, name, price, description, type, photo, tags, reserved, sold, favorite } = ad;
             try {
                 const result = await axios.put(API_END, {   
                     _id: _id,
@@ -218,6 +216,7 @@ const api = (API_URL = 'http://localhost:5000') => {
                     photo: photo,
                     reserved: reserved,
                     sold: sold,
+                    favorite: favorite,
                 });
                 return result.data;
             } catch (error) {

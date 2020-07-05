@@ -129,6 +129,7 @@ export const getOneAd = adId => {
                     type: result.type,
                     reserved: result.reserved || false,
                     sold: result.sold || false,
+                    favorite: result.favorite,
                 }
                 dispatch(fetchAds(userAd))
             })

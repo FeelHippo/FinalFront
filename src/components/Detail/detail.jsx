@@ -9,6 +9,8 @@ const PrintDetail = ({
     _id,
     ad,
     authenticated,
+    markFavorite,
+    favorite
 }) => (
     <div>
         <Helmet>
@@ -56,6 +58,16 @@ const PrintDetail = ({
         </section>
         
         <section className="options">
+            <div onClick={() => markFavorite()}>
+                {
+                    favorite ? (
+                        <img src={require('../../icons/star_full.svg')} alt="favorite" />
+                    ) : (
+                        <img src={require('../../icons/star_empty.svg')} alt="favorite" />
+                    )
+                }
+                
+            </div>
             <Link to={`/change/${_id}`}>
                 <button class="nes-btn is-warning">Modify this Ad</button>
             </Link>

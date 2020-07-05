@@ -14,16 +14,16 @@ const UserAdsSection = ({
 
             
             <h2>{user}</h2>
-            <h3>Active Ads: {ads.length}</h3>
+            <h3>Active Ads: {ads.items ? ads.items.length : ''}</h3>
             
 
             <button type="button" class='success' onClick={() => navigateHome()}>Home</button>
 
             <div className="listContainer">
                 {
-                    ads.length ? (
+                    ads.items ? (
                         <List
-                            items={ads}
+                            items={ads.items}
                             renderItem={
                                 ad => (
                                     <Card {...ad} />

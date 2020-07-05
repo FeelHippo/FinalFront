@@ -65,9 +65,9 @@ const Settings = props => {
                     <section>
                         <h1>Manage Your Ads</h1>
                         {
-                            props.ads.length ? (
+                            props.ads.items ? (
                                 <List
-                                    items={props.ads}
+                                    items={props.ads.items}
                                     renderItem={
                                         ad => (
                                             <Card {...ad} />
@@ -75,6 +75,22 @@ const Settings = props => {
                                 />
                             ) : (
                                 <div></div>
+                            )
+                        }
+                    </section>
+                    <section>
+                        <h1>Your Favorite Ads</h1>
+                        {
+                            !props.ads.favorites === [] ? (
+                                <List
+                                    items={props.ads.favorites}
+                                    renderItem={
+                                        ad => (
+                                            <Card {...ad} />
+                                    )}
+                                />
+                            ) : (
+                                <div>No Favorites</div>
                             )
                         }
                     </section>

@@ -23,35 +23,35 @@ const Navbar = props => {
                 {auth ? (
                     <li className="logout" >
                         <div onClick={() => {props.logoutUser(); setAuth(false)}}>
-                            <img src={require('./icons/logout.svg')} alt="logout" />
+                            <img src={require('../../icons/logout.svg')} alt="logout" />
                         </div>
                         <Link to={'/settings'}>
                             <div>
-                                <img src={require('./icons/edit.svg')} alt="edit" />
+                                <img src={require('../../icons/edit.svg')} alt="edit" />
                             </div>
                         </Link>
                         <div onClick={() => {props.deleteUser(props.username); setAuth(false)}}>
-                            <img src={require('./icons/delete.svg')} alt="delete" />
+                            <img src={require('../../icons/delete.svg')} alt="delete" />
                         </div>
                     </li>
                     
                 ) : (
                     <li className="login">
                         <Link to='/login'>
-                            <img src={require('./icons/login.svg')} alt="login" />
+                            <img src={require('../../icons/login.svg')} alt="login" />
                         </Link>
                     </li>
                 )}
                 
                 
                 <li className="flag">
-                    <img src={require('./icons/uk.svg')} alt="english" />
+                    <img src={require('../../icons/uk.svg')} alt="english" />
                 </li>
                 <li className="flag">
-                    <img src={require('./icons/spain.svg')} alt="spanish" />
+                    <img src={require('../../icons/spain.svg')} alt="spanish" />
                 </li>
                 <li className="flag">
-                    <img src={require('./icons/italy.svg')} alt="italian" />
+                    <img src={require('../../icons/italy.svg')} alt="italian" />
                 </li>
             </ul>
 

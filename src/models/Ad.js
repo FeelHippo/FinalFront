@@ -16,6 +16,7 @@ export default class Ad {
         type = true,
         reserved = false,
         sold = false,
+        favorite = [],
     ){
         this.user = user;
         this.oldFirst = oldFirst;
@@ -30,6 +31,7 @@ export default class Ad {
         this.type = type;
         this.reserved = reserved;
         this.sold = sold;
+        this.favorite = favorite;
     }
 
     /**
