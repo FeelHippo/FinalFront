@@ -16,18 +16,12 @@ class CreateAd extends Component {
     }
 
     sendAd = async values => {
-        values.photo = values.photo ? values.photo : '';
+        var body = new FormData();
+        Object.keys(values).forEach(key => {
+            body.append(key, values[key])
+        });
 
-        let body = {
-            creator: this.props.session.username || '',
-            name: values.name || '',
-            price: values.price || 0,
-            description: values.description || '',
-            photo: values.photo || '',
-            tags: [values.tag1, values.tag2] || ['', ''],
-            type: values.type || true,
-        }
-        
+        body.append('creator', this.props.session.username);
         const success = await this.props.createAd(body);
         if (success) {
             this.setState({
@@ -44,7 +38,7 @@ class CreateAd extends Component {
         return (
             <CreateNewAd 
                 valid_tags={ this.props.valid_tags }
-                onSubmit={ this.sendAd }
+                handleSubmit={ this.sendAd }
             />
         )
     }
@@ -62,5 +56,5 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 )(CreateAd);

@@ -1,101 +1,142 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Field, reduxForm } from 'redux-form';
-import {useDropzone} from 'react-dropzone';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import Thumb from '../Thumb/thumbnail';
 
-function MyDropzone() {
-    const onDrop = useCallback(acceptedFiles => {
-      // Do something with the files
-    }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-   
-    return (
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {
-          isDragActive ?
-            <p>Drop the files here ...</p> :
-            <p>Drag 'n' drop some files here, or click to select files</p>
-        }
-      </div>
-    )
-}
+const adSchema = Yup.object().shape({
+    name: Yup.string(),
+    price: Yup.number().positive(),
+    description: Yup.string(),
+    tag1: Yup.string(),
+    tag2: Yup.string(),
+})
 
-let CreateNewAd = ({
+const CreateNewAd = ({
     valid_tags,
     handleSubmit,
-}) => {
-    return (
-        <div className='ads-create' class="nes-container with-title is-centered">
-            <p class="title nes-text is-warning">Create Your Ad</p>
-            <form onSubmit={ handleSubmit }>
-                <h1 class="nes-text is-primary">Create Stuff</h1>
+}) => (
+    <div className='ads-create'>
+        <p>Create Your Ad</p>
+        <Formik
+            initialValues={{
+                name: '',
+                price: '',
+                type: true,
+                description: '',
+                tag1: '',
+                tag2: '',
+                photo: undefined,
+            }}
+            validationSchema={ adSchema }
+            onSubmit={
+                values => {
+                    handleSubmit(values);
+                }
+            }
+        >
+            {
+                ({ values, errors, touched, setFieldValue }) => (
+                    <Form>
+                        <Field name="name" />
+                        {errors.name && touched.name ? (
+                            <div>{errors.name}</div>
+                        ) : null}
+                        <Field name="price" type="number" />
+                        {errors.price && touched.price ? (
+                            <div>{errors.price}</div>
+                        ) : null}
+                        <Field 
+                            name="type"
+                            render={
+                                ({ field }) => (
+                                    <>
+                                        <div>
+                                            <label htmlFor="true">Sell</label>
+                                            <input 
+                                                {...field}
+                                                value="true"
+                                                checked={field.value === "true"}
+                                                name="type"
+                                                type="radio"
+                                            />   
+                                        </div>
 
-                <div class="nes-field">
-                    <label htmlFor="name">Name It!</label>
-                    <Field name="name" component="input" type="text" class="nes-input" />
-                </div>
+                                        <div>
+                                            <label htmlFor="false">Buy</label>
+                                            <input 
+                                                {...field}
+                                                value="false"
+                                                checked={field.value === "false"}
+                                                name="type"
+                                                type="radio"
+                                            />   
+                                        </div>
+                                    </>
+                                )
+                            } 
 
-                <div class="nes-field">
-                    <label htmlFor="price">Price It!</label>
-                    <Field name="price" component="input" type="number" class="nes-input" />
-                </div>
-                
-                <label>Type of Transaction</label>
-                <div>
-                    <label><Field name="type" component="input" type="radio" value="true"/>Sale</label>
-                    <label><Field name="type" component="input" type="radio" value="false"/> Purchase</label>
-                </div>
-
-                <div class="nes-field">
-                    <label htmlFor="description">Describe It!</label>
-                    <Field name="description" component="input" type="text" class="nes-input" />
-                </div>
-
-                <div>
-                    <Field name="tag1" component="select">
-                        <option value="">Select First Tag</option>
-                        {valid_tags && valid_tags.length ? (
-                            valid_tags.map(tag => {
-                                return ( <option value={tag}>{tag}</option> )
-                            })
-                        ) : (
-                            ''
-                        )
+                        />
+                        {errors.type && touched.type ? (
+                            <div>{errors.type}</div>
+                        ) : null}
+                        <Field name="description" />
+                        {errors.description && touched.description ? (
+                            <div>{errors.description}</div>
+                        ) : null}
+                        <Field name="tag1" as="select" placeholder="Select a tag" id="tag1">
+                            <option value="">Select First Tag</option>
+                            {valid_tags && valid_tags.length ? (
+                                valid_tags.map(tag => {
+                                    return ( <option value={tag}>{tag}</option> )
+                                })
+                            ) : (
+                                ''
+                            )
+                            }
+                        </Field>
+                        {errors.tag1 && touched.tag1 ? (
+                            <div>{errors.tag1}</div>
+                        ) : null}
+                        <Field name="tag2" as="select" placeholder="Select another tag" id="tag2">
+                            <option value="">Select Second Tag</option>
+                            {valid_tags && valid_tags.length ? (
+                                valid_tags.map(tag => {
+                                    return ( <option value={tag}>{tag}</option> )
+                                })
+                            ) : (
+                                ''
+                            )
+                            }
+                        </Field>
+                        {errors.tag2 && touched.tag2 ? (
+                            <div>{errors.tag2}</div>
+                        ) : null}
+                        <input name="photo" type="file" onChange={
+                            (event) => {
+                                setFieldValue('photo', event.currentTarget.files[0])
+                            }
                         }
-                    </Field>
-                </div>
-
-                <div>
-                    <Field name="tag2" component="select">
-                        <option value="">Select Second Tag</option>
-                        {valid_tags && valid_tags.length ? (
-                            valid_tags.map(tag => {
-                                return ( <option value={tag}>{tag}</option> )
-                            })
-                        ) : (
-                            ''
-                        )
+                        />
+                        {errors.photo && touched.photo ? (
+                            <div>{errors.photo}</div>
+                        ) : null}
+                        {
+                            values.photo ? (
+                                <Thumb key="preview" file={values.photo} />
+                            ) : (
+                                ''
+                            )
                         }
-                    </Field>
-                </div>
-
-                <div>
-                    <label htmlFor="photo">Pick a Pic!</label>
-                    <Field name="photo" component={MyDropzone} />
-                </div>
-
-                <button type='submit' class="nes-btn is-primary">Submit It!</button>
-            </form>
-            <Link to='/'>
-                <button class="nes-btn is-warning">Back</button>
-            </Link>
-        </div>
-    )
-}
-
-CreateNewAd = reduxForm({
-    form: 'create ad'
-})(CreateNewAd);
+                        <button type="submit">Submit</button>
+                    </Form>
+                )
+            }
+        </Formik>
+        <Link to='/'>
+            <button >Back</button>
+        </Link>
+    </div>
+)
 
 export default CreateNewAd;

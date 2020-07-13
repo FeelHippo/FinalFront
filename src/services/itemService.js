@@ -144,19 +144,12 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         postAd: async ad => {
             const API_END = `${API_URL}/api/item/`;
-            let { creator, name, price, description, type, photo, tags } = ad;
             try {
-                const responseBody = await axios.post(API_END,
-                    {   
-                        creator: creator,
-                        name: name, 
-                        price: price,
-                        description: description,
-                        tags: tags,
-                        type: type,
-                        photo: photo,
-                    },    
-                );
+                const responseBody = await axios.post(API_END, ad, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data'
+                    }
+                });
                 return responseBody.data;
             } catch (error) {
                 
