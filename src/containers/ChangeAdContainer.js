@@ -32,18 +32,14 @@ export class ChangeDetail extends Component {
         this.props.getOneAd(detId);
     }
 
-    submitAd = async values => {
-
-        const success = await this.props.changeAd({
-            _id: this.state.detId,
-            name: values.name,
-            price: values.price,
-            description: values.description,
-            photo: values.photo,
-            tags: [values.tag1, values.tag2],
-            type: values.type
+    sendAd = async values => {
+        var body = new FormData();
+        Object.keys(values).forEach(key => {
+            body.append(key, values[key])
         });
-        
+        body.append('_id', this.state.detId)
+
+        const success = await this.props.changeAd(body);
         if (success) {
             this.setState({
                 redirect: true
@@ -71,13 +67,13 @@ export class ChangeDetail extends Component {
 
     render() {
         if(this.state.redirect){
-            return <Redirect to={`/settings`} />
+            return <Redirect to={`/detail/${this.state.detId}`} />
         }
         return (
             <ChangeExistingAd 
                 ad={ this.props.ads }
                 valid_tags={ this.props.valid_tags }
-                onSubmit={ this.submitAd }
+                handleSubmit={ this.sendAd }
                 onDelete={ this.deleteAd }
                 toggle={ this.toggleFunction }
             />

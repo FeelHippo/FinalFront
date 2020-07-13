@@ -29,7 +29,7 @@ let ChangeExistingAd = ({
                 description: ad.description,
                 tag1: ad.tag1,
                 tag2: ad.tag2,
-                photo: undefined,
+                photo: ad.photo,
             }}
             validationSchema={ adSchema }
             enableReinitialize={ true }
@@ -126,7 +126,7 @@ let ChangeExistingAd = ({
                             <div>{errors.photo}</div>
                         ) : null}
                         {
-                            values.photo ? (
+                            values.photo !== ad.photo ? (
                                 <Thumb key="preview" file={values.photo} />
                             ) : (
                                 <img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img>

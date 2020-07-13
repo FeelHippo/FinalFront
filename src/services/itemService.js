@@ -197,21 +197,13 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         modifyAd: async ad => {
             const API_END = `${API_URL}/api/item/change`;
-            let { _id, name, price, description, type, photo, tags, reserved, sold, favorite } = ad;
             try {
-                const result = await axios.put(API_END, {   
-                    _id: _id,
-                    name: name, 
-                    price: price,
-                    description: description,
-                    tags: tags,
-                    type: type,
-                    photo: photo,
-                    reserved: reserved,
-                    sold: sold,
-                    favorite: favorite,
+                const responseBody = await axios.put(API_END, ad, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data'
+                    }
                 });
-                return result.data;
+                return responseBody.data;
             } catch (error) {
                 console.log(error)
             }

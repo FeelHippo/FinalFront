@@ -193,10 +193,11 @@ export const changeAd = adData => {
     return async dispatch => {
         try {
             let response = await modifyAd(adData);
-            if (!response._id) {
+            if (!response.success) {
                 dispatch(showMessage({ msg: response.msg, success: false }))
             } else {
                 dispatch(changeAdSuccess(response))
+                return true;
             }
         } catch (error) {
             console.log(error);
