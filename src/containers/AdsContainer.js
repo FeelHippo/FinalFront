@@ -18,6 +18,7 @@ export class AdDetails extends Component {
     }
 
     componentDidMount() {
+        // fetch ad data from api
         const {match: { params }} = this.props; 
         this.getDetails(params.detId); 
         // authentication check

@@ -189,7 +189,7 @@ const api = (API_URL = 'http://localhost:5000') => {
             const API_END = `${API_URL}/api/item/${id}`;
             
             try {
-                const result = await axios.get(API_END);
+                const result = await axios.get(API_END).then()
                 return result.data;
             } catch (error) {
                 console.log(error);

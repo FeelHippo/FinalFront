@@ -53,7 +53,7 @@ const PrintDetail = ({
         <section class="nes-container is-dark">
         <div class="nes-container is-dark with-title">
             <p class="title">Bitmap</p>
-            <p><img src={ad.photo} alt={ad.name}></img></p>
+            <p><img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img></p>
         </div>
         </section>
         

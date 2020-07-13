@@ -21,10 +21,10 @@ export class ChangeDetail extends Component {
     
     componentDidMount() {
         const {match: { params }} = this.props;
-        let detId = params.detId
-        
+        let detId = params.detId;
+        // make id available to component
         this.setState({ detId });
-
+        // fetch ad data from API
         this.getDetails(detId);
     }
 
