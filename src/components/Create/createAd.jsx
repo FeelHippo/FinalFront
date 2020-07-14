@@ -29,6 +29,7 @@ const CreateNewAd = ({
                 photo: undefined,
             }}
             validationSchema={ adSchema }
+            enableReinitialize={ true }
             onSubmit={
                 values => {
                     handleSubmit(values);

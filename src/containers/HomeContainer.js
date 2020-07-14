@@ -15,7 +15,7 @@ export class ClassifiedAds extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            redirect: false,
+            userSearched: '',
         }
     }
 
@@ -23,27 +23,22 @@ export class ClassifiedAds extends Component {
         this.props.getDefaultAds();
     }
 
-    searchUser = async () => {
-        const { user } = this.props.user_search;
-        await this.props.searchUser(user).then(() => {
-            if(this.props.user_search.success === false) {
-                this.key = this.props.enqueueSnackbar(this.props.user_search.error);
-            } else {
-                this.setState({
-                    redirect: true,
-                })
-            }
-        })
+    searchUser = async values => {
+        let response = await this.props.searchUser(values.name);
+        if(!response._id) {
+            this.key = this.props.enqueueSnackbar(response.msg);
+        } else {
+            this.setState({
+                userSearched: response.username,
+            })
+        }
     }
 
-    searchAds = () => {
-        const { tag1,
-                tag2,
-                name,
-                price_low,
-                price_high,type 
-        } = this.props.user_search;
-        this.props.searchAds(name, price_low.toString(),price_high.toString(), type, [tag1, tag2])
+    searchAds = async values => {
+        let response = await this.props.searchAds(values);
+        if (response.msg) {
+            this.key = this.props.enqueueSnackbar(response.msg);
+        }
     }
 
     changeOrder = evt => {
@@ -52,13 +47,14 @@ export class ClassifiedAds extends Component {
     }
 
     render() {
-        if(this.state.redirect){
-            return <Redirect to={`/${this.props.user_search.user}`} />
+        if(this.props.redirect){
+            return <Redirect to={`/${this.state.userSearched}`} />
         }
         return (
             <Home
+                valid_tags={ this.props.valid_tags }
                 ads={ this.props.ads }
-                oldFirst={ this.props.user_search.order }
+                // oldFirst={ find a way to reorder ads here }
                 searchAds={ this.searchAds }
                 searchUser={ this.searchUser }
                 changeOrder={ this.changeOrder }
@@ -70,7 +66,8 @@ export class ClassifiedAds extends Component {
 const mapStateToProps = state => {
     return {
         ads: state.ads,
-        user_search: state.user_search,
+        redirect: state.redirect,
+        valid_tags: state.valid_tags,
     }
 }
 

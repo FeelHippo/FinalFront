@@ -137,7 +137,7 @@ const api = (API_URL = 'http://localhost:5000') => {
             
             try {
                 let res = await axios.get(baseURL);
-                return res.data || [];
+                return res.data;
             } catch (error) {
                 console.log(error.response.data)
             }

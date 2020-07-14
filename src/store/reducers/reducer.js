@@ -2,13 +2,11 @@ import { reducer as formReducer } from 'redux-form';
 import { home, details, auth, shared, messaging } from '../types/types';
 
 import Session from '../../models/Session';
-import Ad from '../../models/Ad';
 
 const defaultState = {
     session: new Session(),
     valid_tags: [],
     ads: [],
-    user_search: new Ad(),
     redirect: false,
     chat: {
         messages: [],
@@ -59,33 +57,6 @@ export const valid_tags = (state = defaultState.valid_tags, action) => {
         return action.payload.data;
     }
     return state;
-}
-
-export const user_search = (state = defaultState.user_search, action) => {
-    switch (action.type) {
-        case shared.UPDATE_FIELD:
-            const { field, value } = action.payload;
-            return {
-                ...state, 
-                [field]: value
-            }
-        
-        case details.USER_SEARCH:
-            return {
-                ...state,
-                user: action.payload,
-            }
-
-        case shared.ERROR:
-            return {
-                ...state,
-                success: action.payload.success,
-                error: action.payload.msg,
-            }
-    
-        default:
-            return state;
-    }
 }
 
 export const ads = (state = defaultState.ads, action) => {

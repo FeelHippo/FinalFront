@@ -9,8 +9,7 @@ const { getTags, getAds, getAd, postAd, modifyAd, deleteAd, getInitialAds, regis
 const { GET_ALL_TAGS,
         TAGS_LOAD_SUCCESS, 
     } = home;
-const { USER_SEARCH,
-        CREATE_AD, 
+const { CREATE_AD, 
         CHANGE_AD 
     } = details;
 const { UPDATE_FIELD, REDIRECT } = shared;
@@ -53,6 +52,22 @@ const showMessage = data => ({
 })
 
 // action creators for home page
+export const searchUser = user => {
+    return async dispatch => {
+        try {
+            let response = await registeredUser(user);
+            
+            if (response._id) {
+                dispatch(redirectAfterLoading(true))
+            }
+                
+            return response; 
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
 export const getAllTags = () => {
     return async dispatch => {
         try {
@@ -74,11 +89,15 @@ const getHomeTags = tags_api => ({
 });
 
 // data fetch action creators
-export const searchAds = (name, price_low, price_high, type, tags) => {
+export const searchAds = ({ name, price_low, price_high, type, tag1, tag2 }) => {
     return async dispatch => {
         try {
-            let API_ARGS = `?${name ? `&name=${name}` : ''}${price_low > 0 ? `&price_low=${price_low}` : ''}${price_high > price_low ? `&price_high=${price_high}` : ''}${tags ? `&tags=["${tags[0]}", "${tags[1]}"]` : ''}${type ? `&type=true` : '&type=false'}`;
-            await getAds(API_ARGS).then(results => dispatch(fetchAds(results)))
+            let API_ARGS = `?${name ? `&name=${name}` : ''}${price_low > 0 ? `&price_low=${price_low.toString()}` : ''}${price_high > price_low ? `&price_high=${price_high.toString()}` : ''}${tag1.length || tag2.length ? `&tags=["${tag1}", "${tag2}"]` : ''}${type ? `&type=true` : '&type=false'}`;
+            let results = await getAds(API_ARGS);
+            if (!results.msg){
+                dispatch(fetchAds(results))
+            }
+            return results;
         } catch (error) {
             console.log(error);            
         }
@@ -143,29 +162,6 @@ export const getOneAd = adId => {
 const fetchAds = ads => ({
     type: 'FETCH_ADS',
     payload: ads,
-})
-
-
-
-export const searchUser = user => {
-    return async dispatch => {
-        try {
-            let response = await registeredUser(user);
-            if (!response._id) {
-                dispatch(showMessage({ msg: response.msg, success: false }))
-            } else {
-                dispatch(userExists(response.username));
-            }
-            
-        } catch (error) {
-            console.log(error)
-        }
-    }
-}
-
-const userExists = user => ({
-    type: USER_SEARCH,
-    payload: user,
 })
 
 export const createAd = adData => {
