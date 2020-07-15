@@ -15,7 +15,7 @@ const SignUp = props => {
     const { value:email, bind:bindEmail } = useInput('');
     const { value:password, bind:bindPassword } = useInput('');
 
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     const submitForm = evt => {
         evt.preventDefault();

@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { userPostLogin } from '../../store/actions/authentication';
+import { useTranslation } from 'react-i18next';
 
 // custom input hook
 import { useInput } from '../Hooks/input-hook';
@@ -14,8 +15,9 @@ const Login = props => {
     const { value:username, bind:bindUsername } = useInput('');
     const { value:password, bind:bindPassword } = useInput('');
     // snackbar errors
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+    const { enqueueSnackbar } = useSnackbar();
+    // translation
+    const { t, i18n } = useTranslation();
     const submitForm = evt => {
         evt.preventDefault();
         
@@ -29,9 +31,9 @@ const Login = props => {
     
     return (
         <>  {redirectPage ? <Redirect to='/'/> : null }
-            <div class="container">
+            <div className="container">
                 <form onSubmit={submitForm} class="form" >
-                    <h1>Login</h1>
+                    <h1>{t('login.title')}</h1>
 
                     <input type="text" {...bindUsername} placeholder="enter your username" />
                     

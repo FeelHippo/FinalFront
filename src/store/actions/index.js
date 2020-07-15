@@ -14,8 +14,6 @@ const { CREATE_AD,
     } = details;
 const { UPDATE_FIELD, REDIRECT } = shared;
 const { UPDATE_MESSAGE_HISTORY,
-        CLIENT_ID,
-        MESSAGE_TYPE,
         SET_CONNECTION_STATUS,
         IS_TYPING,
         NOT_TYPING,

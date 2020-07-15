@@ -122,10 +122,10 @@ const Home = ({
                                 <div>{errors.type}</div>
                             ) : null}
                             <Field name="tag1" as="select" placeholder="Select a tag" id="tag1">
-                                <option value="">Select First Tag</option>
+                                <option value="" key="default">Select First Tag</option>
                                 {valid_tags && valid_tags.length ? (
-                                    valid_tags.map(tag => {
-                                        return ( <option value={tag}>{tag}</option> )
+                                    valid_tags.map((tag, i) => {
+                                        return ( <option value={tag} key={i}>{tag}</option> )
                                     })
                                 ) : (
                                     ''
@@ -136,10 +136,10 @@ const Home = ({
                                 <div>{errors.tag1}</div>
                             ) : null}
                             <Field name="tag2" as="select" placeholder="Select another tag" id="tag2">
-                                <option value="">Select Second Tag</option>
+                                <option value="" key="default">Select Second Tag</option>
                                 {valid_tags && valid_tags.length ? (
-                                    valid_tags.map(tag => {
-                                        return ( <option value={tag}>{tag}</option> )
+                                    valid_tags.map((tag, i) => {
+                                        return ( <option value={tag} key={i}>{tag}</option> )
                                     })
                                 ) : (
                                     ''
@@ -170,7 +170,7 @@ const Home = ({
                 <button type='submit'class="success">Search</button>
             </form> */}
             <Link to='/createAd'>
-                <button type="button" class="warning">Create Ad</button>
+                <button type="button" className="warning">Create Ad</button>
             </Link>
             <div className="listContainer">
                 <select value={oldFirst} name="oldFirst" onChange={evt => changeOrder(evt)}>

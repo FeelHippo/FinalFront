@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import LocalStorage from '../../services/Storage';
 import { useSnackbar } from 'notistack';
 import { logoutUser, deleteUser } from '../../store/actions/authentication';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = props => {
     const [auth, setAuth] = useState(false);
     // snackbar errors
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+    const { enqueueSnackbar } = useSnackbar();
+    // translation
+    const { i18n } = useTranslation();
     useEffect(() => {
         let response = LocalStorage.readTokenStorage();
         if(response) setAuth(true);
@@ -44,13 +46,22 @@ const Navbar = props => {
                 )}
                 
                 
-                <li className="flag">
+                <li 
+                    className="flag"
+                    onClick={() => i18n.changeLanguage('en')}    
+                >
                     <img src={require('../../icons/uk.svg')} alt="english" />
                 </li>
-                <li className="flag">
+                <li 
+                    className="flag"
+                    onClick={() => i18n.changeLanguage('es')}
+                >
                     <img src={require('../../icons/spain.svg')} alt="spanish" />
                 </li>
-                <li className="flag">
+                <li 
+                    className="flag"
+                    onClick={() => i18n.changeLanguage('it')}
+                >
                     <img src={require('../../icons/italy.svg')} alt="italian" />
                 </li>
             </ul>

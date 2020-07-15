@@ -11,7 +11,7 @@ const Password = props => {
 
     const { value:email, bind:bindEmail } = useInput('');
     const [redirectPage, setRedirect] = useState(false);
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         const ui = () => {
