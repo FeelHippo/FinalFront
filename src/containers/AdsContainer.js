@@ -5,7 +5,7 @@ import {
     changeAd,
 } from '../store/actions/index';
 import LocalStorage from '../services/Storage';
-
+import { withTranslation } from 'react-i18next';
 import PrintDetail from '../components/Detail/detail';
 
 export class AdDetails extends Component {
@@ -74,6 +74,7 @@ export class AdDetails extends Component {
                 authenticated={ this.state.authenticated }
                 markFavorite={ this.toggleFavorite }
                 favorite={ this.state.favorite }
+                t={ this.props.t }
             />
         )
     }
@@ -93,7 +94,9 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(AdDetails)
+export default withTranslation()(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(AdDetails)
+)

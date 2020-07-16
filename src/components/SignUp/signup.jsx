@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { userPostSignup } from '../../store/actions/authentication';
-
+import { useTranslation } from 'react-i18next';
 // custom input hook
 import { useInput } from '../Hooks/input-hook';
 
@@ -14,9 +14,10 @@ const SignUp = props => {
     const { value:username, bind:bindUsername } = useInput('');
     const { value:email, bind:bindEmail } = useInput('');
     const { value:password, bind:bindPassword } = useInput('');
-
+    // snackbar errors
     const { enqueueSnackbar } = useSnackbar();
-
+    // translation
+    const { t } = useTranslation();
     const submitForm = evt => {
         evt.preventDefault();
         
@@ -34,21 +35,21 @@ const SignUp = props => {
         <>  {redirectPage ? <Redirect to='/login' /> : null}
             <div class="container">
                 <form onSubmit={submitForm} class="form">
-                    <h1>New User</h1>
+                    <h1>{t('signup.title')}</h1>
 
-                    <input type="text" {...bindUsername} placeholder="choose a username" />
+                    <input type="text" {...bindUsername} placeholder={t('signup.username')} />
 
-                    <input type="email" {...bindEmail} placeholder="register your e-mail" />
+                    <input type="email" {...bindEmail} placeholder={t('signup.email')} />
                     
-                    <input type="password" {...bindPassword} placeholder="choose your password"/>
+                    <input type="password" {...bindPassword} placeholder={t('signup.password')}/>
                     
 
-                    <button type='submit' class="success">Register</button>
+                    <button type='submit' class="success">{t('signup.register')}</button>
                     <Link to='/login'>
-                        <button class="warning">I am registered</button>
+                        <button class="warning">{t('signup.registered')}</button>
                     </Link>
                     <Link to='/'>
-                        <button class='error'>No, Thanks</button>
+                        <button class='error'>{t('signup.anonymous')}</button>
                     </Link>
                 </form>
             </div>

@@ -6,6 +6,7 @@ import { TwitterShareButton } from 'react-twitter-embed';
 import { FacebookProvider, ShareButton } from 'react-facebook';
 
 const PrintDetail = ({
+    t,
     _id,
     ad,
     authenticated,
@@ -17,42 +18,38 @@ const PrintDetail = ({
             <title>{`${ad.name}-${ad.tag1}-${ad.tag2}`}</title>
             <meta name="description" content={`${ad.description}`} />
         </Helmet>
-        <section class="nes-container is-dark">
+        <section>
             <section class="message-list">
                 <section>
-                    <div class="nes-container is-rounded is-dark">
-                        <p>Item: {ad.name}</p>
+                    <div>
+                        <span>{t('detail.name')}</span>
+                        <p>{ad.name}</p>
                     </div>
-                    <div class="nes-container is-rounded is-dark">
-                        <p>Description: {ad.description}</p>
+                    <div>
+                        <span>{t('detail.description')}</span>
+                        <p>{ad.description}</p>
                     </div>
                 </section>
             </section>
         </section>
         <section>
-            <section class="nes-container is-dark">
+            <section>
                 <section class="message -left">
-                    <div class="nes-container is-rounded is-dark">
+                    <div>
                         <p>{ad.tag1}</p>
                     </div>
-                    <div class="nes-container is-rounded is-dark">
+                    <div>
                         <p>{ad.tag2}</p>
                     </div>
                     
-                    <div class="nes-container is-rounded is-dark">
+                    <div>
                         <p>Price: {ad.price}</p>
                     </div>
-                    <section class="icon-list">
-                        <i class="nes-icon twitter is-large"></i>
-                        <i class="nes-icon is-large like"></i>
-                        <i class="nes-icon instagram is-large"></i>
-                    </section>
                 </section>
             </section>
         </section>
-        <section class="nes-container is-dark">
-        <div class="nes-container is-dark with-title">
-            <p class="title">Bitmap</p>
+        <section>
+        <div>
             <p><img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img></p>
         </div>
         </section>
@@ -69,10 +66,10 @@ const PrintDetail = ({
                 
             </div>
             <Link to={`/change/${_id}`}>
-                <button class="nes-btn is-warning">Modify this Ad</button>
+                <button>{t('detail.modify')}</button>
             </Link>
             <Link to={`/`}>
-                <button class="nes-btn is-error">Back to Ads</button>
+                <button>{t('detail.back')}</button>
             </Link>
             <TwitterShareButton
                 url={window.location.href}
@@ -81,7 +78,7 @@ const PrintDetail = ({
             {/* once live, get appId */}
             <FacebookProvider appId="FeelHippo"> 
                 <ShareButton href="http://www.facebook.com">
-                Share
+                {t('detail.facebook')}
                 </ShareButton>
             </FacebookProvider>
         </section>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
+import { withTranslation } from 'react-i18next';
 import {
     updateField,
     getDefaultAds,
@@ -15,7 +16,7 @@ export class ClassifiedAds extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userSearched: '',
+            userSearched: ''
         }
     }
 
@@ -58,6 +59,7 @@ export class ClassifiedAds extends Component {
                 searchAds={ this.searchAds }
                 searchUser={ this.searchUser }
                 changeOrder={ this.changeOrder }
+                t={ this.props.t }
             />
         )
     }
@@ -80,9 +82,11 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default withSnackbar(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(ClassifiedAds)
+export default withTranslation()(
+    withSnackbar(
+        connect(
+            mapStateToProps,
+            mapDispatchToProps
+        )(ClassifiedAds)
+    )
 )

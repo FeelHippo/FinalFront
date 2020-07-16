@@ -4,6 +4,7 @@ import { Card } from '../Hooks/custom-card';
 import List from '../List/list';
 
 const UserAdsSection = ({
+    t,
     ads,
     user,
     navigateHome
@@ -14,10 +15,10 @@ const UserAdsSection = ({
 
             
             <h2>{user}</h2>
-            <h3>Active Ads: {ads.items ? ads.items.length : ''}</h3>
+            <h3>{t('user.title')}{ads.items ? ads.items.length : ''}</h3>
             
 
-            <button type="button" class='success' onClick={() => navigateHome()}>Home</button>
+            <button type="button" class='success' onClick={() => navigateHome()}>{t('user.home')}</button>
 
             <div className="listContainer">
                 {

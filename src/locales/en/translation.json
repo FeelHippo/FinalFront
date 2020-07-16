@@ -1,5 +1,77 @@
 {
-    "login" : {
-        "title": "Login to an existing account"
+    "login": {
+        "title": "Login to an Existing Account",
+        "username": "Enter your username...",
+        "password": "... and your password",
+        "enter": "Go!",
+        "not_registered": "New User",
+        "forgot_password": "I forgot my Password",
+        "anonymous": "Continue as Anonymous User"
+    },
+    "signup": {
+        "title": "I am a New User",
+        "username": "Choose your Username",
+        "email": "Enter your Em@ail",
+        "password": "Choose your Password",
+        "register": "Register",
+        "registered": "I have an Account",
+        "anonymous": "Continue as Anonymous User"
+    },
+    "home": {
+        "title": "Search User Ads",
+        "name": "Name",
+        "price_range": "Price Range",
+        "sell": "Sell",
+        "buy": "Buy",
+        "first_tag": "Select First Tag",
+        "second_tag": "Select Second Tag",
+        "search": "search",
+        "latest": "Latest First",
+        "oldest": "Oldest First"
+    },
+    "detail": {
+        "name": "Item Name: ",
+        "description": "Description: ",
+        "modify": "Modify this Ad",
+        "back": "Back to Home Page",
+        "facebook": "Share on FaceBook"
+    },
+    "change": {
+        "name": "Change Name",
+        "price": "Change Price",
+        "sell": "Sell",
+        "buy": "Buy",
+        "description": "Change Description",
+        "first_tag": "Change First Tag",
+        "second_tag": "Change Second Tag",
+        "submit": "Submit",
+        "delete": "Delete It!",
+        "cancel_res": "Cancel Reservation",
+        "mark_res": "Mark as Reserved",
+        "available": "Currently Available",
+        "sold": "Mark as Sold",
+        "back": "Back to Home Page"
+    },
+    "create": {
+        "title": "Create an Ad",
+        "name": "Choose a Name",
+        "price": "Define Price",
+        "sell": "Sell",
+        "buy": "Buy",
+        "description": "Describe the Item",
+        "first_tag": "Select First Tag",
+        "second_tag": "Select Second Tag",
+        "submit": "Submit",
+        "back": "Back to Home Page"
+    },
+    "user": {
+        "title": "User Active Ads: ",
+        "home": "Home"
+    },
+    "password": {
+        "insert_email": "Insert Your Email Here:",
+        "placeholder": "you will receive an email with your password",
+        "send": "Send",
+        "denial": "No, Thanks"
     }
 }

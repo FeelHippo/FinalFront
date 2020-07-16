@@ -20,6 +20,7 @@ const userSchema = Yup.object().shape({
 })
 
 const Home = ({
+    t,
     valid_tags,
     ads,
     searchAds,
@@ -50,7 +51,7 @@ const Home = ({
                             {errors.name && touched.name ? (
                                 <div>{errors.name}</div>
                             ) : null}
-                            <button type="submit">Search User Ads</button>
+                            <button type="submit">{t('home.title')}</button>
                         </Form>
                     )
                 }
@@ -75,11 +76,12 @@ const Home = ({
                 {
                     ({ errors, touched }) => (
                         <Form>
-                            <Field name="name" />
+                            <Field name="name" placeholder={t('home.name')}/>
                             {errors.name && touched.name ? (
                                 <div>{errors.name}</div>
-                            ) : null}  
-                            <Field name="price_low" type="number" />
+                            ) : null}
+                            <label>{t('home.price_range')}</label>  
+                            <Field name="price_low" type="number"  />
                             {errors.price_low && touched.price_low ? (
                                 <div>{errors.price_low}</div>
                             ) : null}
@@ -93,7 +95,7 @@ const Home = ({
                                     ({ field }) => (
                                         <>
                                             <div>
-                                                <label htmlFor="true">Sell</label>
+                                                <label htmlFor="true">{t('home.sell')}</label>
                                                 <input 
                                                     {...field}
                                                     value="true"
@@ -104,7 +106,7 @@ const Home = ({
                                             </div>
 
                                             <div>
-                                                <label htmlFor="false">Buy</label>
+                                                <label htmlFor="false">{t('home.buy')}</label>
                                                 <input 
                                                     {...field}
                                                     value="false"
@@ -122,7 +124,7 @@ const Home = ({
                                 <div>{errors.type}</div>
                             ) : null}
                             <Field name="tag1" as="select" placeholder="Select a tag" id="tag1">
-                                <option value="" key="default">Select First Tag</option>
+                                <option value="" key="default">{t('home.first_tag')}</option>
                                 {valid_tags && valid_tags.length ? (
                                     valid_tags.map((tag, i) => {
                                         return ( <option value={tag} key={i}>{tag}</option> )
@@ -136,7 +138,7 @@ const Home = ({
                                 <div>{errors.tag1}</div>
                             ) : null}
                             <Field name="tag2" as="select" placeholder="Select another tag" id="tag2">
-                                <option value="" key="default">Select Second Tag</option>
+                                <option value="" key="default">{t('home.second_tag')}</option>
                                 {valid_tags && valid_tags.length ? (
                                     valid_tags.map((tag, i) => {
                                         return ( <option value={tag} key={i}>{tag}</option> )
@@ -149,33 +151,18 @@ const Home = ({
                             {errors.tag2 && touched.tag2 ? (
                                 <div>{errors.tag2}</div>
                             ) : null}
-                            <button type="submit">Search</button>
+                            <button type="submit">{t('home.search')}</button>
                         </Form>
                     )
                 }
             </Formik>
-            {/* <form onSubmit={e => {
-                e.preventDefault();
-                searchAds()}
-            }>
-                <CustomInput label='Article Name' type='text' name='name' container='Home' />
-
-                <CustomInput label='Price From' type='number' name='price_low' container='Home' />
-                <CustomInput label='Price To' type='number' name='price_high' container='Home' />
-
-                <CustomSelect label='Select First Tag' name='tag1' />
-                <CustomSelect label='Select Second Tag' name='tag2' />
-                <CustomRadio label='Are You Buying or Selling?' name='type' />
-
-                <button type='submit'class="success">Search</button>
-            </form> */}
             <Link to='/createAd'>
                 <button type="button" className="warning">Create Ad</button>
             </Link>
             <div className="listContainer">
                 <select value={oldFirst} name="oldFirst" onChange={evt => changeOrder(evt)}>
-                    <option value="false">Latest</option>
-                    <option value="true">Oldest</option>
+                    <option value="false">{t('home.latest')}</option>
+                    <option value="true">{t('home.oldest')}</option>
                 </select>
                 {
                     ads.length ? (

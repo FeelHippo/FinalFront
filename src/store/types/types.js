@@ -14,6 +14,7 @@ export const details = {
 export const shared = {
     UPDATE_FIELD: 'UPDATE_FIELD',
     ERROR: 'ERROR',
+    REDIRECT: 'REDIRECT',
 }
 
 export const auth = {

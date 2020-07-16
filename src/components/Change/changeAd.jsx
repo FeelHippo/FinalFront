@@ -18,6 +18,7 @@ let ChangeExistingAd = ({
     onDelete,
     toggle,
     ad,
+    t
 }) => (
     <div className='ads-change'>
         <p>Modify Ads</p>
@@ -42,10 +43,11 @@ let ChangeExistingAd = ({
             {
                 ({ values, errors, touched, setFieldValue }) => (
                     <Form>
-                        <Field name="name" />
+                        <Field name="name" placeholder={t('change.name')}/>
                         {errors.name && touched.name ? (
                             <div>{errors.name}</div>
                         ) : null}
+                        <label>{t('change.price')}</label>
                         <Field name="price" type="number" />
                         {errors.price && touched.price ? (
                             <div>{errors.price}</div>
@@ -56,7 +58,7 @@ let ChangeExistingAd = ({
                                 ({ field }) => (
                                     <>
                                         <div>
-                                            <label htmlFor="true">Sell</label>
+                                            <label htmlFor="true">{t('change.sell')}</label>
                                             <input 
                                                 {...field}
                                                 value="true"
@@ -67,7 +69,7 @@ let ChangeExistingAd = ({
                                         </div>
 
                                         <div>
-                                            <label htmlFor="false">Buy</label>
+                                            <label htmlFor="false">{t('change.buy')}</label>
                                             <input 
                                                 {...field}
                                                 value="false"
@@ -84,12 +86,12 @@ let ChangeExistingAd = ({
                         {errors.type && touched.type ? (
                             <div>{errors.type}</div>
                         ) : null}
-                        <Field name="description" />
+                        <Field name="description" placeholder={t('change.description')}/>
                         {errors.description && touched.description ? (
                             <div>{errors.description}</div>
                         ) : null}
                         <Field name="tag1" as="select" placeholder="Select a tag" id="tag1">
-                            <option value="">Select First Tag</option>
+                            <option value="">{t('change.first_tag')}</option>
                             {valid_tags && valid_tags.length ? (
                                 valid_tags.map(tag => {
                                     return ( <option value={tag}>{tag}</option> )
@@ -103,7 +105,7 @@ let ChangeExistingAd = ({
                             <div>{errors.tag1}</div>
                         ) : null}
                         <Field name="tag2" as="select" placeholder="Select another tag" id="tag2">
-                            <option value="">Select Second Tag</option>
+                            <option value="">{t('change.second_tag')}</option>
                             {valid_tags && valid_tags.length ? (
                                 valid_tags.map(tag => {
                                     return ( <option value={tag}>{tag}</option> )
@@ -132,26 +134,26 @@ let ChangeExistingAd = ({
                                 <img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img>
                             )
                         }
-                        <button type="submit">Submit</button>
+                        <button type="submit">{t('change.submit')}</button>
                     </Form>
                 )
             }
         </Formik>
         <div>
 
-            <button type='button' class="nes-btn is-primary" onClick={ onDelete }>Delete It!</button>
+            <button type='button' onClick={ onDelete }>{t('change.delete')}</button>
 
             <button type="button" name="reserved" onClick={ e => toggle(e) }>{
-                ad.reserved ? "Cancel Reservation" : "Mark as Reserved"
+                ad.reserved ? t('change.cancel_res') : t('change.mark_res')
             }</button>
 
             <button type="button" name="sold" onClick={ e => toggle(e) }>{
-                ad.sold ? "Currently Available" : "Mark as Sold"
+                ad.sold ? t('change.available') : t('change.sold')
             }</button>
         
         </div>
         <Link to='/'>
-            <button class="nes-btn is-warning">Back</button>
+            <button>{t('change.back')}</button>
         </Link>
     </div>
 )

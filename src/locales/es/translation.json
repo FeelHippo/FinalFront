@@ -1,5 +1,77 @@
 {
     "login": {
-        "title": "Accede a tu cuenta"
+        "title": "Acceso Cliente",
+        "username": "Nombre de usuario...",
+        "password": "... y contraseña",
+        "enter": "Entrar!",
+        "not_registered": "Crear Cuenta",
+        "forgot_password": "He Olvidado mi Contraseña",
+        "anonymous": "Acceso Anónimo"
+    },
+    "signup": {
+        "title": "Crear Cuenta",
+        "username": "Elige un Nombre de Usuario",
+        "email": "Tu Correo Electrónico",
+        "password": "Elige una contraseña",
+        "register": "Date de Alta",
+        "registered": "Ya tengo mi Cuenta",
+        "anonymous": "Acceso Anónimo"
+    },
+    "home": {
+        "title": "Buscador de Anuncios",
+        "name": "Nombre",
+        "price_range": "Rango de Precio",
+        "sell": "Vender",
+        "buy": "Comprar",
+        "first_tag": "Selecciona Categoría",
+        "second_tag": "Selecciona otra Categoría",
+        "search": "Buscar",
+        "latest": "Novedades",
+        "oldest": "Todos los Anuncios"
+    },
+    "detail": {
+        "name": "Nombre Articulo: ",
+        "description": "Descripción: ",
+        "modify": "Modificar Anuncio",
+        "back": "Página inicial",
+        "facebook": "Share on FaceBook"
+    },
+    "change": {
+        "name": "Cambiar Nombre",
+        "price": "Cambiar Precio",
+        "sell": "Vender",
+        "buy": "Comprar",
+        "description": "Modificar Descripción",
+        "first_tag": "Cambiar Tag",
+        "second_tag": "Cambiar Tag",
+        "submit": "Listo",
+        "delete": "Borrar Anuncios",
+        "cancel_res": "Cancelar la Reserva",
+        "mark_res": "Reservar Articulo",
+        "available": "Articulo Disponible",
+        "sold": "Marcar como Vendido",
+        "back": "Página inicial"
+    },
+    "create": {
+        "title": "Crear Anuncio",
+        "name": "Nombre",
+        "price": "Precio",
+        "sell": "Vender",
+        "buy": "Comprar",
+        "description": "Describe el Articulo",
+        "first_tag": "Elige un Tag",
+        "second_tag": "Elige un Tag",
+        "submit": "Crear",
+        "back": "Página inicial"
+    },
+    "user": {
+        "title": "Anuncios Activos: ",
+        "Home": "Página inicial"
+    },
+    "password": {
+        "insert_email": "Correo Electrónico:",
+        "placeholder": "te enviaremos un correo",
+        "send": "Enviar",
+        "denial": "No, Gracias"
     }
 }

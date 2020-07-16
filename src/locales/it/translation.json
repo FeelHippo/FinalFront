@@ -1,5 +1,77 @@
 {
     "login": {
-        "title": "Accedi al tuo account"
+        "title": "Accedi al tuo account",
+        "username": "Inserisci il tuo username...",
+        "password": "... e la password",
+        "enter": "Avanti Tutta!",
+        "not_registered": "Non Sono Registrato",
+        "forgot_password": "Non Ricordo la Password",
+        "anonymous": "Preferisco non Registrarmi"
+    },
+    "signup": {
+        "title": "Registrazione",
+        "username": "Scegli il tuo username",
+        "email": "Inserisci la tua Em@il",
+        "password": "Scegli la tua Password",
+        "register": "Registrati",
+        "registered": "Ho gia' un account",
+        "anonymous": "Preferisco non Registrarmi"
+    },
+    "home": {
+        "title": "Cerca Annunci",
+        "name": "Nome",
+        "price_range": "Fascia di Prezzo",
+        "sell": "Vendi",
+        "buy": "Compra",
+        "first_tag": "Seleziona una categoria",
+        "second_tag": "Seleziona un'altra categoria",
+        "search": "Cerca",
+        "latest": "Novita'",
+        "oldest": "Tutti gli Annunci"
+    },
+    "detail": {
+        "name": "Nome dell'Articolo: ",
+        "description": "Descrizione: ",
+        "modify": "Modifica questo Articolo",
+        "back": "Torna alla Home Page",
+        "facebook": "Share on FaceBook"
+    },
+    "change": {
+        "name": "Modifica il Nome",
+        "price": "Cambia il Prezzo",
+        "sell": "Vendita",
+        "buy": "Acquisto",
+        "description": "Modifica Descrizione",
+        "first_tag": "Modifica il Tag",
+        "second_tag": "MOdifica il Tag",
+        "submit": "Conferma",
+        "delete": "Elimina",
+        "cancel_res": "Annulla Prenotazione",
+        "mark_res": "Riserva Articolo",
+        "available": "Disponibile",
+        "sold": "Venduto",
+        "back": "Torna alla Home Page"
+    },
+    "create": {
+        "title": "Creare un Annuncio",
+        "name": "Scegli un Nome",
+        "price": "Dagli un Prezzo",
+        "sell": "Vendita",
+        "buy": "Acquisto",
+        "description": "Descrivi l'Articolo",
+        "first_tag": "Scegli un Tag",
+        "second_tag": "Scegli un Tag",
+        "submit": "Crea l'Articolo",
+        "back": "Torna alla Home Page"
+    },
+    "user": {
+        "title": "Annunci Attivi: ",
+        "Home": "Torna alla Home Page"
+    },
+    "password": {
+        "insert_email": "Inserisci la tua Email:",
+        "placeholder": "ti invieremo una email con ulteriori istruzioni",
+        "send": "Invia",
+        "denial": "No, Grazie"
     }
 }

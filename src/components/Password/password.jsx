@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { sendEmail } from '../../store/actions/authentication';
+import { useTranslation } from 'react-i18next';
 
 import { useInput } from '../Hooks/input-hook';
 
@@ -12,6 +13,8 @@ const Password = props => {
     const { value:email, bind:bindEmail } = useInput('');
     const [redirectPage, setRedirect] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
+    // translation
+    const { t } = useTranslation();
 
     useEffect(() => {
         const ui = () => {
@@ -28,11 +31,11 @@ const Password = props => {
     return (
         <>  {redirectPage ? <Redirect to='/login' /> : null}
             <div class="container">
-                <h2>Insert your email here</h2>
-                <input type="email" {...bindEmail} placeholder="you will receive an email with your password" />
-                <button type="button" class="success" onClick={() => submitRequest(email)}>Send</button>
+                <h2>{t('password.insert_email')}</h2>
+                <input type="email" {...bindEmail} placeholder={t('password.placeholder')} />
+                <button type="button" class="success" onClick={() => submitRequest(email)}>{t('password.send')}</button>
                 <Link to='/login'>
-                    <button class='error'>No, Thanks</button>
+                    <button class='error'>{t('password.denial')}</button>
                 </Link>
             </div>
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import {
     getOneAd,
     changeAd,
@@ -76,6 +77,7 @@ export class ChangeDetail extends Component {
                 handleSubmit={ this.sendAd }
                 onDelete={ this.deleteAd }
                 toggle={ this.toggleFunction }
+                t={ this.props.t }
             />
         )
     }
@@ -96,7 +98,9 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ChangeDetail);
+export default withTranslation()(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(ChangeDetail)
+)

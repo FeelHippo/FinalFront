@@ -17,7 +17,7 @@ const Login = props => {
     // snackbar errors
     const { enqueueSnackbar } = useSnackbar();
     // translation
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const submitForm = evt => {
         evt.preventDefault();
         
@@ -35,19 +35,19 @@ const Login = props => {
                 <form onSubmit={submitForm} class="form" >
                     <h1>{t('login.title')}</h1>
 
-                    <input type="text" {...bindUsername} placeholder="enter your username" />
+                    <input type="text" {...bindUsername} placeholder={t('login.username')} />
                     
-                    <input type="password" {...bindPassword} placeholder="... and your password"/>
+                    <input type="password" {...bindPassword} placeholder={t('login.password')}/>
                     
-                    <button type='submit' class='success'>Go!</button>
+                    <button type='submit' class='success'>{t('login.enter')}</button>
                     <Link to='/signup'>
-                        <button class='warning'>I am not registered</button>
+                        <button class='warning'>{t('login.not_registered')}</button>
                     </Link>
                     <Link to='/password'>
-                        <button class='warning'>I forgot my password</button>
+                        <button class='warning'>{t('login.forgot_password')}</button>
                     </Link>
                     <Link to='/'>
-                        <button class='error'>continue without login</button>
+                        <button class='error'>{t('login.anonymous')}</button>
                     </Link>
                     
                 </form>

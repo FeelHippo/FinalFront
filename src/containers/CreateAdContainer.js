@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import { 
     createAd,
 } from '../store/actions/index';
@@ -39,6 +40,7 @@ class CreateAd extends Component {
             <CreateNewAd 
                 valid_tags={ this.props.valid_tags }
                 handleSubmit={ this.sendAd }
+                t={ this.props.t }
             />
         )
     }
@@ -54,7 +56,9 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(CreateAd);
+export default withTranslation()(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps,
+    )(CreateAd)
+)

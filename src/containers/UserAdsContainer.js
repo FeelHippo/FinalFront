@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import {
     getUserAds,
 } from '../store/actions/index';
@@ -39,6 +40,7 @@ export class UserAdsContainer extends Component {
             ads={ this.props.ads }
             user={ this.props.match.params.username }
             navigateHome={ this.redirectView }
+            t={ this.props.t }
         />
     }
 }
@@ -55,4 +57,6 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserAdsContainer);
+export default withTranslation()(
+    connect(mapStateToProps, mapDispatchToProps)(UserAdsContainer)
+)

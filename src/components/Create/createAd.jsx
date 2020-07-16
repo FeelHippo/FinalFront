@@ -13,11 +13,12 @@ const adSchema = Yup.object().shape({
 })
 
 const CreateNewAd = ({
+    t,
     valid_tags,
     handleSubmit,
 }) => (
     <div className='ads-create'>
-        <p>Create Your Ad</p>
+        <p>{t('create.title')}</p>
         <Formik
             initialValues={{
                 name: '',
@@ -39,10 +40,11 @@ const CreateNewAd = ({
             {
                 ({ values, errors, touched, setFieldValue }) => (
                     <Form>
-                        <Field name="name" />
+                        <Field name="name" placeholder={t('create.name')}/>
                         {errors.name && touched.name ? (
                             <div>{errors.name}</div>
                         ) : null}
+                        <label>{t('create.price')}</label>
                         <Field name="price" type="number" />
                         {errors.price && touched.price ? (
                             <div>{errors.price}</div>
@@ -53,7 +55,7 @@ const CreateNewAd = ({
                                 ({ field }) => (
                                     <>
                                         <div>
-                                            <label htmlFor="true">Sell</label>
+                                            <label htmlFor="true">{t('create.sell')}</label>
                                             <input 
                                                 {...field}
                                                 value="true"
@@ -64,7 +66,7 @@ const CreateNewAd = ({
                                         </div>
 
                                         <div>
-                                            <label htmlFor="false">Buy</label>
+                                            <label htmlFor="false">{t('create.buy')}</label>
                                             <input 
                                                 {...field}
                                                 value="false"
@@ -81,12 +83,12 @@ const CreateNewAd = ({
                         {errors.type && touched.type ? (
                             <div>{errors.type}</div>
                         ) : null}
-                        <Field name="description" />
+                        <Field name="description" placeholder={t('create.description')}/>
                         {errors.description && touched.description ? (
                             <div>{errors.description}</div>
                         ) : null}
                         <Field name="tag1" as="select" placeholder="Select a tag" id="tag1">
-                            <option value="">Select First Tag</option>
+                            <option value="">{t('create.first_tag')}</option>
                             {valid_tags && valid_tags.length ? (
                                 valid_tags.map(tag => {
                                     return ( <option value={tag}>{tag}</option> )
@@ -100,7 +102,7 @@ const CreateNewAd = ({
                             <div>{errors.tag1}</div>
                         ) : null}
                         <Field name="tag2" as="select" placeholder="Select another tag" id="tag2">
-                            <option value="">Select Second Tag</option>
+                            <option value="">{t('create.second_tag')}</option>
                             {valid_tags && valid_tags.length ? (
                                 valid_tags.map(tag => {
                                     return ( <option value={tag}>{tag}</option> )
@@ -129,13 +131,13 @@ const CreateNewAd = ({
                                 ''
                             )
                         }
-                        <button type="submit">Submit</button>
+                        <button type="submit">{t('create.submit')}</button>
                     </Form>
                 )
             }
         </Formik>
         <Link to='/'>
-            <button >Back</button>
+            <button >{t('create.back')}</button>
         </Link>
     </div>
 )
