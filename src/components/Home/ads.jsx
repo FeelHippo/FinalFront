@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import Navbar from '../Navbar/navbar';
 import { Card } from '../Hooks/custom-card';
 import List from '../List/list';
+import './ads.scss';
 
 const searchSchema = Yup.object().shape({
     name: Yup.string(),
@@ -26,12 +27,11 @@ const Home = ({
     searchAds,
     searchUser,
     changeOrder,
-    oldFirst
+    order
 }) => (
-        
-    <div className='ads-dashboard'>
-        <div className="container">
-            <Navbar />
+    <div className="home-container">
+        <Navbar />
+        <div className="form-container">
             <Formik
                 initialValues={{
                     name: '',
@@ -46,12 +46,15 @@ const Home = ({
             >
                 {
                     ({ errors, touched }) => (
-                        <Form>
+                        <Form className="home-form">
                             <Field name="name" />
                             {errors.name && touched.name ? (
                                 <div>{errors.name}</div>
                             ) : null}
                             <button type="submit">{t('home.title')}</button>
+                            <Link to='/createAd'>
+                                <button type="button" className="warning">Create Ad</button>
+                            </Link>                            
                         </Form>
                     )
                 }
@@ -74,8 +77,8 @@ const Home = ({
                 }
             >
                 {
-                    ({ errors, touched }) => (
-                        <Form>
+                    ({ values, errors, touched }) => (
+                        <Form className="home-form">
                             <Field name="name" placeholder={t('home.name')}/>
                             {errors.name && touched.name ? (
                                 <div>{errors.name}</div>
@@ -102,7 +105,14 @@ const Home = ({
                                                     checked={field.value === "true"}
                                                     name="type"
                                                     type="radio"
-                                                />   
+                                                /> 
+                                                {
+                                                    values.type ? (
+                                                        <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                                    ) : (
+                                                        ''
+                                                    )
+                                                }  
                                             </div>
 
                                             <div>
@@ -113,7 +123,14 @@ const Home = ({
                                                     checked={field.value === "false"}
                                                     name="type"
                                                     type="radio"
-                                                />   
+                                                />
+                                                {
+                                                    !values.type ? (
+                                                        <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                                    ) : (
+                                                        ''
+                                                    )
+                                                }    
                                             </div>
                                         </>
                                     )
@@ -156,29 +173,27 @@ const Home = ({
                     )
                 }
             </Formik>
-            <Link to='/createAd'>
-                <button type="button" className="warning">Create Ad</button>
-            </Link>
-            <div className="listContainer">
-                <select value={oldFirst} name="oldFirst" onChange={evt => changeOrder(evt)}>
-                    <option value="false">{t('home.latest')}</option>
-                    <option value="true">{t('home.oldest')}</option>
-                </select>
-                {
-                    ads.length ? (
-                        <List
-                            items={ads}
-                            oldFirst={oldFirst}
-                            renderItem={
-                                ad => (
-                                    <Card {...ad} />
-                            )}
-                        />
-                    ) : (
-                        <div></div>
-                    )
-                }
-            </div>
+        </div>
+
+        <div className="list-container">
+            <select className="order-selector" value={order} name="oldFirst" onChange={evt => changeOrder(evt)}>
+                <option value="old">{t('home.latest')}</option>
+                <option value="new">{t('home.oldest')}</option>
+            </select>
+            {
+                ads.length ? (
+                    <List
+                        items={ads}
+                        newFirst={order}
+                        renderItem={
+                            ad => (
+                                <Card {...ad} />
+                        )}
+                    />
+                ) : (
+                    <div></div>
+                )
+            }
         </div>
     </div>
 )

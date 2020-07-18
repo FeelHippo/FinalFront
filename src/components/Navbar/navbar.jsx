@@ -5,6 +5,7 @@ import LocalStorage from '../../services/Storage';
 import { useSnackbar } from 'notistack';
 import { logoutUser, deleteUser } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
+import './navbar.scss';
 
 const Navbar = props => {
     const [auth, setAuth] = useState(false);

@@ -1,17 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './card.scss'
 
 export const Card = ({ _id, name, price, tag, description, photo }) => {
     return (
-        <Link to={`/detail/${_id}`}>
-            <section>
-                <div>
+        <Link to={`/detail/${_id}`} className="cardContainer">
+            <article className="card">
+                <img src={'http://localhost:5000/api/photo/' + photo} alt={name}/>
+                <footer className="cardFooter">
                     <h3>{name}</h3>
-                    <p>{price} Euro</p>
-                    <p>"{tag}: {description ? description : null}"</p>
-                    <img src={'http://localhost:5000/api/photo/' + photo} alt={name}/>
-                </div>
-            </section>
+                    <p>Price: {price} $</p>
+                    <p>"{description ? description : null}"</p>
+                </footer>
+            </article>
         </Link>
     )
 }

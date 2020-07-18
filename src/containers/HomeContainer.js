@@ -16,7 +16,8 @@ export class ClassifiedAds extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userSearched: ''
+            userSearched: '',
+            order: "new",
         }
     }
 
@@ -44,7 +45,9 @@ export class ClassifiedAds extends Component {
 
     changeOrder = evt => {
         evt.preventDefault();
-        this.props.updateField(evt);
+        this.setState({
+            order: evt.target.value
+        })
     }
 
     render() {
@@ -60,6 +63,7 @@ export class ClassifiedAds extends Component {
                 searchUser={ this.searchUser }
                 changeOrder={ this.changeOrder }
                 t={ this.props.t }
+                order={ this.state.order }
             />
         )
     }

@@ -1,0 +1,105 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    
+    background-image: url('../../services/imgs/photo-of-orange-yellow-and-red-hello-molding-clay-954599.jpg');
+    background-size: cover;
+
+    .form {
+        margin: 0;
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+
+        padding: 1rem;
+        max-height: 50vh;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "title title"
+            "input button"
+            "input button"
+        ;
+
+        background-color: rgba(255, 0, 0, 0.1);
+        border: 2px solid tomato;
+        border-radius: 12px;
+
+        h1 {
+            grid-area: title;
+            margin: 0 auto;
+            height: auto;
+        }
+
+        .inputs {
+            grid-area: input;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0;
+
+            input {
+                margin: auto;
+                margin: 0.3rem auto;
+            }
+        }
+
+        .buttons {
+            grid-area: button;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .success, .warning, .error {
+                width: 100%;
+                opacity: 0.8;
+            }
+        }
+    }
+}
+
+$information-phone: "only screen and (max-width : 480px)";
+$information-medium-screens: "only screen and (min-width : 481px) and (max-width: 768px)";
+
+@media #{$information-phone} {
+  .container {
+
+    background-image: url('../../services//imgs/art-artistic-arts-and-crafts-background-1153895.jpg');
+    background-size: cover;
+    .form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: space-between;
+
+        top: 50%;
+        width: 90vw;
+  
+        h1 {
+            display: none;
+        }
+    }
+  }
+}
+
+@media #{$information-medium-screens} {
+    .form {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-content: space-between;
+
+        top: 50%;
+        width: 90vw;
+        height: auto;
+  
+        h1 {
+            display: none;
+        }
+    }
+}

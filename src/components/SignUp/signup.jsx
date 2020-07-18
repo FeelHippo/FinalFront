@@ -6,6 +6,7 @@ import { userPostSignup } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
 // custom input hook
 import { useInput } from '../Hooks/input-hook';
+import './signup.scss';
 
 const SignUp = props => {
     // state variables
@@ -36,21 +37,22 @@ const SignUp = props => {
             <div class="container">
                 <form onSubmit={submitForm} class="form">
                     <h1>{t('signup.title')}</h1>
+                    <section className="inputs">
+                        <input type="text" {...bindUsername} placeholder={t('signup.username')} />
 
-                    <input type="text" {...bindUsername} placeholder={t('signup.username')} />
+                        <input type="email" {...bindEmail} placeholder={t('signup.email')} />
 
-                    <input type="email" {...bindEmail} placeholder={t('signup.email')} />
-                    
-                    <input type="password" {...bindPassword} placeholder={t('signup.password')}/>
-                    
-
-                    <button type='submit' class="success">{t('signup.register')}</button>
-                    <Link to='/login'>
-                        <button class="warning">{t('signup.registered')}</button>
-                    </Link>
-                    <Link to='/'>
-                        <button class='error'>{t('signup.anonymous')}</button>
-                    </Link>
+                        <input type="password" {...bindPassword} placeholder={t('signup.password')}/>
+                    </section>
+                    <section className="buttons">
+                        <button type='submit' class="success">{t('signup.register')}</button>
+                        <Link to='/login'>
+                            <button class="warning">{t('signup.registered')}</button>
+                        </Link>
+                        <Link to='/'>
+                            <button class='error'>{t('signup.anonymous')}</button>
+                        </Link>
+                    </section>
                 </form>
             </div>
         </>

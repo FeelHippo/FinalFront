@@ -1,14 +1,13 @@
 import React from 'react';
+import './list.scss'
 
-export default function List({ items, renderItem, oldFirst }) {
-
+export default function List({ items, renderItem, newFirst }) {
     // limit output to 10 elements
-    let recent = oldFirst ? items.reverse().slice(0, 10) : items.slice(0, 10);
-
+    let recent = newFirst==="old" ? items.reverse().slice(0, 9) : items.slice(0, 9);
     return (
         <ul className="adsList">
             {recent.map(item => (
-                <li key={item._id} style={{ listStyleType: "none" }}>
+                <li key={item._id} style={{ listStyleType: "none" }} className="singleCard">
                     {renderItem(item)}
                 </li>
             ))}

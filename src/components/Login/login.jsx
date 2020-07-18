@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { userPostLogin } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
+import './login.scss';
 
 // custom input hook
 import { useInput } from '../Hooks/input-hook';
@@ -32,30 +33,30 @@ const Login = props => {
     return (
         <>  {redirectPage ? <Redirect to='/'/> : null }
             <div className="container">
-                <form onSubmit={submitForm} class="form" >
+                <form onSubmit={submitForm} className="form" >
                     <h1>{t('login.title')}</h1>
+                    <section className="inputs">
+                        <input type="text" {...bindUsername} placeholder={t('login.username')} />
+                        
+                        <input type="password" {...bindPassword} placeholder={t('login.password')}/>
+                        <button type='submit' class='success'>{t('login.enter')}</button>
+                    </section>
 
-                    <input type="text" {...bindUsername} placeholder={t('login.username')} />
-                    
-                    <input type="password" {...bindPassword} placeholder={t('login.password')}/>
-                    
-                    <button type='submit' class='success'>{t('login.enter')}</button>
-                    <Link to='/signup'>
-                        <button class='warning'>{t('login.not_registered')}</button>
-                    </Link>
-                    <Link to='/password'>
-                        <button class='warning'>{t('login.forgot_password')}</button>
-                    </Link>
-                    <Link to='/'>
-                        <button class='error'>{t('login.anonymous')}</button>
-                    </Link>
-                    
+                    <section className="buttons">
+                        <Link to='/signup'>
+                            <button class='warning'>{t('login.not_registered')}</button>
+                        </Link>
+                        <Link to='/password'>
+                            <button class='warning'>{t('login.forgot_password')}</button>
+                        </Link>
+                        <Link to='/'>
+                            <button class='error'>{t('login.anonymous')}</button>
+                        </Link>
+                    </section>
                 </form>
             </div>        
         </>
-
     )
-
 }
 
 const mapStateToProps = state => ({ session: state.session })
