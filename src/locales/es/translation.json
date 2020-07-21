@@ -32,9 +32,10 @@
     "detail": {
         "name": "Nombre Articulo: ",
         "description": "Descripción: ",
+        "price": "Precio",
         "modify": "Modificar Anuncio",
         "back": "Página inicial",
-        "facebook": "Share on FaceBook"
+        "facebook": "Share"
     },
     "change": {
         "name": "Cambiar Nombre",

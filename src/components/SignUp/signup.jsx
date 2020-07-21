@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { userPostSignup } from '../../store/actions/authentication';
+import { userPostSignup, clearSnackbar } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
 // custom input hook
 import { useInput } from '../Hooks/input-hook';
@@ -19,24 +19,31 @@ const SignUp = props => {
     const { enqueueSnackbar } = useSnackbar();
     // translation
     const { t } = useTranslation();
+
+    useEffect(() => {
+        if(props.snackbar.message) {
+            enqueueSnackbar(props.snackbar.message);
+            props.clearSnackbar();
+        }
+    })
+
     const submitForm = evt => {
         evt.preventDefault();
-        
+        // redux authentication.js action
         props.userPostSignup({
             username,
             email,
             password,
         })
-
-        if(props.session.error) enqueueSnackbar(props.session.error);
+        
         setRedirect(props.session.success);
     };
 
     return(
         <>  {redirectPage ? <Redirect to='/login' /> : null}
             <div class="container">
-                <form onSubmit={submitForm} class="form">
-                    <h1>{t('signup.title')}</h1>
+                <form onSubmit={submitForm} class="formSignup">
+                    <h3>{t('signup.title')}</h3>
                     <section className="inputs">
                         <input type="text" {...bindUsername} placeholder={t('signup.username')} />
 
@@ -59,10 +66,16 @@ const SignUp = props => {
     )
 }
 
-const mapStateToProps = state => ({ session: state.session })
+const mapStateToProps = state => { 
+    return {
+        session: state.session,
+        snackbar: state.snackbar,
+    } 
+}
 
 const mapDispatchToProps = dispatch => ({
-    userPostSignup: userInfo => dispatch(userPostSignup(userInfo))
+    userPostSignup: userInfo => dispatch(userPostSignup(userInfo)),
+    clearSnackbar: () => dispatch(clearSnackbar()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

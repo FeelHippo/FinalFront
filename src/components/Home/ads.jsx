@@ -77,7 +77,7 @@ const Home = ({
                 }
             >
                 {
-                    ({ values, errors, touched }) => (
+                    ({ values, errors, touched, setFieldValue }) => (
                         <Form className="home-form">
                             <Field name="name" placeholder={t('home.name')}/>
                             {errors.name && touched.name ? (
@@ -92,51 +92,28 @@ const Home = ({
                             {errors.price_high && touched.price_high ? (
                                 <div>{errors.price_high}</div>
                             ) : null}
-                            <Field 
-                                name="type"
-                                render={
-                                    ({ field }) => (
-                                        <>
-                                            <div>
-                                                <label htmlFor="true">{t('home.sell')}</label>
-                                                <input 
-                                                    {...field}
-                                                    value="true"
-                                                    checked={field.value === "true"}
-                                                    name="type"
-                                                    type="radio"
-                                                /> 
-                                                {
-                                                    values.type ? (
-                                                        <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
-                                                    ) : (
-                                                        ''
-                                                    )
-                                                }  
-                                            </div>
-
-                                            <div>
-                                                <label htmlFor="false">{t('home.buy')}</label>
-                                                <input 
-                                                    {...field}
-                                                    value="false"
-                                                    checked={field.value === "false"}
-                                                    name="type"
-                                                    type="radio"
-                                                />
-                                                {
-                                                    !values.type ? (
-                                                        <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
-                                                    ) : (
-                                                        ''
-                                                    )
-                                                }    
-                                            </div>
-                                        </>
+                            <label>
+                                {t('home.sell')}
+                                <Field type="radio" name="type" value="true" />
+                                {
+                                    values.type === 'true' ? (
+                                        <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                    ) : (
+                                        ''
                                     )
                                 }
-
-                            />
+                            </label>
+                            <label>
+                                {t('home.buy')}
+                                <Field type="radio" name="type" value="false" />
+                                {
+                                    values.type === 'false' ? (
+                                        <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                    ) : (
+                                        ''
+                                    )
+                                }
+                            </label>
                             {errors.type && touched.type ? (
                                 <div>{errors.type}</div>
                             ) : null}
@@ -180,6 +157,7 @@ const Home = ({
                 <option value="old">{t('home.latest')}</option>
                 <option value="new">{t('home.oldest')}</option>
             </select>
+            <section className="searchResults">
             {
                 ads.length ? (
                     <List
@@ -194,6 +172,7 @@ const Home = ({
                     <div></div>
                 )
             }
+            </section>
         </div>
     </div>
 )

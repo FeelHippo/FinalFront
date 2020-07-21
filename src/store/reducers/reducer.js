@@ -8,6 +8,7 @@ const defaultState = {
     valid_tags: [],
     ads: [],
     redirect: false,
+    snackbar: {},
     chat: {
         messages: [],
         connectionStatus: false,
@@ -23,19 +24,13 @@ export const session = (state = defaultState.session, action) => {
         case auth.SIGNUP_USER:
             return { 
                 ...state, 
-                success: action.payload }
+                success: action.payload,
+            }
         
         case auth.LOGIN_USER:
             return {
                 ...state,
                 ...action.payload,
-            }
-
-        case shared.ERROR:
-            return {
-                ...state,
-                success: action.payload.success,
-                error: action.payload.msg,
             }
 
         case auth.LOGOUT_USER: 
@@ -112,5 +107,22 @@ export const chat = (state = defaultState.chat, action) => {
             return { ...state, connectionStatus: action.payload }
         default:
             return state
+    }
+}
+
+export const snackbar = (state = defaultState.snackbar, action) => {
+    switch (action.type) {
+        case shared.SNACKBAR_SUCCESS:
+          return {
+            ...state,
+            message: action.message,
+          };
+        case shared.SNACKBAR_CLEAR:
+          return {
+            ...state,
+            message: undefined,
+          };
+        default:
+          return state;
     }
 }

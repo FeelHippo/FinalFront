@@ -16,20 +16,18 @@ export const userPostLogin = user => {
                 // dispatch login if status 200
                 dispatch(loginAuthUser(response.data));
             } else {
-                dispatch(showMessage(response.data))
+                dispatch(showSnackbar(response.data.msg))
             }
-            
         } catch (error) {
             console.log(error);
         }
-
-        return 'done';
     }
 }
 
 const loginAuthUser = userObj => ({
     type: 'LOGIN_USER',
     payload: userObj,
+    error: undefined,
 })
 
 // signup or update user data
@@ -38,17 +36,17 @@ export const userPostSignup = user => {
         
         try {
             // receive true if user registered
-            let response = await registerUser(user)
-            if (response.status === 200) {
-                dispatch(signupUser(response.data.success))
-            } else {
-                dispatch(showMessage(response.data))
-            }
+            await registerUser(user).then(response => {
+                if (response.status === 200) {
+                    dispatch(signupUser(response.data.success));
+                } else {
+                    dispatch(showSnackbar(response.data.msg))
+                }
+            })
+        
         } catch (error) {
             console.log(error);
         }
-
-        return 'done';
     }
 }
 
@@ -57,12 +55,13 @@ export const userPutUpdate = user => {
 
         try {
             // receive true if user updated
-            let response = await updateUser(user);
-            if (response.status === 200) {
-                dispatch(signupUser(response.data.success))
-            } else {
-                dispatch(showMessage(response.data))
-            }
+            await updateUser(user).then(response => {
+                if (response.status === 200) {
+                    dispatch(signupUser(response.data.success));
+                } else {
+                    dispatch(showSnackbar(response.data.msg))
+                }
+            })            
         } catch (error) {
             console.log(error);
         }
@@ -80,7 +79,7 @@ export const sendEmail = email => {
         try {
             let response = await retrievePassword(email);
             if(!response.success) {
-                dispatch(showMessage({ msg: response.msg, success: false }))
+                dispatch(showSnackbar(response.msg))
             } else {
                 dispatch(redirectAfterLoading(true))
             }
@@ -96,12 +95,11 @@ export const deleteUser = username => {
         try {
             let response = await deleteUserAccount(username);
             if(!response) {
-                dispatch(showMessage({ msg: response.msg, success: false }))
+                dispatch(showSnackbar(response.msg))
             } else {
                 dispatch(logoutUser())
-                dispatch(showMessage({ msg: response.msg, success: true }))
+                dispatch(showSnackbar(response.msg))
             }
-
         } catch (error) {
             console.log(error)
         }
@@ -115,15 +113,18 @@ export const logoutUser = () => {
 }
 
 // error handler
-const showMessage = data => ({
-    type: 'ERROR',
-    payload: data,    
-})
+const showSnackbar = message => ({ 
+    type: "SNACKBAR_SUCCESS", 
+    message 
+});
+
+export const clearSnackbar = () => {
+    return dispatch => {
+      dispatch({ type: "SNACKBAR_CLEAR" });
+    };
+};
 
 const redirectAfterLoading = response => ({
-        type: 'REDIRECT',
-        payload: response,
+    type: 'REDIRECT',
+    payload: response,
 })
-
-// inside the individual components, if there is a state.msg, use snackbar to print it
-// amend userPostLogin to di the same

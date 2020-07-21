@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Thumb from '../Thumb/thumbnail';
+import './changeAd.scss';
 
 const adSchema = Yup.object().shape({
     name: Yup.string(),
@@ -42,7 +43,8 @@ let ChangeExistingAd = ({
         >
             {
                 ({ values, errors, touched, setFieldValue }) => (
-                    <Form>
+                    <Form className="modifyForm">
+                        <label>{t('change.name')}</label>
                         <Field name="name" placeholder={t('change.name')}/>
                         {errors.name && touched.name ? (
                             <div>{errors.name}</div>
@@ -52,40 +54,32 @@ let ChangeExistingAd = ({
                         {errors.price && touched.price ? (
                             <div>{errors.price}</div>
                         ) : null}
-                        <Field 
-                            name="type"
-                            render={
-                                ({ field }) => (
-                                    <>
-                                        <div>
-                                            <label htmlFor="true">{t('change.sell')}</label>
-                                            <input 
-                                                {...field}
-                                                value="true"
-                                                checked={field.value === "true"}
-                                                name="type"
-                                                type="radio"
-                                            />   
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="false">{t('change.buy')}</label>
-                                            <input 
-                                                {...field}
-                                                value="false"
-                                                checked={field.value === "false"}
-                                                name="type"
-                                                type="radio"
-                                            />   
-                                        </div>
-                                    </>
+                        <label>
+                            {t('home.sell')}
+                            <Field type="radio" name="type" value="true" />
+                            {
+                                values.type === 'true' || values.type === true ? (
+                                    <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                ) : (
+                                    ''
                                 )
-                            } 
-
-                        />
+                            }
+                        </label>
+                        <label>
+                            {t('home.buy')}
+                            <Field type="radio" name="type" value="false" />
+                            {
+                                values.type === 'false' || values.type === false ? (
+                                    <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                ) : (
+                                    ''
+                                )
+                            }
+                        </label>
                         {errors.type && touched.type ? (
                             <div>{errors.type}</div>
                         ) : null}
+                        <label>{t('change.description')}</label>
                         <Field name="description" placeholder={t('change.description')}/>
                         {errors.description && touched.description ? (
                             <div>{errors.description}</div>
@@ -134,27 +128,28 @@ let ChangeExistingAd = ({
                                 <img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img>
                             )
                         }
-                        <button type="submit">{t('change.submit')}</button>
+                        <button type="submit" class='success'>{t('change.submit')}</button>
                     </Form>
                 )
             }
         </Formik>
-        <div>
+        <div className="buttonsChange">
 
-            <button type='button' onClick={ onDelete }>{t('change.delete')}</button>
-
-            <button type="button" name="reserved" onClick={ e => toggle(e) }>{
+            <button type="button" name="reserved" onClick={ e => toggle(e) } class='warning'>{
                 ad.reserved ? t('change.cancel_res') : t('change.mark_res')
             }</button>
 
-            <button type="button" name="sold" onClick={ e => toggle(e) }>{
+            <button type="button" name="sold" onClick={ e => toggle(e) } class='warning'>{
                 ad.sold ? t('change.available') : t('change.sold')
             }</button>
+
+            <button type='button' onClick={ onDelete } class='error'>{t('change.delete')}</button>
+
+            <Link to='/'>
+                <button>{t('change.back')}</button>
+            </Link>
         
         </div>
-        <Link to='/'>
-            <button>{t('change.back')}</button>
-        </Link>
     </div>
 )
 

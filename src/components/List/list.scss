@@ -1,6 +1,6 @@
 .adsList {
-    max-width: 100vw;
-    height: auto;
+    max-width: 100%;
+    min-height: 100vh;
     padding: 2rem !important;
     display: grid;
     grid-template-columns: repeat(3, 1fr);

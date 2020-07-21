@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { userPostLogin } from '../../store/actions/authentication';
+import { userPostLogin, clearSnackbar } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
 import './login.scss';
 
@@ -19,6 +19,14 @@ const Login = props => {
     const { enqueueSnackbar } = useSnackbar();
     // translation
     const { t } = useTranslation();
+
+    useEffect(() => {
+        if(props.snackbar.message) {
+            enqueueSnackbar(props.snackbar.message);
+            props.clearSnackbar();
+        }
+    })
+
     const submitForm = evt => {
         evt.preventDefault();
         
@@ -26,15 +34,15 @@ const Login = props => {
             username,
             password,
         })
-        if(props.session.error) enqueueSnackbar(props.session.error);
+
         setRedirect(props.session.success);
     };
     
     return (
         <>  {redirectPage ? <Redirect to='/'/> : null }
             <div className="container">
-                <form onSubmit={submitForm} className="form" >
-                    <h1>{t('login.title')}</h1>
+                <form onSubmit={submitForm} className="formLogin" >
+                    <h3>{t('login.title')}</h3>
                     <section className="inputs">
                         <input type="text" {...bindUsername} placeholder={t('login.username')} />
                         
@@ -59,10 +67,16 @@ const Login = props => {
     )
 }
 
-const mapStateToProps = state => ({ session: state.session })
+const mapStateToProps = state => { 
+    return {
+        session: state.session,
+        snackbar: state.snackbar,
+    } 
+}
 
 const mapDispatchToProps = dispatch => ({
     userPostLogin: userInfo => dispatch(userPostLogin(userInfo)),
+    clearSnackbar: () => dispatch(clearSnackbar()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

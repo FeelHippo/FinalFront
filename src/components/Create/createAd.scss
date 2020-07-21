@@ -1,0 +1,62 @@
+.ads-create {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    background-image: url('../../services/imgs/diaPencils.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .createForm {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+
+        border: 1px solid whitesmoke;
+        border-radius: 12px;
+        background-color: rgba(245, 245, 245, 0.3);
+
+        label {
+            width: 100%;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .tick {
+            width: 1rem;
+            height: auto;
+            margin-left: 1rem;
+        }
+
+        input[type='radio'] {
+            display: none;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    .buttonsChange {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        a {
+            width: 100%;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}

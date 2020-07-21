@@ -11,6 +11,8 @@ import { useInput } from '../Hooks/input-hook';
 import { Card } from '../Hooks/custom-card';
 import List from '../List/list';
 
+import './settings.scss';
+
 const Settings = props => {
     // state variables
     const [redirectPage, setRedirect] = useState(false);
@@ -44,8 +46,8 @@ const Settings = props => {
 
     return(
         <>  {redirectPage ? <Redirect to='/login' /> : null}
-            <div class="container">
-                <form onSubmit={submitForm}>
+            <div class="containerSettings">
+                <form onSubmit={submitForm} className="settingsForm">
                     <h1>Account Settings</h1>
 
                     <input type="text" {...bindUsername} placeholder={props.session.username} />
@@ -62,7 +64,7 @@ const Settings = props => {
                     <Link to='/'>
                         <button class='error'>No, Thanks</button>
                     </Link>
-                    <section>
+                    <section className="personalAds">
                         <h1>Manage Your Ads</h1>
                         {
                             props.ads.items ? (
@@ -78,7 +80,7 @@ const Settings = props => {
                             )
                         }
                     </section>
-                    <section>
+                    <section class="favoriteAds">
                         <h1>Your Favorite Ads</h1>
                         {
                             !props.ads.favorites === [] ? (

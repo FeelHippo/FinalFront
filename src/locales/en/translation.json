@@ -32,9 +32,10 @@
     "detail": {
         "name": "Item Name: ",
         "description": "Description: ",
+        "price": "Price",
         "modify": "Modify this Ad",
         "back": "Back to Home Page",
-        "facebook": "Share on FaceBook"
+        "facebook": "Share"
     },
     "change": {
         "name": "Change Name",

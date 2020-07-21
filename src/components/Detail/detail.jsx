@@ -4,6 +4,7 @@ import Chat from '../../containers/Chat';
 import { Helmet } from 'react-helmet';
 import { TwitterShareButton } from 'react-twitter-embed';
 import { FacebookProvider, ShareButton } from 'react-facebook';
+import './detail.scss';
 
 const PrintDetail = ({
     t,
@@ -13,49 +14,50 @@ const PrintDetail = ({
     markFavorite,
     favorite
 }) => (
-    <div>
+    <div className="detailContainer">
         <Helmet>
-            <title>{`${ad.name}-${ad.tag1}-${ad.tag2}`}</title>
+            <title>{`${ad.name} ${ad.tag1} ${ad.tag2}`}</title>
             <meta name="description" content={`${ad.description}`} />
         </Helmet>
-        <section>
-            <section class="message-list">
-                <section>
-                    <div>
-                        <span>{t('detail.name')}</span>
-                        <p>{ad.name}</p>
-                    </div>
-                    <div>
-                        <span>{t('detail.description')}</span>
-                        <p>{ad.description}</p>
-                    </div>
-                </section>
-            </section>
-        </section>
-        <section>
-            <section>
-                <section class="message -left">
-                    <div>
-                        <p>{ad.tag1}</p>
-                    </div>
-                    <div>
-                        <p>{ad.tag2}</p>
-                    </div>
-                    
-                    <div>
-                        <p>Price: {ad.price}</p>
-                    </div>
-                </section>
-            </section>
-        </section>
-        <section>
-        <div>
-            <p><img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img></p>
+        <div className="detailText">
+            <div className="detailName">
+                <span>{t('detail.name')}</span>
+                <p>{ad.name}</p>
+            </div>
+            <div className="detailDesc">
+                <span>{t('detail.description')}</span>
+                <p>{ad.description}</p>
+            </div>
         </div>
-        </section>
+        <div className="detailInfo">
+            <div>
+                <p>#{ad.tag1}</p>
+            </div>
+            <div>
+                <p>#{ad.tag2}</p>
+            </div>
+            
+            <div>
+                <p>{t('detail.price')}: {ad.price}</p>
+            </div>
+        </div>
+        <div className="detailPic">
+            <img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img>
+        </div>
         
         <section className="options">
-            <div onClick={() => markFavorite()}>
+            <div className="navDetail">
+                <Link to={`/change/${_id}`}>
+                    <button>{t('detail.modify')}</button>
+                </Link>
+                <Link to={`/`}>
+                    <button>{t('detail.back')}</button>
+                </Link>
+            </div>
+            <label>
+                Favorite
+            </label>
+            <div onClick={() => markFavorite()} className="favoriteDetail">
                 {
                     favorite ? (
                         <img src={require('../../icons/star_full.svg')} alt="favorite" />
@@ -65,22 +67,19 @@ const PrintDetail = ({
                 }
                 
             </div>
-            <Link to={`/change/${_id}`}>
-                <button>{t('detail.modify')}</button>
-            </Link>
-            <Link to={`/`}>
-                <button>{t('detail.back')}</button>
-            </Link>
-            <TwitterShareButton
-                url={window.location.href}
-                options={{ text: `${ad.name}-${ad.description}`, via: 'FeelHippo' }}
-            />
-            {/* once live, get appId */}
-            <FacebookProvider appId="FeelHippo"> 
-                <ShareButton href="http://www.facebook.com">
-                {t('detail.facebook')}
-                </ShareButton>
-            </FacebookProvider>
+            <div className="detailSocial">
+                <TwitterShareButton
+                    url={window.location.href}
+                    options={{ text: `${ad.name}-${ad.description}`, via: 'FeelHippo' }}
+                />
+                {/* once live, get appId */}
+                <FacebookProvider appId="FeelHippo"> 
+                    <ShareButton href="http://www.facebook.com">
+                        {t('detail.facebook')}
+                    </ShareButton>
+                </FacebookProvider>
+            </div>
+            
         </section>
         <section>
             {

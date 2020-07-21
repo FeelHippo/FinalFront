@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Thumb from '../Thumb/thumbnail';
+import './createAd.scss';
 
 const adSchema = Yup.object().shape({
     name: Yup.string(),
@@ -39,7 +40,7 @@ const CreateNewAd = ({
         >
             {
                 ({ values, errors, touched, setFieldValue }) => (
-                    <Form>
+                    <Form className="createForm">
                         <Field name="name" placeholder={t('create.name')}/>
                         {errors.name && touched.name ? (
                             <div>{errors.name}</div>
@@ -49,37 +50,28 @@ const CreateNewAd = ({
                         {errors.price && touched.price ? (
                             <div>{errors.price}</div>
                         ) : null}
-                        <Field 
-                            name="type"
-                            render={
-                                ({ field }) => (
-                                    <>
-                                        <div>
-                                            <label htmlFor="true">{t('create.sell')}</label>
-                                            <input 
-                                                {...field}
-                                                value="true"
-                                                checked={field.value === "true"}
-                                                name="type"
-                                                type="radio"
-                                            />   
-                                        </div>
-
-                                        <div>
-                                            <label htmlFor="false">{t('create.buy')}</label>
-                                            <input 
-                                                {...field}
-                                                value="false"
-                                                checked={field.value === "false"}
-                                                name="type"
-                                                type="radio"
-                                            />   
-                                        </div>
-                                    </>
+                        <label>
+                            {t('home.sell')}
+                            <Field type="radio" name="type" value="true" />
+                            {
+                                values.type === 'true' || values.type === true ? (
+                                    <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                ) : (
+                                    ''
                                 )
-                            } 
-
-                        />
+                            }
+                        </label>
+                        <label>
+                            {t('home.buy')}
+                            <Field type="radio" name="type" value="false" />
+                            {
+                                values.type === 'false' || values.type === false ? (
+                                    <img className="tick" src={require('../../icons/tick.svg')} alt="checked" />
+                                ) : (
+                                    ''
+                                )
+                            }
+                        </label>
                         {errors.type && touched.type ? (
                             <div>{errors.type}</div>
                         ) : null}
@@ -131,14 +123,16 @@ const CreateNewAd = ({
                                 ''
                             )
                         }
-                        <button type="submit">{t('create.submit')}</button>
+                        <button type="submit" class='success'>{t('create.submit')}</button>
                     </Form>
                 )
             }
         </Formik>
-        <Link to='/'>
-            <button >{t('create.back')}</button>
-        </Link>
+        <div className="buttonsCreate">
+            <Link to='/'>
+                <button >{t('create.back')}</button>
+            </Link>
+        </div>
     </div>
 )
 

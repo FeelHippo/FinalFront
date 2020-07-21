@@ -98,7 +98,9 @@ class Chat extends Component {
         />
         <button 
           onClick={this.onSendMessageHandler}
-          disabled={this.props.chat.connectionStatus}>Send</button>
+          disabled={this.props.chat.connectionStatus}
+          style={{width: "100%"}}
+          >Send</button>
       </>
     )
   }

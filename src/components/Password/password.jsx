@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { sendEmail } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
+import './password.scss';
 
 import { useInput } from '../Hooks/input-hook';
 
@@ -30,13 +31,15 @@ const Password = props => {
 
     return (
         <>  {redirectPage ? <Redirect to='/login' /> : null}
-            <div class="container">
-                <h2>{t('password.insert_email')}</h2>
-                <input type="email" {...bindEmail} placeholder={t('password.placeholder')} />
-                <button type="button" class="success" onClick={() => submitRequest(email)}>{t('password.send')}</button>
-                <Link to='/login'>
-                    <button class='error'>{t('password.denial')}</button>
-                </Link>
+            <div class="containerPassword">
+                <div className="passwordForm">
+                    <h2>{t('password.insert_email')}</h2>
+                    <input type="email" {...bindEmail} placeholder={t('password.placeholder')} />
+                    <button type="button" class="success" onClick={() => submitRequest(email)}>{t('password.send')}</button>
+                    <Link to='/login'>
+                        <button class='error'>{t('password.denial')}</button>
+                    </Link>
+                </div>
             </div>
 
         </>
