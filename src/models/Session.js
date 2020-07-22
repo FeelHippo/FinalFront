@@ -6,14 +6,12 @@ export default class Session {
         username = '',
         email = '',
         password = '',
-        success = false,
         token = '',
         error = '',
     ) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.success = success;
         this.token = token;
         this.error = error;
     }

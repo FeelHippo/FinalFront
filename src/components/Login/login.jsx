@@ -21,8 +21,6 @@ const Login = props => {
     const { t } = useTranslation();
 
     useEffect(() => {
-        setRedirect(props.session.success);
-
         if(props.snackbar.message) {
             enqueueSnackbar(props.snackbar.message);
             props.clearSnackbar();
@@ -32,10 +30,12 @@ const Login = props => {
     const submitForm = evt => {
         evt.preventDefault();
         
-        props.userPostLogin({
+        let response = props.userPostLogin({
             username,
             password,
         })
+        
+        setRedirect(response);
     };
     
     return (

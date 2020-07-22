@@ -12,9 +12,12 @@ export const userPostLogin = user => {
             let authenticated = await tokenAuthentication(token);
             // store token in LocalStorage, validity is 7 days
             if (authenticated && response.status === 200) {
+                // let browser know session has started
                 localStorage.setItem('x-auth-token', token);
                 // dispatch login if status 200
                 dispatch(loginAuthUser(response.data));
+                // let component know result is positive
+                return true;
             } else {
                 dispatch(showSnackbar(response.data.msg))
             }
@@ -27,7 +30,6 @@ export const userPostLogin = user => {
 const loginAuthUser = userObj => ({
     type: 'LOGIN_USER',
     payload: userObj,
-    error: undefined,
 })
 
 // signup or update user data
@@ -38,6 +40,7 @@ export const userPostSignup = user => {
             // receive true if user registered
             await registerUser(user).then(response => {
                 if (response.status === 200) {
+                    // let component know result is positive
                     dispatch(signupUser(response.data.success));
                 } else {
                     dispatch(showSnackbar(response.data.msg))
