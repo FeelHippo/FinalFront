@@ -74,5 +74,14 @@
         "placeholder": "you will receive an email with your password",
         "send": "Send",
         "denial": "No, Thanks"
+    },
+    "settings": {
+        "title": "Account Settings",
+        "update": "Update",
+        "login": "Back to Login",
+        "back": "No, Thanks",
+        "manage": "Manage your Ads",
+        "favorite": "Your Favorite Ads",
+        "no_results": "No Favorite Ads"
     }
 }

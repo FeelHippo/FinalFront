@@ -45,7 +45,7 @@ const PrintDetail = ({
             <img src={'http://localhost:5000/api/photo/' + ad.photo} alt={ad.name}></img>
         </div>
         
-        <section className="options">
+        <section className="optionsDetail">
             <div className="navDetail">
                 <Link to={`/change/${_id}`}>
                     <button>{t('detail.modify')}</button>

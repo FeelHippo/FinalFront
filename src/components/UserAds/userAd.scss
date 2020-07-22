@@ -1,0 +1,19 @@
+.user-ads-dashboard {
+    width: 100vw;
+    min-height: 100vh;
+
+    .user-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .listContainer {
+        width: 100%;
+
+        background-image: url('../../services/imgs/diaPencils.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}

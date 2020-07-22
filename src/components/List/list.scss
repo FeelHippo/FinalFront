@@ -1,8 +1,23 @@
 .adsList {
-    max-width: 100%;
-    min-height: 100vh;
-    padding: 2rem !important;
+    max-width: 80%;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 0px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+
+    .singleCard {
+        place-self: center;
+    }
+}
+
+$information-phone: "only screen and (max-width : 480px)";
+
+@media #{$information-phone} {
+    .adsList {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
 }

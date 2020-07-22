@@ -1,6 +1,7 @@
 
 .detailContainer {
     width: 100vw;
+    height: auto;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -36,7 +37,7 @@
         }
     }
 
-    .options {
+    .optionsDetail {
         width: 90%;
         display: flex;
         flex-direction: row;
@@ -66,6 +67,22 @@
             * {
                 margin: 1rem;
             }
+        }
+    }
+}
+
+
+$information-phone: "only screen and (max-width : 760px)";
+
+@media #{$information-phone} {
+    .detailContainer .optionsDetail {
+        display: flex;
+        flex-direction: column !important;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .favoriteDetail {
+            text-align: center;
         }
     }
 }

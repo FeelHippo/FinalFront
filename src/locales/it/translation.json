@@ -67,12 +67,21 @@
     },
     "user": {
         "title": "Annunci Attivi: ",
-        "Home": "Torna alla Home Page"
+        "home": "Torna alla Home Page"
     },
     "password": {
         "insert_email": "Inserisci la tua Email:",
         "placeholder": "ti invieremo una email con ulteriori istruzioni",
         "send": "Invia",
         "denial": "No, Grazie"
+    },
+    "settings": {
+        "title": "Impostazioni Personali",
+        "update": "Aggiorna",
+        "login": "Effettua il Login",
+        "back": "No, Grazie",
+        "manage": "I Tuoi Annunci",
+        "favorite": "I Tuoi Favoriti",
+        "no_results": "Nessun Risultato"
     }
 }

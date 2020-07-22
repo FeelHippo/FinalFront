@@ -56,6 +56,51 @@
         }
 
         .searchResults {
+
+            background-image: url('../../services/imgs/diaPencils.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+}
+
+$information-phone: "only screen and (max-width : 480px)";
+
+@media #{$information-phone} {
+    
+    .home-form {
+        width: 50%;
+        margin: 0 auto;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        background-color: rgba(255, 0, 0, 0.1);
+
+        button, input, select, a {
+            width: 95%;
+            button {
+                width: 100%;
+            }
+        }
+
+        .tick {
+            width: 1rem;
+            height: auto;
+            margin-left: 1rem;
+        }
+    }
+
+    .list-container {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+
+        .searchResults {
+            max-width: 100%;
+            height: auto;
             background-image: url('../../services/imgs/diaPencils.jpg');
             background-repeat: no-repeat;
             background-size: cover;

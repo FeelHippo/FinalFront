@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 // auth + fetch actions
 import { userPutUpdate, clearSnackbar } from '../../store/actions/authentication';
 import { getUserAds } from '../../store/actions/index';
@@ -20,8 +21,10 @@ const Settings = props => {
     const { value:username, bind:bindUsername } = useInput('');
     const { value:email, bind:bindEmail } = useInput('');
     const { value:password, bind:bindPassword } = useInput('');
-
+    // snackbar
     const { enqueueSnackbar } = useSnackbar();
+    // translation
+    const { t } = useTranslation();
 
     useEffect(() => {
         const ownAds = async username => {
@@ -52,7 +55,7 @@ const Settings = props => {
         <>  {redirectPage ? <Redirect to='/login' /> : null}
             <div class="containerSettings">
                 <form onSubmit={submitForm} className="settingsForm">
-                    <h1>Account Settings</h1>
+                    <h1>{t('settings.title')}</h1>
 
                     <input type="text" {...bindUsername} placeholder={props.session.username} />
 
@@ -61,15 +64,15 @@ const Settings = props => {
                     <input type="password" {...bindPassword} placeholder={props.session.password} />
                     
 
-                    <button type='submit' class="success">Update</button>
+                    <button type='submit' class="success">{t('settings.update')}</button>
                     <Link to='/login'>
-                        <button class="warning">Login</button>
+                        <button class="warning">{t('settings.login')}</button>
                     </Link>
                     <Link to='/'>
-                        <button class='error'>No, Thanks</button>
+                        <button class='error'>{t('settings.back')}</button>
                     </Link>
                     <section className="personalAds">
-                        <h1>Manage Your Ads</h1>
+                        <h1>{t('settings.manage')}</h1>
                         {
                             props.ads.items ? (
                                 <List
@@ -85,7 +88,7 @@ const Settings = props => {
                         }
                     </section>
                     <section class="favoriteAds">
-                        <h1>Your Favorite Ads</h1>
+                        <h1>{t('settings.favorite')}</h1>
                         {
                             !props.ads.favorites === [] ? (
                                 <List
@@ -96,7 +99,7 @@ const Settings = props => {
                                     )}
                                 />
                             ) : (
-                                <div>No Favorites</div>
+                                <div>{t('settings.no_results')}</div>
                             )
                         }
                     </section>

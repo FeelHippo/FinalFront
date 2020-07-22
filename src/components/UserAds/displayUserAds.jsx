@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../Navbar/navbar';
 import { Card } from '../Hooks/custom-card';
 import List from '../List/list';
+import './userAd.scss';
 
 const UserAdsSection = ({
     t,
@@ -9,12 +10,11 @@ const UserAdsSection = ({
     user,
     navigateHome
 }) => (
-    <div className='ads-dashboard' >
-        <div className='container'>
-            <Navbar />
-
+    <div className='user-ads-dashboard' >
+        <Navbar />
+        <div className='user-container'>
             
-            <h2>{user}</h2>
+            <h2>User: {user}</h2>
             <h3>{t('user.title')}{ads.items ? ads.items.length : ''}</h3>
             
 

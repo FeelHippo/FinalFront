@@ -71,7 +71,7 @@ $information-medium-screens: "only screen and (min-width : 481px) and (max-width
 
     background-image: url('../../services//imgs/art-artistic-arts-and-crafts-background-1153895.jpg');
     background-size: cover;
-    .form {
+    .formSignup {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -80,15 +80,19 @@ $information-medium-screens: "only screen and (min-width : 481px) and (max-width
         top: 50%;
         width: 90vw;
   
-        h1 {
+        h3 {
             display: none;
+        }
+
+        .inputs {
+            padding: 0px;
         }
     }
   }
 }
 
 @media #{$information-medium-screens} {
-    .form {
+    .formSignup {
         display: flex !important;
         flex-direction: column;
         justify-content: center;
@@ -98,8 +102,12 @@ $information-medium-screens: "only screen and (min-width : 481px) and (max-width
         width: 90vw;
         height: auto;
   
-        h1 {
+        h3 {
             display: none;
+        }
+
+        .inputs {
+            padding: 0px !important;
         }
     }
 }
