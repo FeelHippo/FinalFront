@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
+import { withSnackbar } from 'notistack';
 import {
     getUserAds,
+    clearSnackbar,
 } from '../store/actions/index';
 
 import UserAdsSection from '../components/UserAds/displayUserAds';
@@ -20,6 +22,11 @@ export class UserAdsContainer extends Component {
         // fetch ads
         const {match: { params }} = this.props;
         this.fetchUserAds(params.username);
+        // snackbar errors
+        if(this.props.snackbar.message) {
+            this.props.enqueueSnackbar(this.props.snackbar.message);
+            this.props.clearSnackbar();
+        }
     }
 
     fetchUserAds = username => {
@@ -48,15 +55,17 @@ export class UserAdsContainer extends Component {
 const mapStateToProps = state => {
     return {
         ads: state.ads,
+        snackbar: state.snackbar,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         getUserAds: username => dispatch(getUserAds(username)),
+        clearSnackbar: () => dispatch(clearSnackbar()),
     }
 }
 
-export default withTranslation()(
+export default withSnackbar(withTranslation()(
     connect(mapStateToProps, mapDispatchToProps)(UserAdsContainer)
-)
+))

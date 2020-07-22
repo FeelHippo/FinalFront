@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
+import { withSnackbar } from 'notistack';
 import {
     getOneAd,
     changeAd,
     deleteItem,
+    clearSnackbar,
 } from '../store/actions/index.js';
 
 import ChangeExistingAd from '../components/Change/changeAd';
@@ -27,6 +29,11 @@ export class ChangeDetail extends Component {
         this.setState({ detId });
         // fetch ad data from API
         this.getDetails(detId);
+        // snackbar errors
+        if(this.props.snackbar.message) {
+            this.props.enqueueSnackbar(this.props.snackbar.message);
+            this.props.clearSnackbar();
+        }
     }
 
     getDetails = detId => {
@@ -81,6 +88,7 @@ const mapStateToProps = state => {
         ads: state.ads,
         valid_tags: state.valid_tags,
         redirect: state.redirect,
+        snackbar: state.snackbar,
     }
 }
 
@@ -89,12 +97,13 @@ const mapDispatchToProps = dispatch => {
         getOneAd: detId => dispatch(getOneAd(detId)),
         changeAd: ad => dispatch(changeAd(ad)),
         deleteItem: detId => dispatch(deleteItem(detId)),
+        clearSnackbar: () => dispatch(clearSnackbar()),
     }
 }
 
-export default withTranslation()(
+export default withSnackbar(withTranslation()(
     connect(
         mapStateToProps,
         mapDispatchToProps
     )(ChangeDetail)
-)
+))

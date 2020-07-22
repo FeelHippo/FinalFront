@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
+import { withSnackbar } from 'notistack';
 import { 
     createAd,
+    clearSnackbar,
 } from '../store/actions/index';
 
 import CreateNewAd from '../components/Create/createAd';
@@ -13,6 +15,14 @@ class CreateAd extends Component {
         super(props);
         this.state = {
             redirect: false,
+        }
+    }
+
+    componentDidMount() {
+        // snackbar errors
+        if(this.props.snackbar.message) {
+            this.props.enqueueSnackbar(this.props.snackbar.message);
+            this.props.clearSnackbar();
         }
     }
 
@@ -53,12 +63,13 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         createAd: body => dispatch(createAd(body)),
+        clearSnackbar: () => dispatch(clearSnackbar()),
     }
 }
 
-export default withTranslation()(
+export default withSnackbar(withTranslation()(
     connect(
         mapStateToProps,
         mapDispatchToProps,
     )(CreateAd)
-)
+))
