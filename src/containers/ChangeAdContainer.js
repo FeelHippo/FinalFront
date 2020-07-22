@@ -16,7 +16,7 @@ export class ChangeDetail extends Component {
         super(props);
         this.state = {
             detId: '',
-            redirect: false,
+            deleted: false,
         }
     }
     
@@ -40,23 +40,14 @@ export class ChangeDetail extends Component {
         });
         body.append('_id', this.state.detId)
 
-        const success = await this.props.changeAd(body);
-        if (success) {
-            this.setState({
-                redirect: true
-            })
-        }
+        await this.props.changeAd(body);
     }
 
     deleteAd = async () => {
-
-        const success = await this.props.deleteItem(this.state.detId)
-
-        if (success) {
-            this.setState({
-                redirect: true
-            })
-        }
+        await this.props.deleteItem(this.state.detId);
+        this.setState({
+            deleted: true,
+        })
     }
 
     toggleFunction = async e => {
@@ -67,8 +58,10 @@ export class ChangeDetail extends Component {
     }
 
     render() {
-        if(this.state.redirect){
+        if(this.props.redirect){
             return <Redirect to={`/detail/${this.state.detId}`} />
+        } else if (this.state.deleted) {
+            return <Redirect to={`/`} />
         }
         return (
             <ChangeExistingAd 
@@ -87,6 +80,7 @@ const mapStateToProps = state => {
     return {
         ads: state.ads,
         valid_tags: state.valid_tags,
+        redirect: state.redirect,
     }
 }
 

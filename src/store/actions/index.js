@@ -44,10 +44,16 @@ export function redirectAfterLoading(response) {
 }
 
 // error handler
-const showMessage = data => ({
-    type: 'ERROR',
-    payload: data,    
-})
+const showSnackbar = message => ({ 
+    type: "SNACKBAR_SUCCESS", 
+    message 
+});
+
+export const clearSnackbar = () => {
+    return dispatch => {
+      dispatch({ type: "SNACKBAR_CLEAR" });
+    };
+};
 
 // action creators for home page
 export const searchUser = user => {
@@ -118,7 +124,7 @@ export const getUserAds = username => {
         try {
             let response = await getAdsRegisteredUser(username);
             if (!response) {
-                dispatchEvent(showMessage({ msg: response.msg, success: false }))
+                dispatchEvent(showSnackbar(response.msg))
             } else {
                 dispatch(fetchAds(response))
             }
@@ -167,7 +173,7 @@ export const createAd = adData => {
         try {
             let response = await postAd(adData);
             if (!response._id) {
-                dispatch(showMessage({ msg: response.msg, success: false }))
+                dispatch(showSnackbar(response.msg))
             } else {
                 dispatch(createAdSuccess(response))
                 return true;
@@ -188,10 +194,10 @@ export const changeAd = adData => {
         try {
             let response = await modifyAd(adData);
             if (!response.success) {
-                dispatch(showMessage({ msg: response.msg, success: false }))
+                dispatch(showSnackbar(response.msg))
             } else {
                 dispatch(changeAdSuccess(response))
-                return true;
+                dispatch(redirectAfterLoading(true))
             }
         } catch (error) {
             console.log(error);
@@ -210,11 +216,9 @@ export const deleteItem = detId => {
         try {
             let response = await deleteAd(detId);
 
-            if (!response.success) {
-                dispatch(showMessage({ msg: response.msg, success: false }))
-            } else {
-                dispatch(redirectAfterLoading(true))
-            }
+            if (!response._id.length) {
+                dispatch(showSnackbar(response.msg))
+            } 
         } catch (error) {
             console.log(error);
         }

@@ -210,7 +210,6 @@ const api = (API_URL = 'http://localhost:5000') => {
         },
         deleteAd: async detId => {
             const API_END = `${API_URL}/api/item/${detId}`;
-
             try {
                 const result = await axios.delete(API_END);
                 return result.data;

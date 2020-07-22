@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LocalStorage from '../../services/Storage';
 import { useSnackbar } from 'notistack';
-import { logoutUser, deleteUser } from '../../store/actions/authentication';
+import { logoutUser, deleteUser, clearSnackbar } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
 import './navbar.scss';
 
@@ -16,8 +16,11 @@ const Navbar = props => {
     useEffect(() => {
         let response = LocalStorage.readTokenStorage();
         if(response) setAuth(true);
-        if(props.session.error) enqueueSnackbar(props.session.error);
-    }, []);
+        if(props.snackbar.message) {
+            enqueueSnackbar(props.snackbar.message);
+            props.clearSnackbar();
+        }
+    }, [props, enqueueSnackbar]);
 
     return (
         <div className="nav-container">
@@ -71,11 +74,17 @@ const Navbar = props => {
     )
 }
 
-const mapStateToProps = state => ({ session: state.session })
+const mapStateToProps = state => { 
+    return {
+        session: state.session,
+        snackbar: state.snackbar,
+    } 
+}
 
 const mapDispatchToProps = dispatch => ({
     logoutUser: () => dispatch(logoutUser()),
     deleteUser: username => dispatch(deleteUser(username)),
+    clearSnackbar: () => dispatch(clearSnackbar()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

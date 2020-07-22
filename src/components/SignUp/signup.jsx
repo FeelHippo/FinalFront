@@ -21,11 +21,13 @@ const SignUp = props => {
     const { t } = useTranslation();
 
     useEffect(() => {
+        setRedirect(props.session.success);
+
         if(props.snackbar.message) {
             enqueueSnackbar(props.snackbar.message);
             props.clearSnackbar();
         }
-    })
+    }, [props, enqueueSnackbar])
 
     const submitForm = evt => {
         evt.preventDefault();
@@ -35,8 +37,6 @@ const SignUp = props => {
             email,
             password,
         })
-        
-        setRedirect(props.session.success);
     };
 
     return(

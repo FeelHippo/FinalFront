@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { sendEmail } from '../../store/actions/authentication';
+import { sendEmail, clearSnackbar } from '../../store/actions/authentication';
 import { useTranslation } from 'react-i18next';
 import './password.scss';
 
@@ -20,7 +20,10 @@ const Password = props => {
     useEffect(() => {
         const ui = () => {
             if(props.redirect) {setRedirect(true)} 
-            else if(props.session.error) {enqueueSnackbar(props.session.error)}
+            else if(props.snackbar.message) {
+                enqueueSnackbar(props.snackbar.message);
+                props.clearSnackbar();
+            }
         }
         ui();
     })
@@ -49,8 +52,12 @@ const Password = props => {
 const mapStateToProps = state => ({ 
     session: state.session,
     redirect: state.redirect,
+    snackbar: state.snackbar,
 })
 
-const mapDispatchToProps = dispatch => ({ sendEmail: () => dispatch(sendEmail()) })
+const mapDispatchToProps = dispatch => ({ 
+    sendEmail: () => dispatch(sendEmail()),
+    clearSnackbar: () => dispatch(clearSnackbar()),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Password);

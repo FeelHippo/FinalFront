@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 // auth + fetch actions
-import { userPutUpdate } from '../../store/actions/authentication';
+import { userPutUpdate, clearSnackbar } from '../../store/actions/authentication';
 import { getUserAds } from '../../store/actions/index';
 
 // custom input hook
@@ -28,6 +28,11 @@ const Settings = props => {
             await props.getUserAds(username);
         }
         if(props.session.username) ownAds(props.session.username);
+        // snackabar in case of error
+        if(props.snackbar.message) {
+            enqueueSnackbar(props.snackbar.message);
+            props.clearSnackbar();
+        }
     }, [])
 
     const submitForm = evt => {
@@ -40,7 +45,6 @@ const Settings = props => {
             password,
         })
 
-        if(props.session.error) enqueueSnackbar(props.session.error);
         setRedirect(props.session.success);
     };
 
@@ -106,12 +110,14 @@ const mapStateToProps = state => {
     return {
         session: state.session,
         ads: state.ads,
+        snackbar: state.snackbar,
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     userPutUpdate: userInfo => dispatch(userPutUpdate(userInfo)),
-    getUserAds: username => dispatch(getUserAds(username))
+    getUserAds: username => dispatch(getUserAds(username)),
+    clearSnackbar: () => dispatch(clearSnackbar()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
