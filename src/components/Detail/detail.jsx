@@ -54,18 +54,27 @@ const PrintDetail = ({
                     <button>{t('detail.back')}</button>
                 </Link>
             </div>
-            <label>
-                Favorite
-            </label>
-            <div onClick={() => markFavorite()} className="favoriteDetail">
+            <div>
                 {
-                    favorite ? (
-                        <img src={require('../../icons/star_full.svg')} alt="favorite" />
+                    authenticated===true ? (
+                        <div>
+                            <label>
+                                Favorite
+                            </label>
+                            <div onClick={() => markFavorite()} className="favoriteDetail">
+                                {
+                                    favorite ? (
+                                        <img src={require('../../icons/star_full.svg')} alt="favorite" />
+                                    ) : (
+                                        <img src={require('../../icons/star_empty.svg')} alt="favorite" />
+                                    )
+                                }
+                            </div>
+                        </div>
                     ) : (
-                        <img src={require('../../icons/star_empty.svg')} alt="favorite" />
+                        ''
                     )
                 }
-                
             </div>
             <div className="detailSocial">
                 <TwitterShareButton
