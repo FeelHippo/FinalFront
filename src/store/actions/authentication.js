@@ -17,7 +17,7 @@ export const userPostLogin = user => {
                 // dispatch login if status 200
                 dispatch(loginAuthUser(response.data));
                 // let component know result is positive
-                return true;
+                dispatch(redirectAfterLoading(true));
             } else {
                 dispatch(showSnackbar(response.data.msg))
             }
@@ -42,6 +42,7 @@ export const userPostSignup = user => {
                 if (response.status === 200) {
                     // let component know result is positive
                     dispatch(signupUser(response.data.success));
+                    dispatch(redirectAfterLoading(true));
                 } else {
                     dispatch(showSnackbar(response.data.msg))
                 }
@@ -61,6 +62,7 @@ export const userPutUpdate = user => {
             await updateUser(user).then(response => {
                 if (response.status === 200) {
                     dispatch(signupUser(response.data.success));
+                    dispatch(redirectAfterLoading(true));
                 } else {
                     dispatch(showSnackbar(response.data.msg))
                 }

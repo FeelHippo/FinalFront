@@ -13,6 +13,5 @@ export default class Session {
         this.email = email;
         this.password = password;
         this.token = token;
-        this.error = error;
     }
 }

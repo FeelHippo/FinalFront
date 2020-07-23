@@ -30,12 +30,12 @@ const Login = props => {
     const submitForm = evt => {
         evt.preventDefault();
         
-        let response = props.userPostLogin({
+        props.userPostLogin({
             username,
             password,
         })
         
-        setRedirect(response);
+        setRedirect(props.redirect);
     };
     
     return (
@@ -69,7 +69,7 @@ const Login = props => {
 
 const mapStateToProps = state => { 
     return {
-        session: state.session,
+        redirect: state.redirect,
         snackbar: state.snackbar,
     } 
 }

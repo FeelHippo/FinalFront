@@ -36,7 +36,7 @@ const SignUp = props => {
             password,
         })
 
-        setRedirect(props.session.success);
+        setRedirect(props.redirect);
     };
 
     return(
@@ -68,7 +68,7 @@ const SignUp = props => {
 
 const mapStateToProps = state => { 
     return {
-        session: state.session,
+        redirect: state.redirect,
         snackbar: state.snackbar,
     } 
 }

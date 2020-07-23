@@ -36,7 +36,7 @@ const Settings = props => {
             enqueueSnackbar(props.snackbar.message);
             props.clearSnackbar();
         }
-    }, [])
+    }, [props, enqueueSnackbar])
 
     const submitForm = evt => {
         evt.preventDefault();
@@ -48,7 +48,7 @@ const Settings = props => {
             password,
         })
 
-        setRedirect(props.session.success);
+        setRedirect(props.redirect);
     };
 
     return(
@@ -114,6 +114,7 @@ const mapStateToProps = state => {
         session: state.session,
         ads: state.ads,
         snackbar: state.snackbar,
+        redirect: state.redirect,
     }
 }
 

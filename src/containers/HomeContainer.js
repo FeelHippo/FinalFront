@@ -8,6 +8,7 @@ import {
     getDefaultAds,
     searchAds,
     searchUser,
+    clearSnackbar,
 } from '../store/actions/index.js';
 
 import Home from '../components/Home/ads';
@@ -23,12 +24,18 @@ export class ClassifiedAds extends Component {
 
     componentDidMount() {
         this.props.getDefaultAds();
+        // snackbar errors
+        if(this.props.snackbar.message) {
+            this.props.enqueueSnackbar(this.props.snackbar.message);
+            this.props.clearSnackbar();
+        }
     }
 
     searchUser = async values => {
         let response = await this.props.searchUser(values.name);
         if(!response._id) {
             this.key = this.props.enqueueSnackbar(response.msg);
+            this.props.clearSnackbar();
         } else {
             this.setState({
                 userSearched: response.username,
@@ -40,6 +47,7 @@ export class ClassifiedAds extends Component {
         let response = await this.props.searchAds(values);
         if (response.msg) {
             this.key = this.props.enqueueSnackbar(response.msg);
+            this.props.clearSnackbar();
         }
     }
 
@@ -74,6 +82,7 @@ const mapStateToProps = state => {
         ads: state.ads,
         redirect: state.redirect,
         valid_tags: state.valid_tags,
+        snackbar: state.snackbar,
     }
 }
 
@@ -82,7 +91,8 @@ const mapDispatchToProps = dispatch => {
         searchAds: params => dispatch(searchAds(params)),
         searchUser: user => dispatch(searchUser(user)),
         getDefaultAds: () => dispatch(getDefaultAds()),
-        updateField: evt => dispatch(updateField(evt))
+        updateField: evt => dispatch(updateField(evt)),
+        clearSnackbar: () => dispatch(clearSnackbar()),
     }
 }
 
