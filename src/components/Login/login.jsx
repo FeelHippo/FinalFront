@@ -33,9 +33,11 @@ const Login = props => {
         props.userPostLogin({
             username,
             password,
+        }).then(response => {
+            if (response===true) {
+                setRedirect(true);
+            }  
         })
-        
-        setRedirect(props.redirect);
     };
     
     return (

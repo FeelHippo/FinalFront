@@ -17,7 +17,7 @@ export const userPostLogin = user => {
                 // dispatch login if status 200
                 dispatch(loginAuthUser(response.data));
                 // let component know result is positive
-                dispatch(redirectAfterLoading(true));
+                return true;
             } else {
                 dispatch(showSnackbar(response.data.msg))
             }
@@ -38,15 +38,14 @@ export const userPostSignup = user => {
         
         try {
             // receive true if user registered
-            await registerUser(user).then(response => {
-                if (response.status === 200) {
-                    // let component know result is positive
-                    dispatch(signupUser(response.data.success));
-                    dispatch(redirectAfterLoading(true));
-                } else {
-                    dispatch(showSnackbar(response.data.msg))
-                }
-            })
+            let response = await registerUser(user)
+            if (response.status === 200) {
+                // let component know result is positive
+                dispatch(signupUser(response.data.success));
+                return true;
+            } else {
+                dispatch(showSnackbar(response.data.msg))
+            }
         
         } catch (error) {
             console.log(error);
@@ -62,7 +61,7 @@ export const userPutUpdate = user => {
             await updateUser(user).then(response => {
                 if (response.status === 200) {
                     dispatch(signupUser(response.data.success));
-                    dispatch(redirectAfterLoading(true));
+                    return true;
                 } else {
                     dispatch(showSnackbar(response.data.msg))
                 }
@@ -86,7 +85,7 @@ export const sendEmail = email => {
             if(!response.success) {
                 dispatch(showSnackbar(response.msg))
             } else {
-                dispatch(redirectAfterLoading(true))
+                return true;
             }
         } catch (error) {
             console.log(error)
@@ -128,8 +127,3 @@ export const clearSnackbar = () => {
       dispatch({ type: "SNACKBAR_CLEAR" });
     };
 };
-
-const redirectAfterLoading = response => ({
-    type: 'REDIRECT',
-    payload: response,
-})

@@ -7,7 +7,6 @@ const defaultState = {
     session: new Session(),
     valid_tags: [],
     ads: [],
-    redirect: false,
     snackbar: {},
     chat: {
         messages: [],
@@ -76,13 +75,6 @@ export const ads = (state = defaultState.ads, action) => {
         default:
             return state;
     }
-}
-
-export const redirect = (state = defaultState.redirect, action) => {
-    if (action.type === shared.REDIRECT) {
-        return action.payload
-    }
-    return state;
 }
 
 export const chat = (state = defaultState.chat, action) => {

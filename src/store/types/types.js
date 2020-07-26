@@ -12,9 +12,7 @@ export const details = {
 }
 
 export const shared = {
-    UPDATE_FIELD: 'UPDATE_FIELD',
     ERROR: 'ERROR',
-    REDIRECT: 'REDIRECT',
     SNACKBAR_SUCCESS: 'SNACKBAR_SUCCESS',
     SNACKBAR_CLEAR: 'SNACKBAR_CLEAR',
 }

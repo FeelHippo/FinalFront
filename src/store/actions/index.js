@@ -4,54 +4,33 @@ import io from 'socket.io-client';
 import uniqid from 'uniqid';
 import api from '../../services/itemService';
 
+// API methods
 const { getTags, getAds, getAd, postAd, modifyAd, deleteAd, getInitialAds, registeredUser, getAdsRegisteredUser } = api();
 
+// Types
 const { GET_ALL_TAGS,
         TAGS_LOAD_SUCCESS, 
     } = home;
 const { CREATE_AD, 
         CHANGE_AD 
     } = details;
-const { UPDATE_FIELD, REDIRECT } = shared;
+const { SNACKBAR_SUCCESS,
+        SNACKBAR_CLEAR } = shared;
 const { UPDATE_MESSAGE_HISTORY,
         SET_CONNECTION_STATUS,
         IS_TYPING,
         NOT_TYPING,
 } = messaging;
 
-// global action creators
-export function updateField(evt) {
-    const update = {
-        field: evt.target.name,
-        value: evt.target.value,
-    }
-
-    if(update.value === 'true' || update.value === 'false') {
-        update.value = update.value === 'true' ? true : false
-    }
-
-    return {
-        type: UPDATE_FIELD,
-        payload: update,
-    }
-}
-
-export function redirectAfterLoading(response) {
-    return {
-        type: REDIRECT,
-        payload: response,
-    }
-}
-
 // error handler
 const showSnackbar = message => ({ 
-    type: "SNACKBAR_SUCCESS", 
+    type: SNACKBAR_SUCCESS, 
     message 
 });
 
 export const clearSnackbar = () => {
     return dispatch => {
-      dispatch({ type: "SNACKBAR_CLEAR" });
+      dispatch({ type: SNACKBAR_CLEAR });
     };
 };
 
@@ -59,12 +38,7 @@ export const clearSnackbar = () => {
 export const searchUser = user => {
     return async dispatch => {
         try {
-            let response = await registeredUser(user);
-            
-            if (response._id) {
-                dispatch(redirectAfterLoading(true))
-            }
-                
+            let response = await registeredUser(user);                
             return response; 
         } catch (error) {
             console.log(error)
@@ -197,7 +171,7 @@ export const changeAd = adData => {
                 dispatch(showSnackbar(response.msg))
             } else {
                 dispatch(changeAdSuccess(response))
-                dispatch(redirectAfterLoading(true))
+                return true;
             }
         } catch (error) {
             console.log(error);
@@ -218,7 +192,7 @@ export const deleteItem = detId => {
 
             if (!response._id.length) {
                 dispatch(showSnackbar(response.msg))
-            } 
+            }
         } catch (error) {
             console.log(error);
         }

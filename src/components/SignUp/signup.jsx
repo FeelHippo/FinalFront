@@ -34,9 +34,11 @@ const SignUp = props => {
             username,
             email,
             password,
+        }).then(response => {
+            if (response===true) {
+                setRedirect(true);
+            }  
         })
-
-        setRedirect(props.redirect);
     };
 
     return(

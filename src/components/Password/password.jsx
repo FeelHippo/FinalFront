@@ -29,7 +29,11 @@ const Password = props => {
     })
 
     const submitRequest = email => {
-        props.sendEmail(email);
+        props.sendEmail(email).then(response => {
+            if (response===true) {
+                setRedirect(true);
+            }  
+        })
     }
 
     return (

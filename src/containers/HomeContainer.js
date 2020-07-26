@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withSnackbar } from 'notistack';
 import { withTranslation } from 'react-i18next';
 import {
-    updateField,
     getDefaultAds,
     searchAds,
     searchUser,
@@ -18,6 +17,7 @@ export class ClassifiedAds extends Component {
         super(props);
         this.state = {
             userSearched: '',
+            redirect: false,
             order: "new",
         }
     }
@@ -39,6 +39,7 @@ export class ClassifiedAds extends Component {
         } else {
             this.setState({
                 userSearched: response.username,
+                redirect: true,
             })
         }
     }
@@ -59,7 +60,7 @@ export class ClassifiedAds extends Component {
     }
 
     render() {
-        if(this.props.redirect){
+        if(this.state.redirect){
             return <Redirect to={`/${this.state.userSearched}`} />
         }
         return (
@@ -91,7 +92,6 @@ const mapDispatchToProps = dispatch => {
         searchAds: params => dispatch(searchAds(params)),
         searchUser: user => dispatch(searchUser(user)),
         getDefaultAds: () => dispatch(getDefaultAds()),
-        updateField: evt => dispatch(updateField(evt)),
         clearSnackbar: () => dispatch(clearSnackbar()),
     }
 }

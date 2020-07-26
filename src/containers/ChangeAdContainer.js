@@ -19,6 +19,7 @@ export class ChangeDetail extends Component {
         this.state = {
             detId: '',
             deleted: false,
+            redirect: false,
         }
     }
     
@@ -47,7 +48,12 @@ export class ChangeDetail extends Component {
         });
         body.append('_id', this.state.detId)
 
-        await this.props.changeAd(body);
+        let response = await this.props.changeAd(body);
+        if (response) {
+            this.setState({
+                redirect: true,
+            })
+        }
     }
 
     deleteAd = async () => {
@@ -65,7 +71,7 @@ export class ChangeDetail extends Component {
     }
 
     render() {
-        if(this.props.redirect){
+        if(this.state.redirect){
             return <Redirect to={`/detail/${this.state.detId}`} />
         } else if (this.state.deleted) {
             return <Redirect to={`/`} />
